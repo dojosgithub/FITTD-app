@@ -5,9 +5,8 @@ import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
-import 'package:fitted/core/di/service_locator.dart';
+import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/auth/forgot_password/bloc/bloc.dart';
-import 'package:fitted/features/auth/forgot_password/domain/usecase/forgot_password_usecase.dart';
 import 'package:fitted/features/auth/verify_otp/data/enums/otp_enum.dart';
 import 'package:fitted/features/auth/widgets/back_to_login.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../config/widgets/app_text.dart';
+import '../../../../../config/widgets/app_text.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   ForgotPasswordView({super.key});
@@ -72,16 +71,18 @@ class ForgotPasswordView extends StatelessWidget {
                           label: 'Email',
                           controller: state.emailController,
                         ),
-                        CustomButton(
-                          text: "Reset Password",
-                          onTap: () {
-                            if (formkey.currentState!.validate()) {
-                              context.read<ForgotPasswordBloc>().add(
-                                    ForgotPasswordSendEmailEvent(),
-                                  );
-                            }
-                          },
-                        ),
+                        state.isLoading
+                            ? LoadingIndicator()
+                            : CustomButton(
+                                text: "Reset Password",
+                                onTap: () {
+                                  if (formkey.currentState!.validate()) {
+                                    context.read<ForgotPasswordBloc>().add(
+                                          SendEmailEvent(),
+                                        );
+                                  }
+                                },
+                              ),
                       ],
                     ),
                   ),

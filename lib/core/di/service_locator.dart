@@ -66,14 +66,19 @@ Future<void> init() async {
   sl.registerLazySingleton(() => VerifyOtpUseCase(sl()));
   sl.registerLazySingleton(() => VerifyEmailOtpUseCase(sl()));
   sl.registerLazySingleton(() => ForgotPasswordUsecase(sl()));
+  sl.registerLazySingleton(() => ChangePasswordUsecase(sl()));
 
   // Blocs
   sl.registerFactory(() => LoginBloc(loginUseCase: sl()));
   sl.registerFactory(() => SignInBloc(signUpUseCase: sl()));
-  sl.registerFactory(() => ForgotPasswordBloc(forgotPasswordUsecase: sl()));
   sl.registerFactory(() => OtpBloc(
         verifyEmailOtpUseCase: sl(),
         verifyOtpUseCase: sl(),
       ));
+  sl.registerFactory(() => ForgotPasswordBloc(
+        forgotPasswordUsecase: sl(),
+        changePasswordUsecase: sl(),
+      ));
+
   sl.registerFactory(() => OnboardingBloc());
 }

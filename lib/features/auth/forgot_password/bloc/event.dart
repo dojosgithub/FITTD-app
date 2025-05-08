@@ -2,6 +2,6 @@ part of 'bloc.dart';
 
 class ForgotPasswordEvent {}
 
-class ForgotPasswordSendEmailEvent extends ForgotPasswordEvent {
-  ForgotPasswordSendEmailEvent();
-}
+class SendEmailEvent extends ForgotPasswordEvent {}
+
+class ChangePasswordEvent extends ForgotPasswordEvent {}

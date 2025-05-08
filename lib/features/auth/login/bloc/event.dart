@@ -4,7 +4,12 @@ class LoginEvent {
   const LoginEvent();
 }
 
-class LoginButtonPressed extends LoginEvent {}
+class LoginButtonPressed extends LoginEvent {
+  final String? email;
+  final String? password;
+
+  LoginButtonPressed({this.email, this.password});
+}
 
 class LoginRememberMeChanged extends LoginEvent {
   final bool rememberMe;

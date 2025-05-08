@@ -31,11 +31,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
   void _onLoginButtonPressed(
       LoginButtonPressed event, Emitter<LoginState> emit) async {
-    emit(state.copyWith(isLoading: true, isError: false, errorMessage: ''));
+    emit(state.copyWith(
+        isLoading: true, isError: false, errorMessage: '', isSuccess: false));
 
     final result = await loginUseCase(
-      email: state.email.text,
-      password: state.password.text,
+      email: event.email ?? state.email.text,
+      password: event.password ?? state.password.text,
     );
     result.fold(
       (failure) {
@@ -57,6 +58,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       (response) {
         SharedPrefsStorage.setToken(response.accessToken!);
         SharedPrefsStorage.setUserId(response.id!);
+        print("object");
         emit(state.copyWith(
           isLoading: false,
           isSuccess: true,

@@ -10,8 +10,10 @@ part 'event.dart';
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
   final ForgotPasswordUsecase forgotPasswordUsecase;
+  final ChangePasswordUsecase changePasswordUsecase;
   ForgotPasswordBloc({
     required this.forgotPasswordUsecase,
+    required this.changePasswordUsecase,
   }) : super(
           ForgotPasswordState(
             isLoading: false,
@@ -23,11 +25,12 @@ class ForgotPasswordBloc
             confirmPasswordController: TextEditingController(),
           ),
         ) {
-    on<ForgotPasswordSendEmailEvent>(_handleEmailSend);
+    on<SendEmailEvent>(_handleEmailSend);
+    on<ChangePasswordEvent>(_handlePasswordChange);
   }
 
   _handleEmailSend(
-    ForgotPasswordSendEmailEvent event,
+    SendEmailEvent event,
     Emitter<ForgotPasswordState> emit,
   ) async {
     emit(state.copyWith(isLoading: true, isError: false, errorMessage: ""));
@@ -41,6 +44,39 @@ class ForgotPasswordBloc
           isError: true,
           errorMessage: failure.message,
         ));
+        ToastUtil.showToast(message: failure.message.split(":").last);
+      },
+      (success) {
+        emit(state.copyWith(
+          isLoading: false,
+          isSucess: true,
+        ));
+      },
+    );
+  }
+
+  _handlePasswordChange(
+      ChangePasswordEvent event, Emitter<ForgotPasswordState> emit) async {
+    emit(
+      state.copyWith(
+        isLoading: true,
+        isError: false,
+        errorMessage: "",
+        isSucess: false,
+      ),
+    );
+    final result = await changePasswordUsecase(
+      email: state.emailController.text,
+      password: state.passwordController.text,
+    );
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: failure.message,
+        ));
+        print(failure.message);
         ToastUtil.showToast(message: failure.message.split(":").last);
       },
       (success) {

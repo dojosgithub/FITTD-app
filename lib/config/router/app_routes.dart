@@ -1,9 +1,9 @@
 import 'package:fitted/config/helper/transitions/page_transition.dart';
 import 'package:fitted/features/auth/verify_otp/presentation/screens/otp_verification.dart';
-import 'package:fitted/features/auth/forgot_password/presentation/forgot_password_view.dart';
-import 'package:fitted/features/auth/forgot_password/presentation/password_reset_confirm_view.dart';
+import 'package:fitted/features/auth/forgot_password/presentation/screen/forgot_password_view.dart';
+import 'package:fitted/features/auth/forgot_password/presentation/screen/password_reset_confirm_view.dart';
 import 'package:fitted/features/auth/login/presentation/screens/login_view.dart';
-import 'package:fitted/features/auth/forgot_password/presentation/new_password_view.dart';
+import 'package:fitted/features/auth/forgot_password/presentation/screen/new_password_view.dart';
 import 'package:fitted/features/home/presentation/home_view.dart';
 import 'package:fitted/features/onboarding/presentation/onboarding_view.dart';
 import 'package:fitted/features/auth/signup/presentation/screens/signup_view.dart';
