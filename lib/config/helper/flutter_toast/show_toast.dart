@@ -7,7 +7,7 @@ class ToastUtil {
   static void showToast({
     required String message,
     ToastGravity gravity = ToastGravity.BOTTOM,
-    Color backgroundColor = AppColors.orangeSecondary,
+    Color backgroundColor = AppColors.orangePrimary,
     Color textColor = AppColors.white,
     double fontSize = 16.0,
   }) {

@@ -13,6 +13,5 @@ class SignUpRequestModel {
         'name': name,
         'email': email,
         'password': password,
-        "mobile": "012344ww3210",
       };
 }

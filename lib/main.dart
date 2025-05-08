@@ -2,6 +2,7 @@ import 'package:fitted/config/providers/app_providers.dart';
 import 'package:fitted/config/router/app_router.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/config/theme/app_theme.dart';
+import 'package:fitted/features/onboarding/presentation/choose_your_style_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,11 +27,16 @@ class MyApp extends StatelessWidget {
         providers: [
           ...AppProviders.getProviders(),
         ],
-        child: MaterialApp.router(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppThemeData.appTheme,
-          routerConfig: AppRouter.router,
+          home: ChooseYourStyleView(),
         ),
+        // child: MaterialApp.router(
+        //   debugShowCheckedModeBanner: false,
+        //   theme: AppThemeData.appTheme,
+        //   routerConfig: AppRouter.router,
+        // ),
       ),
     );
   }

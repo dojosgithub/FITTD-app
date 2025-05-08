@@ -1,3 +1,15 @@
+import 'package:fitted/features/auth/forgot_password/bloc/bloc.dart';
+import 'package:fitted/features/auth/forgot_password/data/datasources/forgot_password_remote_datasource.dart';
+import 'package:fitted/features/auth/forgot_password/domain/repository/forgot_password_repository.dart';
+import 'package:fitted/features/auth/forgot_password/domain/repository/forgot_password_repository_impl.dart';
+import 'package:fitted/features/auth/forgot_password/domain/usecase/forgot_password_usecase.dart';
+import 'package:fitted/features/auth/verify_otp/bloc/bloc.dart';
+import 'package:fitted/features/auth/verify_otp/data/datasources/verfication_remote_datasources.dart';
+import 'package:fitted/features/auth/verify_otp/domain/repositories/otp_repository.dart';
+import 'package:fitted/features/auth/verify_otp/domain/repositories/otp_repository_impl.dart';
+import 'package:fitted/features/auth/verify_otp/domain/usecase/otp_usecase.dart';
+import 'package:fitted/features/onboarding/bloc/bloc.dart';
+
 import '../../features/auth/login/bloc/bloc.dart';
 import '../../features/auth/login/data/datasources/login_remote_datasources.dart';
 import '../../features/auth/login/domain/respository/login_repository_impl.dart';
@@ -27,6 +39,12 @@ Future<void> init() async {
   sl.registerLazySingleton<SignUpRemoteDataSource>(
     () => SignUpRemoteDataSourceImpl(sl()),
   );
+  sl.registerLazySingleton<VerificationRemoteDataSource>(
+    () => VerificationRemoteDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<ForgotPasswordRemoteDatasource>(
+    () => ForgotPasswordRemoteDatasourceImpl(sl()),
+  );
 
   // Repositories
   sl.registerLazySingleton<LoginRepository>(
@@ -35,11 +53,27 @@ Future<void> init() async {
   sl.registerLazySingleton<SignUpRepository>(
     () => SignUpRepositoryImpl(sl()),
   );
+  sl.registerLazySingleton<OtpVerificationRepository>(
+    () => OtpVerificationRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<ForgotPasswordRepository>(
+    () => ForgotPasswordRepositoryImpl(sl()),
+  );
+
   // UseCases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
+  sl.registerLazySingleton(() => VerifyOtpUseCase(sl()));
+  sl.registerLazySingleton(() => VerifyEmailOtpUseCase(sl()));
+  sl.registerLazySingleton(() => ForgotPasswordUsecase(sl()));
 
   // Blocs
   sl.registerFactory(() => LoginBloc(loginUseCase: sl()));
   sl.registerFactory(() => SignInBloc(signUpUseCase: sl()));
+  sl.registerFactory(() => ForgotPasswordBloc(forgotPasswordUsecase: sl()));
+  sl.registerFactory(() => OtpBloc(
+        verifyEmailOtpUseCase: sl(),
+        verifyOtpUseCase: sl(),
+      ));
+  sl.registerFactory(() => OnboardingBloc());
 }

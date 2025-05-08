@@ -10,4 +10,5 @@ class AppVectors {
   static const String notification = '${baseUrl}notification$extension';
   static const String search = '${baseUrl}search$extension';
   static const String filter = '${baseUrl}filter$extension';
+  static const String men = '${baseUrl}men$extension';
 }

@@ -7,7 +7,14 @@ class OtpEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class VerifyOtpEvent extends OtpEvent {}
+class VerifyOtpEvent extends OtpEvent {
+  final OtpContextType contextType;
+  final String email;
+  const VerifyOtpEvent({
+    required this.contextType,
+    required this.email,
+  });
+}
 
 class ResendOtpEvent extends OtpEvent {}
 

@@ -64,7 +64,7 @@ class FittedInputField extends StatelessWidget {
         onPressed: onToggle,
       ),
       validator:
-          isLogin ? InputValidators.minLength(8) : InputValidators.password(),
+          isLogin ? InputValidators.minLength(2) : InputValidators.password(),
     );
   }
 

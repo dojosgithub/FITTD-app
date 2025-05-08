@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../../config/helper/flutter_toast/show_toast.dart';
 
 class LoginFormWidget extends StatelessWidget {
@@ -24,11 +23,11 @@ class LoginFormWidget extends StatelessWidget {
       key: formKey,
       child: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state.isSuccess && state.isVerified) {
+          if (state.isSuccess) {
             context.pushNamed(
               AppRoutesEnum.home.name,
             );
-          } else if (state.isSuccess && !state.isVerified) {
+          } else if (state.isError && state.showVerfication) {
             context.pushNamed(
               AppRoutesEnum.confirmOtp.name,
               queryParameters: {

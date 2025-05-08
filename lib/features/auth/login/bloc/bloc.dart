@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,7 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           isError: false,
           rememberMe: false,
           errorMessage: '',
-          isVerified: false,
+          showVerfication: false,
           seePassword: true,
         )) {
     on<LoginButtonPressed>(_onLoginButtonPressed);
@@ -40,19 +39,27 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
     result.fold(
       (failure) {
-        log('result: ${failure.message}');
-
-        emit(state.copyWith(
-          isLoading: false,
-          isError: true,
-          errorMessage: failure.message,
-        ));
+        if (failure.message.contains("Account not verified")) {
+          emit(state.copyWith(
+            isLoading: false,
+            isError: true,
+            errorMessage: failure.message,
+            showVerfication: true,
+          ));
+        } else {
+          emit(state.copyWith(
+            isLoading: false,
+            isError: true,
+            errorMessage: failure.message.split(":").last,
+          ));
+        }
       },
       (response) {
+        SharedPrefsStorage.setToken(response.accessToken!);
+        SharedPrefsStorage.setUserId(response.id!);
         emit(state.copyWith(
           isLoading: false,
           isSuccess: true,
-          isVerified: response.isVerified,
         ));
       },
     );
