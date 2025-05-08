@@ -3,6 +3,7 @@ import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,11 +20,20 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        context.pushReplacementNamed(AppRoutesEnum.login.name);
+    _navigate();
+  }
+
+  Future<void> _navigate() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    final userId = SharedPrefsStorage.getUserId();
+    if (mounted) {
+      if (userId != null && userId.isNotEmpty) {
+        context.goNamed(AppRoutesEnum.home.name);
+      } else {
+        context.goNamed(AppRoutesEnum.login.name);
       }
-    });
+    }
   }
 
   @override
