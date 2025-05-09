@@ -9,4 +9,5 @@ class AppImages {
   static const String tight = '${baseUrl}tight$extension';
   static const String loose = '${baseUrl}loose$extension';
   static const String tall = '${baseUrl}tall$extension';
+  static const String measurement = '${baseUrl}measurement$extension';
 }

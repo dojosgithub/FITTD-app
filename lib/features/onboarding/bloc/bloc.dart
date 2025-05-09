@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:fitted/features/onboarding/data/enums/female_measurement_enum.dart';
 import 'package:fitted/features/onboarding/data/enums/unit_enum.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../data/models/female_measurement_model.dart';
+import '../data/models/measurement_model.dart';
 
 part 'event.dart';
 part "state.dart";
@@ -8,28 +12,34 @@ part "state.dart";
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   OnboardingBloc()
       : super(OnboardingState(
-          selectedUnit: Unit.inch,
-          heightCm: 177,
-          heightIn: 69,
+          measurements: FemaleMeasurementModel(
+            bust: Measurement(value: 0, unit: Unit.cm),
+            bandSize: Measurement(value: 0, unit: Unit.cm),
+            cupSize: Measurement(value: 0, unit: Unit.cm),
+            sleevesLength: Measurement(value: 0, unit: Unit.cm),
+            waist: Measurement(value: 0, unit: Unit.cm),
+            torsoHeight: Measurement(value: 0, unit: Unit.cm),
+            lowerWaist: Measurement(value: 0, unit: Unit.cm),
+            hip: Measurement(value: 0, unit: Unit.cm),
+            inseam: Measurement(value: 0, unit: Unit.cm),
+            legLength: Measurement(value: 0, unit: Unit.cm),
+            height: Measurement(value: 0, unit: Unit.cm),
+          ),
           style: "",
           fit: "",
           currentIndex: 0,
         )) {
-    on<ChangeUnit>(_changeUnit);
-    on<ChangeHeight>(_changeHeight);
+    on<UpdateMeasurement>((event, emit) {
+      final updatedMeasurements = state.measurements.updateMeasurement(
+        event.field,
+        event.value,
+      );
+      emit(state.copyWith(measurements: updatedMeasurements));
+    });
+
     on<SelectFit>(_selectFit);
     on<SelectStyle>(_selectStyle);
     on<IncrementIndex>(_incrementIndex);
-  }
-
-  _changeHeight(ChangeHeight event, Emitter<OnboardingState> emit) {
-    state.selectedUnit == Unit.inch
-        ? emit(state.copyWith(heightIn: event.height))
-        : emit(state.copyWith(heightCm: event.height));
-  }
-
-  _changeUnit(ChangeUnit event, Emitter<OnboardingState> emit) {
-    emit(state.copyWith(selectedUnit: event.selectedUnit));
   }
 
   _selectStyle(SelectStyle event, Emitter<OnboardingState> emit) {

@@ -90,9 +90,9 @@ List<Map> styleList = [
     "title": "WOMENS",
     "value": "women",
   },
-  {
-    "image": AppImages.women,
-    "title": "UNISEX",
-    "value": "unisex",
-  },
+  // {
+  //   "image": AppImages.women,
+  //   "title": "UNISEX",
+  //   "value": "unisex",
+  // },
 ];

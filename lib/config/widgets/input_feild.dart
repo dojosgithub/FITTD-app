@@ -13,7 +13,11 @@ class FittedInputField extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final Widget? suffixIcon;
+  final double? height;
+  final Widget? spacing;
   final String? Function(String?)? validator;
+  final Function(String)? onChanged;
+
   final Widget? prefixIcon; // Add this line
 
   const FittedInputField({
@@ -25,7 +29,10 @@ class FittedInputField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.suffixIcon,
     this.validator,
-    this.prefixIcon, // Include here
+    this.prefixIcon,
+    this.height,
+    this.spacing,
+    this.onChanged,
   });
 
   factory FittedInputField.email({
@@ -127,6 +134,9 @@ class FittedInputField extends StatelessWidget {
     String? Function(String?)? validator,
     Widget? prefixIcon,
     Widget? suffixIcon,
+    Widget? spacing,
+    double? height = 58,
+    Function(String)? onChanged,
     bool obscureText = false,
   }) {
     return FittedInputField(
@@ -138,6 +148,9 @@ class FittedInputField extends StatelessWidget {
       validator: validator,
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
+      height: height,
+      spacing: spacing,
+      onChanged: onChanged,
     );
   }
 
@@ -160,29 +173,33 @@ class FittedInputField extends StatelessWidget {
             height: 20 / 14,
             color: AppColors.tealPrimary,
           ),
-          SpacersVertical.spacer4,
-          TextFormField(
-            controller: controller,
-            obscureText: obscureText,
-            keyboardType: keyboardType,
-            cursorColor: AppColors.orangePrimary,
-            validator: validator,
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: AppTextStyles.poppinsRegular(
-                fontSize: 16,
-                height: 24 / 16,
-                color: AppColors.tealSecondary,
+          spacing ?? SpacersVertical.spacer4,
+          SizedBox(
+            height: height,
+            child: TextFormField(
+              controller: controller,
+              obscureText: obscureText,
+              keyboardType: keyboardType,
+              cursorColor: AppColors.orangePrimary,
+              validator: validator,
+              onChanged: onChanged,
+              decoration: InputDecoration(
+                hintText: hint,
+                hintStyle: AppTextStyles.poppinsRegular(
+                  fontSize: 16,
+                  height: 24 / 16,
+                  color: AppColors.tealSecondary,
+                ),
+                errorMaxLines: 2,
+                border: outlineInputBorder,
+                enabledBorder: outlineInputBorder,
+                errorBorder: outlineInputBorder,
+                focusedBorder: outlineInputBorder,
+                disabledBorder: outlineInputBorder,
+                focusedErrorBorder: outlineInputBorder,
+                prefixIcon: prefixIcon,
+                suffixIcon: suffixIcon,
               ),
-              errorMaxLines: 2,
-              border: outlineInputBorder,
-              enabledBorder: outlineInputBorder,
-              errorBorder: outlineInputBorder,
-              focusedBorder: outlineInputBorder,
-              disabledBorder: outlineInputBorder,
-              focusedErrorBorder: outlineInputBorder,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
             ),
           ),
         ],

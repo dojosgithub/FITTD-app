@@ -2,41 +2,32 @@
 part of 'bloc.dart';
 
 class OnboardingState extends Equatable {
-  final Unit selectedUnit;
-  final num heightCm;
-  final num heightIn;
   final int currentIndex;
   final String style;
   final String fit;
+  final FemaleMeasurementModel measurements;
+
   const OnboardingState({
     required this.currentIndex,
-    required this.selectedUnit,
-    required this.heightCm,
-    required this.heightIn,
     required this.style,
     required this.fit,
+    required this.measurements,
   });
 
   @override
-  // TODO: implement props
-  List<Object?> get props =>
-      [selectedUnit, heightCm, heightIn, style, fit, currentIndex];
+  List<Object?> get props => [style, fit, currentIndex, measurements];
 
   OnboardingState copyWith({
-    Unit? selectedUnit,
-    num? heightCm,
-    num? heightIn,
     String? style,
     String? fit,
     int? currentIndex,
+    FemaleMeasurementModel? measurements,
   }) {
     return OnboardingState(
-      selectedUnit: selectedUnit ?? this.selectedUnit,
-      heightCm: heightCm ?? this.heightCm,
-      heightIn: heightIn ?? this.heightIn,
       style: style ?? this.style,
       fit: fit ?? this.fit,
       currentIndex: currentIndex ?? this.currentIndex,
+      measurements: measurements ?? this.measurements,
     );
   }
 }

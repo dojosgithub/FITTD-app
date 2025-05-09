@@ -45,14 +45,19 @@ class SetHeightWidget extends StatelessWidget {
         ),
         SpacersVertical.spacer28,
         UnitSwitcher(
-          selectedUnit: state.selectedUnit,
+          selectedUnit: state.measurements.height.unit,
         ),
         SpacersVertical.spacer44,
         HeightSliderWidget(
           state: state,
         ),
         SpacersVertical.spacer66,
-        CustomButton(text: 'Next'),
+        CustomButton(
+          text: 'Next',
+          onTap: () {
+            context.read<OnboardingBloc>().add(IncrementIndex());
+          },
+        ),
       ],
     );
   }

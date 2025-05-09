@@ -1,5 +1,7 @@
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
+import 'package:fitted/features/onboarding/data/enums/female_measurement_enum.dart';
+import 'package:fitted/features/onboarding/data/models/female_measurement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wheel_slider/wheel_slider.dart';
@@ -7,6 +9,7 @@ import 'package:wheel_slider/wheel_slider.dart';
 import '../../../../config/colors/colors.dart';
 import '../../bloc/bloc.dart';
 import '../../data/enums/unit_enum.dart';
+import '../../data/models/measurement_model.dart';
 
 class HeightSliderWidget extends StatelessWidget {
   const HeightSliderWidget({
@@ -22,16 +25,14 @@ class HeightSliderWidget extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: state.selectedUnit.name.substring(0, 2),
+                text: state.measurements.height.unit.name,
                 style: AppTextStyles.poppinsLight(
                   fontSize: 18,
                   color: AppColors.tealSecondary,
                 ),
               ),
             ],
-            text: state.selectedUnit == Unit.inch
-                ? state.heightIn.toString()
-                : state.heightCm.toString(),
+            text: state.measurements.height.value.toString(),
             style: AppTextStyles.poppinsLight(
               fontSize: 38,
               color: AppColors.tealSecondary,
@@ -55,17 +56,19 @@ class HeightSliderWidget extends StatelessWidget {
           },
           blendMode: BlendMode.dstIn, // keeps only overlapping parts
           child: WheelSlider(
-            totalCount: state.selectedUnit == Unit.inch ? 107 : 251,
-            initValue: state.selectedUnit == Unit.inch
-                ? state.heightIn
-                : state.heightCm,
+            totalCount: state.measurements.height.unit == Unit.inch ? 107 : 251,
+            initValue: state.measurements.height.value,
             isInfinite: false,
             lineColor: AppColors.tealAccent,
             pointerColor: AppColors.tealAccent,
             onValueChanged: (value) {
               context.read<OnboardingBloc>().add(
-                    ChangeHeight(
-                      height: (value),
+                    UpdateMeasurement(
+                      field: FemaleMeasurementEnum.height,
+                      value: Measurement(
+                        value: value,
+                        unit: state.measurements.height.unit,
+                      ),
                     ),
                   );
             },

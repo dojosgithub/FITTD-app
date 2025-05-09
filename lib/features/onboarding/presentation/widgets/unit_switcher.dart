@@ -1,16 +1,22 @@
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/data/enums/female_measurement_enum.dart';
+import 'package:fitted/features/onboarding/data/models/measurement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../data/enums/unit_enum.dart';
+import '../../data/models/female_measurement_model.dart';
 
 class UnitSwitcher extends StatelessWidget {
   const UnitSwitcher({super.key, required this.selectedUnit});
   final Unit selectedUnit;
   @override
   Widget build(BuildContext context) {
+    final unit = context.select<OnboardingBloc, Unit>(
+      (bloc) => bloc.state.measurements.height.unit,
+    );
     return Container(
       width: 150.w,
       height: 38.h,
@@ -27,7 +33,7 @@ class UnitSwitcher extends StatelessWidget {
           AnimatedAlign(
             duration: Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-            alignment: selectedUnit == Unit.inch
+            alignment: unit == Unit.inch
                 ? Alignment.centerLeft
                 : Alignment.centerRight,
             child: Container(
@@ -51,14 +57,20 @@ class UnitSwitcher extends StatelessWidget {
   }
 
   Widget _buildOption(String label, Unit unit, BuildContext context) {
-    final isSelected = selectedUnit == unit;
+    final currentUnit =
+        context.read<OnboardingBloc>().state.measurements.height.unit;
+    final isSelected = currentUnit == unit;
+
     return Expanded(
       child: GestureDetector(
         onTap: () {
           if (!isSelected) {
+            final currentValue =
+                context.read<OnboardingBloc>().state.measurements.height.value;
             context.read<OnboardingBloc>().add(
-                  ChangeUnit(
-                    selectedUnit: unit,
+                  UpdateMeasurement(
+                    field: FemaleMeasurementEnum.height,
+                    value: Measurement(value: currentValue, unit: unit),
                   ),
                 );
           }

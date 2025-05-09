@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 part of 'bloc.dart';
 
 class OnboardingEvent {}
@@ -7,9 +9,11 @@ class ChangeUnit extends OnboardingEvent {
   ChangeUnit({required this.selectedUnit});
 }
 
-class ChangeHeight extends OnboardingEvent {
-  final num height;
-  ChangeHeight({required this.height});
+class UpdateMeasurement extends OnboardingEvent {
+  final FemaleMeasurementEnum field;
+  final Measurement value;
+
+  UpdateMeasurement({required this.field, required this.value});
 }
 
 class SelectFit extends OnboardingEvent {
