@@ -45,7 +45,9 @@ class SetHeightWidget extends StatelessWidget {
         ),
         SpacersVertical.spacer28,
         UnitSwitcher(
-          selectedUnit: state.measurements.height.unit,
+          selectedUnit: state.style == "men"
+              ? state.maleMeasurementModel.height.unit
+              : state.femaleMeasurementModel.height.unit,
         ),
         SpacersVertical.spacer44,
         HeightSliderWidget(

@@ -4,7 +4,6 @@ import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/features/onboarding/presentation/widgets/female/widget/lower_form.dart';
-import 'package:fitted/features/onboarding/presentation/widgets/female/widget/upper_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,7 +21,7 @@ class FemaleLowerMeasureWidget extends StatelessWidget {
         ),
         SpacersVertical.spacer28,
         AppText.poppinsMedium(
-          "Enter your measurements Lower",
+          "Enter your measurements",
           fontSize: 25,
           height: 32 / 25,
           color: AppColors.tealPrimary,
@@ -39,7 +38,7 @@ class FemaleLowerMeasureWidget extends StatelessWidget {
           ),
         ),
         SpacersVertical.spacer44,
-        LowerForm(),
+        FemaleLowerForm(),
       ],
     );
   }

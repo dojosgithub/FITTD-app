@@ -5,29 +5,34 @@ class OnboardingState extends Equatable {
   final int currentIndex;
   final String style;
   final String fit;
-  final FemaleMeasurementModel measurements;
+  final FemaleMeasurementModel femaleMeasurementModel;
+  final MaleMeasurementModel maleMeasurementModel;
 
-  const OnboardingState({
-    required this.currentIndex,
-    required this.style,
-    required this.fit,
-    required this.measurements,
-  });
+  const OnboardingState(
+      {required this.currentIndex,
+      required this.style,
+      required this.fit,
+      required this.femaleMeasurementModel,
+      required this.maleMeasurementModel});
 
   @override
-  List<Object?> get props => [style, fit, currentIndex, measurements];
+  List<Object?> get props =>
+      [style, fit, currentIndex, femaleMeasurementModel, maleMeasurementModel];
 
   OnboardingState copyWith({
     String? style,
     String? fit,
     int? currentIndex,
-    FemaleMeasurementModel? measurements,
+    FemaleMeasurementModel? femaleMeasurementModel,
+    MaleMeasurementModel? maleMeasurementModel,
   }) {
     return OnboardingState(
       style: style ?? this.style,
       fit: fit ?? this.fit,
       currentIndex: currentIndex ?? this.currentIndex,
-      measurements: measurements ?? this.measurements,
+      femaleMeasurementModel:
+          femaleMeasurementModel ?? this.femaleMeasurementModel,
+      maleMeasurementModel: maleMeasurementModel ?? this.maleMeasurementModel,
     );
   }
 }

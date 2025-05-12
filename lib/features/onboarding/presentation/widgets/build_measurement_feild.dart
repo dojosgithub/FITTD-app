@@ -1,6 +1,5 @@
 import 'package:fitted/config/helper/form_validation/form_validator.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
-import 'package:fitted/features/onboarding/data/enums/female_measurement_enum.dart';
 import 'package:fitted/features/onboarding/data/models/measurement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,14 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/widgets/input_feild.dart';
 import '../../bloc/bloc.dart';
 import '../../data/enums/unit_enum.dart';
-import '../../data/models/female_measurement_model.dart';
 import 'unit_dropdown.dart';
 
 Widget buildMeasurementField({
   required BuildContext context,
   required OnboardingState state,
   required String label,
-  required FemaleMeasurementEnum fieldEnum,
+  required Object fieldEnum,
   required num value,
   required Unit unit,
 }) {
@@ -35,7 +33,7 @@ Widget buildMeasurementField({
     },
     suffixIcon: UnitDropdown(
       selectedUnit: unit,
-      feild: fieldEnum,
+      field: fieldEnum,
       value: value,
     ),
   );

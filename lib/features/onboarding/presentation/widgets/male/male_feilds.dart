@@ -1,41 +1,36 @@
-import 'package:fitted/features/onboarding/data/models/female_measurement_model.dart';
+import 'package:fitted/features/onboarding/data/models/male_measurement_model.dart';
 import '../../../data/enums/male_measurement_enum.dart';
 
 final maleUpperFields = [
   {
-    'label': 'Bust',
-    'enum': MaleMeasurementEnum.bicep,
-    'getter': (FemaleMeasurementModel m) => m.bust,
-  },
-  {
-    'label': 'Band size',
+    'label': 'Chest',
     'enum': MaleMeasurementEnum.chest,
-    'getter': (FemaleMeasurementModel m) => m.bandSize,
+    'getter': (MaleMeasurementModel m) => m.chest,
   },
   {
-    'label': 'Cup size',
-    'enum': MaleMeasurementEnum.thighCircumference,
-    'getter': (FemaleMeasurementModel m) => m.cupSize,
+    'label': 'Shoulder Width',
+    'enum': MaleMeasurementEnum.shoulderWidth,
+    'getter': (MaleMeasurementModel m) => m.shoulderWidth,
   },
-  // {
-  //   'label': 'Cup size',
-  //   'enum': MaleMeasurementEnum.,
-  //   'getter': (FemaleMeasurementModel m) => m.cupSize,
-  // },
+  {
+    'label': 'Bicep',
+    'enum': MaleMeasurementEnum.bicep,
+    'getter': (MaleMeasurementModel m) => m.bicep,
+  },
   {
     'label': 'Sleeves length',
     'enum': MaleMeasurementEnum.sleevesLength,
-    'getter': (FemaleMeasurementModel m) => m.sleevesLength,
+    'getter': (MaleMeasurementModel m) => m.sleevesLength,
   },
   {
     'label': 'Waist',
     'enum': MaleMeasurementEnum.waist,
-    'getter': (FemaleMeasurementModel m) => m.waist,
+    'getter': (MaleMeasurementModel m) => m.waist,
   },
   {
     'label': 'Minimum Torso height',
     'enum': MaleMeasurementEnum.torsoHeight,
-    'getter': (FemaleMeasurementModel m) => m.torsoHeight,
+    'getter': (MaleMeasurementModel m) => m.torsoHeight,
   },
 ];
 
@@ -43,21 +38,26 @@ final maleLowerFields = [
   {
     'label': 'Lower Waist',
     'enum': MaleMeasurementEnum.lowerWaist,
-    'getter': (FemaleMeasurementModel m) => m.lowerWaist,
+    'getter': (MaleMeasurementModel m) => m.lowerWaist,
   },
   {
     'label': 'Hip',
     'enum': MaleMeasurementEnum.hip,
-    'getter': (FemaleMeasurementModel m) => m.hip,
+    'getter': (MaleMeasurementModel m) => m.hip,
   },
   {
     'label': 'Inseam',
     'enum': MaleMeasurementEnum.inseam,
-    'getter': (FemaleMeasurementModel m) => m.inseam,
+    'getter': (MaleMeasurementModel m) => m.inseam,
   },
   {
     'label': 'Leg length',
     'enum': MaleMeasurementEnum.legLength,
-    'getter': (FemaleMeasurementModel m) => m.legLength,
+    'getter': (MaleMeasurementModel m) => m.legLength,
+  },
+  {
+    'label': 'Thigh Circumference',
+    'enum': MaleMeasurementEnum.thighCircumference,
+    'getter': (MaleMeasurementModel m) => m.thighCircumference,
   },
 ];

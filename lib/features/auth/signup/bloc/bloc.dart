@@ -66,11 +66,4 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       seeConfirmPassword: event.seeConfirmPassword,
     ));
   }
-
-  @override
-  void onChange(Change<SignInState> change) {
-    print(change.currentState.isLoading);
-    print(change.currentState.isSuccess);
-    super.onChange(change);
-  }
 }

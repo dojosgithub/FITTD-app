@@ -21,7 +21,7 @@ class FemaleUpperMeasureWidget extends StatelessWidget {
         ),
         SpacersVertical.spacer28,
         AppText.poppinsMedium(
-          "Enter your measurements Upper",
+          "Enter your measurements",
           fontSize: 25,
           height: 32 / 25,
           color: AppColors.tealPrimary,
@@ -38,7 +38,7 @@ class FemaleUpperMeasureWidget extends StatelessWidget {
           ),
         ),
         SpacersVertical.spacer44,
-        UpperForm(),
+        FemaleUpperForm(),
       ],
     );
   }

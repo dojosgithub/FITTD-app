@@ -1,18 +1,16 @@
 import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/data/enums/male_measurement_enum.dart';
+import 'package:fitted/features/onboarding/data/models/male_measurement_model.dart';
 import 'package:fitted/features/onboarding/data/models/measurement_model.dart';
-import 'package:fitted/features/onboarding/presentation/onboarding_view.dart';
-import 'package:fitted/features/onboarding/presentation/widgets/female/female_feilds.dart';
 import 'package:flutter/material.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../data/enums/female_measurement_enum.dart';
-import '../../../../data/models/female_measurement_model.dart';
 import '../../build_measurement_feild.dart';
 import '../male_feilds.dart';
 
-class UpperForm extends StatelessWidget {
-  const UpperForm({super.key});
+class MaleUpperForm extends StatelessWidget {
+  const MaleUpperForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +22,14 @@ class UpperForm extends StatelessWidget {
               context: context,
               state: state,
               label: field['label'] as String,
-              fieldEnum: field['enum'] as FemaleMeasurementEnum,
+              fieldEnum: field['enum'] as MaleMeasurementEnum,
               value: (field['getter'] as Measurement Function(
-                      FemaleMeasurementModel))
-                  .call(state.measurements)
+                      MaleMeasurementModel))
+                  .call(state.maleMeasurementModel)
                   .value,
               unit: (field['getter'] as Measurement Function(
-                      FemaleMeasurementModel))
-                  .call(state.measurements)
+                      MaleMeasurementModel))
+                  .call(state.maleMeasurementModel)
                   .unit,
             ),
             SpacersVertical.spacer18,
@@ -42,8 +40,8 @@ class UpperForm extends StatelessWidget {
               for (final field in maleUpperFields) {
                 final label = field['label'] as String;
                 final getter = field['getter'] as Measurement Function(
-                    FemaleMeasurementModel);
-                final measurement = getter(state.measurements);
+                    MaleMeasurementModel);
+                final measurement = getter(state.maleMeasurementModel);
                 print(
                     '$label: Value = ${measurement.value}, Unit = ${measurement.unit.name}');
               }

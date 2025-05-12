@@ -10,7 +10,7 @@ class ChangeUnit extends OnboardingEvent {
 }
 
 class UpdateMeasurement extends OnboardingEvent {
-  final FemaleMeasurementEnum field;
+  final Object field;
   final Measurement value;
 
   UpdateMeasurement({required this.field, required this.value});

@@ -3,12 +3,12 @@ import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
-import 'package:fitted/features/onboarding/presentation/widgets/female/widget/upper_form.dart';
+import 'package:fitted/features/onboarding/presentation/widgets/male/widget/upper_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class FemaleUpperMeasureWidget extends StatelessWidget {
-  const FemaleUpperMeasureWidget({super.key});
+class MaleUpperMeasureWidget extends StatelessWidget {
+  const MaleUpperMeasureWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class FemaleUpperMeasureWidget extends StatelessWidget {
         ),
         SpacersVertical.spacer28,
         AppText.poppinsMedium(
-          "Enter your measurements Upper",
+          "Enter your measurements",
           fontSize: 25,
           height: 32 / 25,
           color: AppColors.tealPrimary,
@@ -38,7 +38,7 @@ class FemaleUpperMeasureWidget extends StatelessWidget {
           ),
         ),
         SpacersVertical.spacer44,
-        UpperForm(),
+        MaleUpperForm(),
       ],
     );
   }

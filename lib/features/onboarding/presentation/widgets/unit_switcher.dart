@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../data/enums/unit_enum.dart';
-import '../../data/models/female_measurement_model.dart';
 
 class UnitSwitcher extends StatelessWidget {
   const UnitSwitcher({super.key, required this.selectedUnit});
   final Unit selectedUnit;
   @override
   Widget build(BuildContext context) {
-    final unit = context.select<OnboardingBloc, Unit>(
-      (bloc) => bloc.state.measurements.height.unit,
-    );
+    final unit = context.select<OnboardingBloc, Unit>((bloc) =>
+        bloc.state.style == "men"
+            ? bloc.state.maleMeasurementModel.height.unit
+            : bloc.state.femaleMeasurementModel.height.unit);
     return Container(
       width: 150.w,
       height: 38.h,
@@ -57,16 +57,19 @@ class UnitSwitcher extends StatelessWidget {
   }
 
   Widget _buildOption(String label, Unit unit, BuildContext context) {
-    final currentUnit =
-        context.read<OnboardingBloc>().state.measurements.height.unit;
+    final state = context.read<OnboardingBloc>().state;
+    final currentUnit = state.style == "men"
+        ? state.maleMeasurementModel.height.unit
+        : state.femaleMeasurementModel.height.unit;
     final isSelected = currentUnit == unit;
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
           if (!isSelected) {
-            final currentValue =
-                context.read<OnboardingBloc>().state.measurements.height.value;
+            final currentValue = state.style == "men"
+                ? state.maleMeasurementModel.height.value
+                : state.femaleMeasurementModel.height.value;
             context.read<OnboardingBloc>().add(
                   UpdateMeasurement(
                     field: FemaleMeasurementEnum.height,

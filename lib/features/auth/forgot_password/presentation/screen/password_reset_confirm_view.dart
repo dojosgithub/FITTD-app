@@ -73,16 +73,6 @@ class PasswordResetConfirmView extends StatelessWidget {
                       : CustomButton(
                           text: "Continue",
                           onTap: () {
-                            print(context
-                                .read<ForgotPasswordBloc>()
-                                .state
-                                .emailController
-                                .text);
-                            print(context
-                                .read<ForgotPasswordBloc>()
-                                .state
-                                .passwordController
-                                .text);
                             context.read<LoginBloc>().add(
                                   LoginButtonPressed(
                                     email: context

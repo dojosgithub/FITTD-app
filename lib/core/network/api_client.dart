@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:fitted/core/constants/app_constants.dart';
+import 'package:fitted/core/network/network_info.dart'; // <-- Import NetworkInfo
 
 class ApiClient {
   final Dio _dio;
+  final NetworkInfo networkInfo; // <-- Injected Dependency
 
-  ApiClient(dio)
-      : _dio = Dio(BaseOptions(
+  ApiClient({
+    required this.networkInfo,
+  }) : _dio = Dio(BaseOptions(
           baseUrl: AppConstants.baseUrl,
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
@@ -16,9 +19,10 @@ class ApiClient {
         ));
 
   Future<Response> post(String endpoint, {Map<String, dynamic>? data}) async {
-    // if (!await NetworkUtils.hasInternetConnection()) {
-    //   return const Left(NetworkFailure("No internet connection"));
-    // }
+    if (!await networkInfo.isConnected) {
+      throw Exception("No internet connection");
+    }
+
     try {
       final response = await _dio.post(endpoint, data: data);
       return response;

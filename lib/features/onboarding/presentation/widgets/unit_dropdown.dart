@@ -1,23 +1,21 @@
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
-import 'package:fitted/features/onboarding/data/enums/female_measurement_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/colors/colors.dart';
 import '../../bloc/bloc.dart';
 import '../../data/enums/unit_enum.dart';
-import '../../data/models/female_measurement_model.dart';
 import '../../data/models/measurement_model.dart';
 
 class UnitDropdown extends StatelessWidget {
   final Unit selectedUnit;
-  final FemaleMeasurementEnum feild;
+  final Object field; // Generic to accept both Female & Male enums
   final num value;
 
   const UnitDropdown({
     super.key,
     required this.selectedUnit,
-    required this.feild,
+    required this.field,
     required this.value,
   });
 
@@ -48,15 +46,17 @@ class UnitDropdown extends StatelessWidget {
           isExpanded: true,
           underline: SizedBox(),
           onChanged: (Unit? newValue) {
-            context.read<OnboardingBloc>().add(
-                  UpdateMeasurement(
-                    field: feild,
-                    value: Measurement(
-                      value: value,
-                      unit: newValue!,
+            if (newValue != null) {
+              context.read<OnboardingBloc>().add(
+                    UpdateMeasurement(
+                      field: field, // Will accept any enum
+                      value: Measurement(
+                        value: value,
+                        unit: newValue,
+                      ),
                     ),
-                  ),
-                );
+                  );
+            }
           },
           items: Unit.values.map((unit) {
             return DropdownMenuItem<Unit>(

@@ -46,8 +46,8 @@ class ChooseYourFitWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () => context.read<OnboardingBloc>().add(
-                        SelectStyle(
-                          style: fitList[index]['value'],
+                        SelectFit(
+                          fit: fitList[index]['value'],
                         ),
                       ),
                   child: Container(
