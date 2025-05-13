@@ -17,8 +17,7 @@ class LoginRepositoryImpl implements LoginRepository {
       final responseModel = await dataSource.login(model);
       return Right(
         LoginResponse(
-          id: responseModel.data?.user?.id,
-          isVerified: responseModel.data?.user?.isVerified,
+          user: responseModel.data?.user,
           accessToken: responseModel.data?.tokens?.accessToken,
         ),
       );

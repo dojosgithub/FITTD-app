@@ -8,7 +8,7 @@ import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/auth/forgot_password/bloc/bloc.dart';
-import 'package:fitted/features/auth/login/bloc/bloc.dart';
+import 'package:fitted/features/auth/login/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/verify_otp/data/enums/otp_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

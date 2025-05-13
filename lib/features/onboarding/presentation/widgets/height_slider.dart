@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wheel_slider/wheel_slider.dart';
 
 import '../../../../config/colors/colors.dart';
-import '../../bloc/bloc.dart';
+import '../bloc/bloc.dart';
 import '../../data/enums/male_measurement_enum.dart';
 import '../../data/enums/unit_enum.dart';
 import '../../data/models/measurement_model.dart';
@@ -19,7 +19,7 @@ class HeightSliderWidget extends StatelessWidget {
   final OnboardingState state;
   @override
   Widget build(BuildContext context) {
-    final bool isMale = state.style == "men";
+    final bool isMale = state.style == "male";
 
     if (isMale) {
       final measurement = state.maleMeasurementModel;

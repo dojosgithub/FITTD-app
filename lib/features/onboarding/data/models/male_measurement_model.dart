@@ -73,7 +73,7 @@ class MaleMeasurementModel extends Equatable {
       bicep: bicep ?? this.bicep,
       shoulderWidth: shoulderWidth ?? this.shoulderWidth,
       lowerWaist: lowerWaist ?? this.lowerWaist,
-      thighCircumference: thighCircumference ?? this.lowerWaist,
+      thighCircumference: thighCircumference ?? this.thighCircumference,
     );
   }
 

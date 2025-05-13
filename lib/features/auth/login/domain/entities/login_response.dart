@@ -1,10 +1,10 @@
+import '../../data/models/login_response_model.dart';
+
 class LoginResponse {
   LoginResponse({
-    required this.id,
+    required this.user,
     required this.accessToken,
-    required this.isVerified,
   });
   final String? accessToken;
-  final String? id;
-  final bool? isVerified;
+  final User? user;
 }

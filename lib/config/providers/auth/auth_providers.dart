@@ -1,9 +1,9 @@
 import 'package:fitted/core/di/service_locator.dart';
 import 'package:fitted/features/auth/forgot_password/bloc/bloc.dart';
-import 'package:fitted/features/auth/login/bloc/bloc.dart';
-import 'package:fitted/features/auth/signup/bloc/bloc.dart';
-import 'package:fitted/features/auth/verify_otp/bloc/bloc.dart';
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/auth/login/presentation/bloc/bloc.dart';
+import 'package:fitted/features/auth/signup/presentation/bloc/bloc.dart';
+import 'package:fitted/features/auth/verify_otp/presentation/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthProviders {

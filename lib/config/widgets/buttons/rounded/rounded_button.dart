@@ -6,33 +6,37 @@ class RoundedButton extends StatelessWidget {
   const RoundedButton({
     super.key,
     this.child,
+    this.onTap,
   });
 
   final Widget? child;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 48.w,
-        height: 48.h,
-        padding: EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: AppColors.grey,
-            width: 0.1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.black.withValues(
-                alpha: 0.04,
-              ),
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
+      width: 48.w,
+      height: 48.h,
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: AppColors.grey,
+          width: 0.1,
         ),
-        child: child);
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withValues(
+              alpha: 0.04,
+            ),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: GestureDetector(onTap: onTap, child: child),
+    );
   }
 }

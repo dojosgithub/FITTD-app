@@ -27,3 +27,5 @@ class SelectStyle extends OnboardingEvent {
 }
 
 class IncrementIndex extends OnboardingEvent {}
+
+class OnboardUser extends OnboardingEvent {}

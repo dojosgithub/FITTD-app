@@ -1,8 +1,8 @@
 import 'package:fitted/features/onboarding/data/enums/unit_enum.dart';
 
 class Measurement {
-  num value;
-  Unit unit;
+  final num value;
+  final Unit unit;
 
   Measurement({required this.value, required this.unit});
 

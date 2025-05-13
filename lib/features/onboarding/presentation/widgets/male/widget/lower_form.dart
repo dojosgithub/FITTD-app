@@ -1,4 +1,4 @@
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:fitted/features/onboarding/data/models/male_measurement_model.dart';
 import 'package:fitted/features/onboarding/data/models/measurement_model.dart';
 import 'package:fitted/features/onboarding/presentation/widgets/build_measurement_feild.dart';
@@ -35,16 +35,9 @@ class MaleLowerForm extends StatelessWidget {
             SpacersVertical.spacer18,
           ],
           CustomButton(
-            text: "Next",
+            text: "Finish ",
             onTap: () {
-              for (final field in maleLowerFields) {
-                final label = field['label'] as String;
-                final getter = field['getter'] as Measurement Function(
-                    MaleMeasurementModel);
-                final measurement = getter(state.maleMeasurementModel);
-                print(
-                    '$label: Value = ${measurement.value}, Unit = ${measurement.unit.name}');
-              }
+              context.read<OnboardingBloc>().add(OnboardUser());
             },
           ),
           SpacersVertical.spacer28,

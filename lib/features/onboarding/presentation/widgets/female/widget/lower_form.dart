@@ -1,4 +1,4 @@
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:fitted/features/onboarding/data/models/measurement_model.dart';
 import 'package:fitted/features/onboarding/presentation/widgets/build_measurement_feild.dart';
 import 'package:fitted/features/onboarding/presentation/widgets/female/female_feilds.dart';
@@ -35,8 +35,10 @@ class FemaleLowerForm extends StatelessWidget {
             SpacersVertical.spacer18,
           ],
           CustomButton(
-            text: "Next",
-            onTap: () {},
+            text: "Finish ",
+            onTap: () {
+              context.read<OnboardingBloc>().add(OnboardUser());
+            },
           ),
           SpacersVertical.spacer28,
         ],

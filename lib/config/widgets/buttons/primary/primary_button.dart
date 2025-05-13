@@ -88,6 +88,50 @@ class CustomButton extends StatelessWidget {
     );
   }
 
+  factory CustomButton.icon({
+    required String text,
+    required String icon,
+    required Size iconSize,
+    VoidCallback? onTap,
+    double? width,
+    double? height,
+    TextStyle? textStyle,
+    Color? backgroundColor,
+    BorderRadiusGeometry? borderRadius,
+    AlignmentGeometry alignment = Alignment.center,
+  }) {
+    return CustomButton(
+      width: width,
+      height: height,
+      onTap: onTap,
+      text: text,
+      textStyle: textStyle,
+      borderRadius: borderRadius ?? BorderRadius.circular(100.r),
+      alignment: alignment,
+      backgroundColor: backgroundColor ?? AppColors.orangePrimary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 8.w,
+        children: [
+          // Spacing between icon and text
+          Text(
+            text,
+            style: textStyle ??
+                AppTextStyles.poppinsSemiBold(
+                  fontSize: 16,
+                  color: AppColors.white, // Text color for filled button
+                  height: 24 / 16,
+                ),
+          ),
+          FittedImageProvider.localSvg(
+            imagePath: icon,
+            imageSize: iconSize,
+          ),
+        ],
+      ),
+    );
+  }
+
   // Factory constructor for Icon and OutlineButton with Row (Icon + Text)
   factory CustomButton.iconAndOutline({
     required String text,

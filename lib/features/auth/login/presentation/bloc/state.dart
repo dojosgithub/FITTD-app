@@ -10,6 +10,7 @@ class LoginState extends Equatable {
   final bool rememberMe;
   final bool seePassword;
   final String errorMessage;
+  final bool hasMeasurements;
 
   const LoginState({
     required this.email,
@@ -21,6 +22,7 @@ class LoginState extends Equatable {
     required this.rememberMe,
     required this.seePassword,
     required this.errorMessage,
+    required this.hasMeasurements,
   });
 
   @override
@@ -33,7 +35,8 @@ class LoginState extends Equatable {
         showVerfication,
         errorMessage,
         seePassword,
-        rememberMe
+        rememberMe,
+        hasMeasurements
       ];
 
   LoginState copyWith({
@@ -45,6 +48,7 @@ class LoginState extends Equatable {
     bool? showVerfication,
     bool? seePassword,
     bool? rememberMe,
+    bool? hasMeasurements,
     String? errorMessage,
   }) {
     return LoginState(
@@ -57,6 +61,7 @@ class LoginState extends Equatable {
       rememberMe: rememberMe ?? this.rememberMe,
       seePassword: seePassword ?? this.seePassword,
       showVerfication: showVerfication ?? this.showVerfication,
+      hasMeasurements: hasMeasurements ?? this.hasMeasurements,
     );
   }
 }

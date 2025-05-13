@@ -21,6 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           errorMessage: '',
           showVerfication: false,
           seePassword: true,
+          hasMeasurements: false,
         )) {
     on<LoginButtonPressed>(_onLoginButtonPressed);
     on<LoginRememberMeChanged>(_onLoginRememberMeChanged);
@@ -57,11 +58,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       },
       (response) {
         SharedPrefsStorage.setToken(response.accessToken!);
-        SharedPrefsStorage.setUserId(response.id!);
-        print("object");
+        SharedPrefsStorage.setUserId(response.user!.id!);
+
         emit(state.copyWith(
           isLoading: false,
           isSuccess: true,
+          hasMeasurements: response.user?.measurements == null ? false : true,
         ));
       },
     );

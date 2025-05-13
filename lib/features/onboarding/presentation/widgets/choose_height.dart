@@ -4,7 +4,7 @@ import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:fitted/features/onboarding/presentation/widgets/height_slider.dart';
 import 'package:fitted/features/onboarding/presentation/widgets/unit_switcher.dart';
 import 'package:flutter/material.dart';
@@ -25,27 +25,27 @@ class SetHeightWidget extends StatelessWidget {
           imageSize: Size(245.w, 231.h),
           boxFit: BoxFit.cover,
         ),
-        SpacersVertical.spacer22,
+        SpacersVertical.spacer20,
         AppText.poppinsMedium(
           "How tall are you?",
           fontSize: 25,
           height: 32 / 25,
           color: AppColors.tealPrimary,
         ),
-        SpacersVertical.spacer16,
+        SpacersVertical.spacer18,
         SizedBox(
           width: 370.w,
           child: AppText.poppinsRegular(
-            "Enter your exact height in ft - it will help us to pick the best clothes for you.",
+            "Enter your height",
             fontSize: 16,
             height: 24 / 16,
             color: AppColors.tealSecondary,
             textAlign: TextAlign.center,
           ),
         ),
-        SpacersVertical.spacer28,
+        SpacersVertical.spacer50,
         UnitSwitcher(
-          selectedUnit: state.style == "men"
+          selectedUnit: state.style == "male"
               ? state.maleMeasurementModel.height.unit
               : state.femaleMeasurementModel.height.unit,
         ),
@@ -53,7 +53,7 @@ class SetHeightWidget extends StatelessWidget {
         HeightSliderWidget(
           state: state,
         ),
-        SpacersVertical.spacer66,
+        SpacersVertical.spacer64,
         CustomButton(
           text: 'Next',
           onTap: () {

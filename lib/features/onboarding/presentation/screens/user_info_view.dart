@@ -1,16 +1,16 @@
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'widgets/choose_height.dart';
-import 'widgets/choose_your_fit.dart';
-import 'widgets/choose_your_style.dart';
-import 'widgets/female/enter_measurements_lower.dart';
-import 'widgets/female/enter_measurements_upper.dart';
-import 'widgets/male/enter_measurements_lower.dart';
-import 'widgets/male/enter_measurements_upper.dart';
+import '../widgets/choose_height.dart';
+import '../widgets/choose_your_fit.dart';
+import '../widgets/choose_your_style.dart';
+import '../widgets/female/enter_measurements_lower.dart';
+import '../widgets/female/enter_measurements_upper.dart';
+import '../widgets/male/enter_measurements_lower.dart';
+import '../widgets/male/enter_measurements_upper.dart';
 
 class UserInfoView extends StatelessWidget {
   const UserInfoView({super.key});
@@ -40,10 +40,10 @@ class UserInfoView extends StatelessWidget {
       const ChooseYourStyleWidget(),
       const ChooseYourFitWidget(),
       const SetHeightWidget(),
-      if (state.style == "men") ...[
+      if (state.style == "male") ...[
         const MaleUpperMeasureWidget(),
         const MaleLowerMeasureWidget(),
-      ] else if (state.style == "women") ...[
+      ] else if (state.style == "female") ...[
         const FemaleUpperMeasureWidget(),
         const FemaleLowerMeasureWidget(),
       ],
@@ -54,7 +54,7 @@ class UserInfoView extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(
         top: 82.h,
-        bottom: state.currentIndex != 2 ? 83 : 28,
+        bottom: state.currentIndex != 2 ? 80 : 28,
       ),
       width: 1.sw,
       height: 6,

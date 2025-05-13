@@ -4,7 +4,7 @@ import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
-import 'package:fitted/features/auth/signup/bloc/bloc.dart';
+import 'package:fitted/features/auth/signup/presentation/bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

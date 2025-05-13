@@ -17,25 +17,27 @@ class FittedInputField extends StatelessWidget {
   final Widget? spacing;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
+  final double? width;
 
   final Widget? prefixIcon; // Add this line
 
-  const FittedInputField({
-    super.key,
-    required this.label,
-    this.hint,
-    this.controller,
-    this.obscureText = false,
-    this.keyboardType = TextInputType.text,
-    this.suffixIcon,
-    this.validator,
-    this.prefixIcon,
-    this.height,
-    this.spacing,
-    this.onChanged,
-  });
+  const FittedInputField(
+      {super.key,
+      required this.label,
+      this.hint,
+      this.controller,
+      this.obscureText = false,
+      this.keyboardType = TextInputType.text,
+      this.suffixIcon,
+      this.validator,
+      this.prefixIcon,
+      this.height,
+      this.spacing,
+      this.onChanged,
+      this.width});
 
   factory FittedInputField.email({
+    double? width,
     required String label,
     String? hint,
     TextEditingController? controller,
@@ -46,10 +48,12 @@ class FittedInputField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.emailAddress,
       validator: InputValidators.email(),
+      width: width,
     );
   }
 
   factory FittedInputField.password({
+    double? width,
     required String label,
     String? hint,
     required bool isHidden,
@@ -72,10 +76,12 @@ class FittedInputField extends StatelessWidget {
       ),
       validator:
           isLogin ? InputValidators.minLength(2) : InputValidators.password(),
+      width: width,
     );
   }
 
   factory FittedInputField.phone({
+    double? width,
     required String label,
     String? hint,
     TextEditingController? controller,
@@ -86,10 +92,12 @@ class FittedInputField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.phone,
       validator: InputValidators.phone(),
+      width: width,
     );
   }
 
   factory FittedInputField.confirmPassword({
+    double? width,
     required String label,
     String? hint,
     required bool isHidden,
@@ -110,23 +118,28 @@ class FittedInputField extends StatelessWidget {
         onPressed: onToggle,
       ),
       validator: InputValidators.confirmPassword(originalController),
+      width: width,
     );
   }
 
-  factory FittedInputField.basic(
-      {required String label,
-      String? hint,
-      TextEditingController? controller,
-      String? Function(String?)? validator}) {
+  factory FittedInputField.basic({
+    required String label,
+    String? hint,
+    TextEditingController? controller,
+    String? Function(String?)? validator,
+    double? width,
+  }) {
     return FittedInputField(
       label: label,
       hint: hint ?? 'Enter your $label',
       controller: controller,
       keyboardType: TextInputType.text,
       validator: validator,
+      width: width,
     );
   }
   factory FittedInputField.withIcon({
+    double? width,
     required String label,
     String? hint,
     TextEditingController? controller,
@@ -151,6 +164,7 @@ class FittedInputField extends StatelessWidget {
       height: height,
       spacing: spacing,
       onChanged: onChanged,
+      width: width,
     );
   }
 
@@ -163,7 +177,7 @@ class FittedInputField extends StatelessWidget {
       ),
     );
     return SizedBox(
-      width: 342.w,
+      width: width ?? 342.w,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

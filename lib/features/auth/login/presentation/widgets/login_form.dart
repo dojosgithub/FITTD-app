@@ -4,7 +4,7 @@ import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
-import 'package:fitted/features/auth/login/bloc/bloc.dart';
+import 'package:fitted/features/auth/login/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/login/presentation/widgets/login_buttons.dart';
 import 'package:fitted/features/auth/verify_otp/data/enums/otp_enum.dart';
 import 'package:flutter/material.dart';
@@ -23,17 +23,21 @@ class LoginFormWidget extends StatelessWidget {
       key: formKey,
       child: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state.isSuccess) {
-            context.pushNamed(
+          if (state.isSuccess && state.hasMeasurements) {
+            context.pushReplacementNamed(
               AppRoutesEnum.home.name,
             );
           } else if (state.isError && state.showVerfication) {
-            context.pushNamed(
+            context.pushReplacementNamed(
               AppRoutesEnum.confirmOtp.name,
               queryParameters: {
                 'email': state.email.text,
-                'context': OtpContextType.signUp.name,
+                'context': OtpContextType.login.name,
               },
+            );
+          } else if (state.isSuccess && !state.hasMeasurements) {
+            context.pushReplacementNamed(
+              AppRoutesEnum.userInfoView.name,
             );
           } else if (state.isError) {
             ToastUtil.showToast(

@@ -1,6 +1,6 @@
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/widgets/app_text.dart';
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:fitted/features/onboarding/data/enums/female_measurement_enum.dart';
 import 'package:fitted/features/onboarding/data/models/measurement_model.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class UnitSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final unit = context.select<OnboardingBloc, Unit>((bloc) =>
-        bloc.state.style == "men"
+        bloc.state.style == "male"
             ? bloc.state.maleMeasurementModel.height.unit
             : bloc.state.femaleMeasurementModel.height.unit);
     return Container(
@@ -58,7 +58,7 @@ class UnitSwitcher extends StatelessWidget {
 
   Widget _buildOption(String label, Unit unit, BuildContext context) {
     final state = context.read<OnboardingBloc>().state;
-    final currentUnit = state.style == "men"
+    final currentUnit = state.style == "male"
         ? state.maleMeasurementModel.height.unit
         : state.femaleMeasurementModel.height.unit;
     final isSelected = currentUnit == unit;
@@ -67,7 +67,7 @@ class UnitSwitcher extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           if (!isSelected) {
-            final currentValue = state.style == "men"
+            final currentValue = state.style == "male"
                 ? state.maleMeasurementModel.height.value
                 : state.femaleMeasurementModel.height.value;
             context.read<OnboardingBloc>().add(

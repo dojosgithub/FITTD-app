@@ -1,4 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:fitted/core/network/token_provider.dart';
+import 'package:fitted/features/onboarding/data/datasources/onboarding_remote_datasources.dart';
+import 'package:fitted/features/onboarding/domain/repository/onboarding_repository.dart';
+import 'package:fitted/features/onboarding/domain/repository/onboarding_repositoy_impl.dart';
+import 'package:fitted/features/onboarding/domain/usecase/onboarding_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import '../network/api_client.dart';
@@ -23,11 +28,11 @@ import '../../features/auth/forgot_password/domain/repository/forgot_password_re
 import '../../features/auth/forgot_password/domain/repository/forgot_password_repository.dart';
 import '../../features/auth/forgot_password/domain/usecase/forgot_password_usecase.dart';
 
-import '../../features/auth/login/bloc/bloc.dart';
-import '../../features/auth/signup/bloc/bloc.dart';
-import '../../features/auth/verify_otp/bloc/bloc.dart';
+import '../../features/auth/login/presentation/bloc/bloc.dart';
+import '../../features/auth/signup/presentation/bloc/bloc.dart';
+import '../../features/auth/verify_otp/presentation/bloc/bloc.dart';
 import '../../features/auth/forgot_password/bloc/bloc.dart';
-import '../../features/onboarding/bloc/bloc.dart';
+import '../../features/onboarding/presentation/bloc/bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -36,9 +41,12 @@ Future<void> init() async {
   sl.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(Connectivity()),
   );
+  sl.registerLazySingleton<TokenProvider>(
+    () => TokenProvider(),
+  );
 
   sl.registerLazySingleton<ApiClient>(
-    () => ApiClient(networkInfo: sl()),
+    () => ApiClient(networkInfo: sl(), tokenProvider: sl()),
   );
 
   // Data sources
@@ -54,6 +62,9 @@ Future<void> init() async {
   sl.registerLazySingleton<ForgotPasswordRemoteDatasource>(
     () => ForgotPasswordRemoteDatasourceImpl(sl()),
   );
+  sl.registerLazySingleton<OnboardingRemoteDataSource>(
+    () => OnboardingRemoteDataSourceImpl(sl()),
+  );
 
   // Repositories
   sl.registerLazySingleton<LoginRepository>(
@@ -68,6 +79,9 @@ Future<void> init() async {
   sl.registerLazySingleton<ForgotPasswordRepository>(
     () => ForgotPasswordRepositoryImpl(sl()),
   );
+  sl.registerLazySingleton<OnboardingRepository>(
+    () => OnboardingRepositoryImpl(sl()),
+  );
 
   // UseCases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
@@ -76,6 +90,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => VerifyEmailOtpUseCase(sl()));
   sl.registerLazySingleton(() => ForgotPasswordUsecase(sl()));
   sl.registerLazySingleton(() => ChangePasswordUsecase(sl()));
+  sl.registerLazySingleton(() => OnboardUserUseCase(sl()));
 
   // Blocs
   sl.registerFactory(() => LoginBloc(loginUseCase: sl()));
@@ -88,5 +103,5 @@ Future<void> init() async {
         forgotPasswordUsecase: sl(),
         changePasswordUsecase: sl(),
       ));
-  sl.registerFactory(() => OnboardingBloc());
+  sl.registerFactory(() => OnboardingBloc(onboardUserUseCase: sl()));
 }

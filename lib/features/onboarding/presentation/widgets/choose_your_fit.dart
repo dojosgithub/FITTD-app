@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../bloc/bloc.dart';
+import '../bloc/bloc.dart';
 
 class ChooseYourFitWidget extends StatelessWidget {
   const ChooseYourFitWidget({
@@ -16,6 +16,7 @@ class ChooseYourFitWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 94.h,
       children: [
         AppText.poppinsMedium(
           "Choose your fit",
@@ -23,18 +24,6 @@ class ChooseYourFitWidget extends StatelessWidget {
           height: 32 / 25,
           color: AppColors.tealPrimary,
         ),
-        SpacersVertical.spacer18,
-        SizedBox(
-          width: 370.w,
-          child: AppText.poppinsRegular(
-            "Enter your exact height in ft - it will help us to pick the best clothes for you.",
-            fontSize: 16,
-            height: 24 / 16,
-            color: AppColors.tealSecondary,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        SpacersVertical.spacer30,
         SizedBox(
           width: 342.w,
           child: ListView.separated(

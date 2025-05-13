@@ -111,6 +111,9 @@ class SpacersVertical {
   static SizedBox spacer40 = SizedBox(
     height: 40.0.h,
   );
+  static SizedBox spacer42 = SizedBox(
+    height: 42.0.h,
+  );
   static SizedBox spacer44 = SizedBox(
     height: 44.0.h,
   );
@@ -119,6 +122,9 @@ class SpacersVertical {
   );
   static SizedBox spacer48 = SizedBox(
     height: 48.0.h,
+  );
+  static SizedBox spacer50 = SizedBox(
+    height: 50.0.h,
   );
   static SizedBox spacer56 = SizedBox(
     height: 56.0.h,

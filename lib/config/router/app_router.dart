@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static final router = GoRouter(
-    initialLocation: AppRoutesEnum.onboarding.path,
+    initialLocation: AppRoutesEnum.profile.path,
     routes: [
       ...AppRoutes.routes,
     ],

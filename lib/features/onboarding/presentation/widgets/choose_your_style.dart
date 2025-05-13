@@ -2,7 +2,7 @@ import 'package:fitted/config/assets/images.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,12 +83,12 @@ List<Map> styleList = [
   {
     "image": AppImages.men,
     "title": "MENS",
-    "value": "men",
+    "value": "male",
   },
   {
     "image": AppImages.women,
     "title": "WOMENS",
-    "value": "women",
+    "value": "female",
   },
   // {
   //   "image": AppImages.women,

@@ -6,7 +6,7 @@ import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
-import 'package:fitted/features/auth/verify_otp/bloc/bloc.dart';
+import 'package:fitted/features/auth/verify_otp/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/widgets/back_to_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,7 +86,12 @@ class ConfirmOtpView extends StatelessWidget {
                     if (state.isValid) {
                       switch (contextType) {
                         case OtpContextType.signUp:
-                          context.pushReplacementNamed(AppRoutesEnum.home.name);
+                          context
+                              .pushReplacementNamed(AppRoutesEnum.login.name);
+                          break;
+                        case OtpContextType.login:
+                          context.pushReplacementNamed(
+                              AppRoutesEnum.userInfoView.name);
                           break;
                         case OtpContextType.resetPassword:
                           context.pushReplacementNamed(
@@ -183,6 +188,8 @@ class ConfirmOtpView extends StatelessWidget {
   String _getButtonText(OtpContextType type) {
     switch (type) {
       case OtpContextType.signUp:
+        return 'Verify Account';
+      case OtpContextType.login:
         return 'Verify Account';
       case OtpContextType.resetPassword:
         return 'Reset Password';

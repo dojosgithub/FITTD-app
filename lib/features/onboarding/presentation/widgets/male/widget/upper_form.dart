@@ -1,4 +1,4 @@
-import 'package:fitted/features/onboarding/bloc/bloc.dart';
+import 'package:fitted/features/onboarding/presentation/bloc/bloc.dart';
 import 'package:fitted/features/onboarding/data/enums/male_measurement_enum.dart';
 import 'package:fitted/features/onboarding/data/models/male_measurement_model.dart';
 import 'package:fitted/features/onboarding/data/models/measurement_model.dart';
@@ -37,14 +37,6 @@ class MaleUpperForm extends StatelessWidget {
           CustomButton(
             text: "Next",
             onTap: () {
-              for (final field in maleUpperFields) {
-                final label = field['label'] as String;
-                final getter = field['getter'] as Measurement Function(
-                    MaleMeasurementModel);
-                final measurement = getter(state.maleMeasurementModel);
-                print(
-                    '$label: Value = ${measurement.value}, Unit = ${measurement.unit.name}');
-              }
               context.read<OnboardingBloc>().add(IncrementIndex());
             },
           ),

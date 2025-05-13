@@ -4,7 +4,7 @@ import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
-import 'package:fitted/features/auth/signup/bloc/bloc.dart';
+import 'package:fitted/features/auth/signup/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/signup/presentation/widgets/signup_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
