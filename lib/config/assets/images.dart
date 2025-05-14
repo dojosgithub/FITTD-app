@@ -10,4 +10,6 @@ class AppImages {
   static const String loose = '${baseUrl}loose$extension';
   static const String tall = '${baseUrl}tall$extension';
   static const String measurement = '${baseUrl}measurement$extension';
+  static const String female = '${baseUrl}female$extension';
+  static const String male = '${baseUrl}male$extension';
 }

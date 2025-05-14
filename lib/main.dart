@@ -1,10 +1,10 @@
 import 'package:fitted/config/providers/app_providers.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/config/theme/app_theme.dart';
+import 'package:fitted/features/measurement/presentation/screen/size_recommendation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'config/router/app_router.dart';
 import 'core/di/service_locator.dart';
 
 void main() async {
@@ -26,10 +26,15 @@ class MyApp extends StatelessWidget {
         providers: [
           ...AppProviders.getProviders(),
         ],
-        child: MaterialApp.router(
+        // child: MaterialApp.router(
+        // debugShowCheckedModeBanner: false,
+        // theme: AppThemeData.appTheme,
+        //   routerConfig: AppRouter.router,
+        // ),
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppThemeData.appTheme,
-          routerConfig: AppRouter.router,
+          home: SizeRecommendationView(),
         ),
       ),
     );

@@ -11,4 +11,5 @@ class AppColors {
   static const Color tealSecondary = Color(0xFF789096);
   static const Color tealAccent = Color(0xFF103037);
   static const Color deepBurgundy = Color(0xFF14060B);
+  static const Color charcoal = Color(0xFF0F1413);
 }
