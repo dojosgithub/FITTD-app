@@ -5,11 +5,12 @@ import 'package:fitted/features/auth/forgot_password/presentation/screen/forgot_
 import 'package:fitted/features/auth/forgot_password/presentation/screen/password_reset_confirm_view.dart';
 import 'package:fitted/features/auth/login/presentation/screens/login_view.dart';
 import 'package:fitted/features/auth/forgot_password/presentation/screen/new_password_view.dart';
-import 'package:fitted/features/home/presentation/home_view.dart';
+import 'package:fitted/features/main/presentation/main_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/size_preview_view.dart';
 import 'package:fitted/features/onboarding/presentation/screens/onboarding_view.dart';
 import 'package:fitted/features/auth/signup/presentation/screens/signup_view.dart';
 import 'package:fitted/features/onboarding/presentation/screens/splash_view.dart';
-import 'package:fitted/features/onboarding/presentation/screens/user_info_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/user_info_view.dart';
 import 'package:fitted/features/profile/presentation/screens/profile_view.dart';
 import 'package:fitted/features/settings/dialogs/delete_dialog.dart';
 import 'package:fitted/features/settings/dialogs/log_out_dialog.dart';
@@ -82,10 +83,10 @@ class AppRoutes {
       ),
     ),
     GoRoute(
-      path: AppRoutesEnum.home.path,
-      name: AppRoutesEnum.home.name,
+      path: AppRoutesEnum.main.path,
+      name: AppRoutesEnum.main.name,
       pageBuilder: (context, state) => buildTransitionPage(
-        child: HomeView(),
+        child: MainView(),
       ),
     ),
     GoRoute(
@@ -130,6 +131,13 @@ class AppRoutes {
         builder: (_) => LogOutDialog(),
       ),
     ),
+    GoRoute(
+      path: AppRoutesEnum.sizePreview.path,
+      name: AppRoutesEnum.sizePreview.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: SizePreviewView(),
+      ),
+    ),
   ];
 }
 
@@ -143,11 +151,12 @@ enum AppRoutesEnum {
   newPasswordView,
   passwordResetConfirmView,
   userInfoView,
-  home,
+  main,
   profile,
   settings,
   personalInfoView,
   changePasswordView,
+  sizePreview,
   deleteDialog,
   logOutDialog,
 }
@@ -173,7 +182,7 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/passwordResetConfirmView';
       case AppRoutesEnum.userInfoView:
         return '/userInfoForms';
-      case AppRoutesEnum.home:
+      case AppRoutesEnum.main:
         return '/home';
       case AppRoutesEnum.profile:
         return '/profile';
@@ -187,6 +196,8 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/deleteDialog';
       case AppRoutesEnum.logOutDialog:
         return '/logOutDialog';
+      case AppRoutesEnum.sizePreview:
+        return '/sizePreview';
     }
   }
 

@@ -12,4 +12,8 @@ class AppImages {
   static const String measurement = '${baseUrl}measurement$extension';
   static const String female = '${baseUrl}female$extension';
   static const String male = '${baseUrl}male$extension';
+  static const String feet = '${baseUrl}feet$extension';
+  static const String head = '${baseUrl}head$extension';
+  static const String hand = '${baseUrl}hand$extension';
+  static const String face = '${baseUrl}face$extension';
 }

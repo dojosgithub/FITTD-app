@@ -25,14 +25,14 @@ class LoginFormWidget extends StatelessWidget {
         listener: (context, state) {
           if (state.isSuccess && state.hasMeasurements) {
             context.pushReplacementNamed(
-              AppRoutesEnum.home.name,
+              AppRoutesEnum.main.name,
             );
           } else if (state.isError && state.showVerfication) {
             context.pushReplacementNamed(
               AppRoutesEnum.confirmOtp.name,
               queryParameters: {
                 'email': state.email.text,
-                'context': OtpContextType.login.name,
+                'context': OtpContextType.signUp.name,
               },
             );
           } else if (state.isSuccess && !state.hasMeasurements) {

@@ -3,7 +3,7 @@ import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
-import 'package:fitted/features/home/data/mock_data.dart';
+import 'package:fitted/features/main/data/mock_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';

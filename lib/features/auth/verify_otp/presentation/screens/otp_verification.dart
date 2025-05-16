@@ -86,10 +86,6 @@ class ConfirmOtpView extends StatelessWidget {
                     if (state.isValid) {
                       switch (contextType) {
                         case OtpContextType.signUp:
-                          context
-                              .pushReplacementNamed(AppRoutesEnum.login.name);
-                          break;
-                        case OtpContextType.login:
                           context.pushReplacementNamed(
                               AppRoutesEnum.userInfoView.name);
                           break;
@@ -188,8 +184,6 @@ class ConfirmOtpView extends StatelessWidget {
   String _getButtonText(OtpContextType type) {
     switch (type) {
       case OtpContextType.signUp:
-        return 'Verify Account';
-      case OtpContextType.login:
         return 'Verify Account';
       case OtpContextType.resetPassword:
         return 'Reset Password';

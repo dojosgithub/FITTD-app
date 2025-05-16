@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/signup/domain/usecase/signup_usecase.dart';
 import 'package:flutter/widgets.dart';
 
@@ -51,6 +52,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         ));
       },
       (response) {
+        SharedPrefsStorage.setRefreshToken(state.password.text);
         emit(state.copyWith(
           isLoading: false,
           isSuccess: true,

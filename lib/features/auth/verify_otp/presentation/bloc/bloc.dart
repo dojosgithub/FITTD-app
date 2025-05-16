@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
+import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:fitted/features/auth/verify_otp/data/enums/otp_enum.dart';
 
+import '../../../../../config/storage/app_storage.dart';
 import '../../domain/usecase/otp_usecase.dart';
 
 part 'event.dart';
@@ -11,8 +15,12 @@ part 'state.dart';
 class OtpBloc extends Bloc<OtpEvent, OtpState> {
   final VerifyEmailOtpUseCase verifyEmailOtpUseCase;
   final VerifyOtpUseCase verifyOtpUseCase;
+  final LoginUseCase loginUseCase;
 
-  OtpBloc({required this.verifyEmailOtpUseCase, required this.verifyOtpUseCase})
+  OtpBloc(
+      {required this.verifyEmailOtpUseCase,
+      required this.verifyOtpUseCase,
+      required this.loginUseCase})
       : super(const OtpState(
           otp: '',
           isLoading: false,
@@ -33,38 +41,48 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
   void _onVerifyOtp(VerifyOtpEvent event, Emitter<OtpState> emit) async {
     emit(state.copyWith(isLoading: true, isError: false, errorMessage: ''));
-    final result = event.contextType == OtpContextType.signUp ||
-            event.contextType == OtpContextType.login
-        ? await verifyEmailOtpUseCase(
-            code: state.otp,
-            email: event.email,
-          )
-        : await verifyOtpUseCase(
-            code: state.otp,
-            email: event.email,
-          );
 
-    result.fold(
-      (failure) {
+    final result = event.contextType == OtpContextType.signUp
+        ? await verifyEmailOtpUseCase(code: state.otp, email: event.email)
+        : await verifyOtpUseCase(code: state.otp, email: event.email);
+
+    await result.fold(
+      (failure) async {
         emit(state.copyWith(
           isLoading: false,
           isError: true,
           errorMessage: failure.message,
         ));
-        ToastUtil.showToast(
-          message: state.errorMessage!,
-        );
+        ToastUtil.showToast(message: failure.message);
       },
-      (response) {
-        emit(state.copyWith(
-          isLoading: false,
-          isValid: true,
-        ));
+      (response) async {
+        log(SharedPrefsStorage.getRefreshToken().toString());
+        final loginResult = await loginUseCase(
+          password: SharedPrefsStorage.getRefreshToken().toString(),
+          email: event.email,
+        );
+
+        await loginResult.fold(
+          (failure) async {
+            emit(state.copyWith(
+              isLoading: false,
+              isError: true,
+              errorMessage: failure.message,
+            ));
+            ToastUtil.showToast(message: failure.message);
+          },
+          (response) async {
+            await SharedPrefsStorage.setToken(response.accessToken!);
+            await SharedPrefsStorage.setUserId(response.user!.id!);
+            emit(state.copyWith(
+              isLoading: false,
+              isValid: true,
+            ));
+          },
+        );
       },
     );
   }
 
-  void _onResendOtp(ResendOtpEvent event, Emitter<OtpState> emit) {
-    // Handle OTP resend logic here
-  }
+  void _onResendOtp(ResendOtpEvent event, Emitter<OtpState> emit) {}
 }

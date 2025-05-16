@@ -1,9 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fitted/core/network/token_provider.dart';
-import 'package:fitted/features/onboarding/data/datasources/onboarding_remote_datasources.dart';
-import 'package:fitted/features/onboarding/domain/repository/onboarding_repository.dart';
-import 'package:fitted/features/onboarding/domain/repository/onboarding_repositoy_impl.dart';
-import 'package:fitted/features/onboarding/domain/usecase/onboarding_usecase.dart';
+import 'package:fitted/features/measurement/data/datasources/measurement_remote_datasources.dart';
+import 'package:fitted/features/measurement/domain/repository/measurement_repository.dart';
+import 'package:fitted/features/measurement/domain/repository/measurement_repositoy_impl.dart';
+import 'package:fitted/features/measurement/domain/usecase/measurement_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import '../network/api_client.dart';
@@ -32,7 +32,7 @@ import '../../features/auth/login/presentation/bloc/bloc.dart';
 import '../../features/auth/signup/presentation/bloc/bloc.dart';
 import '../../features/auth/verify_otp/presentation/bloc/bloc.dart';
 import '../../features/auth/forgot_password/bloc/bloc.dart';
-import '../../features/onboarding/presentation/bloc/bloc.dart';
+import '../../features/measurement/presentation/bloc/bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -62,8 +62,8 @@ Future<void> init() async {
   sl.registerLazySingleton<ForgotPasswordRemoteDatasource>(
     () => ForgotPasswordRemoteDatasourceImpl(sl()),
   );
-  sl.registerLazySingleton<OnboardingRemoteDataSource>(
-    () => OnboardingRemoteDataSourceImpl(sl()),
+  sl.registerLazySingleton<MeasurementRemoteDataSource>(
+    () => MeasurementRemoteDataSourceImpl(sl()),
   );
 
   // Repositories
@@ -79,8 +79,8 @@ Future<void> init() async {
   sl.registerLazySingleton<ForgotPasswordRepository>(
     () => ForgotPasswordRepositoryImpl(sl()),
   );
-  sl.registerLazySingleton<OnboardingRepository>(
-    () => OnboardingRepositoryImpl(sl()),
+  sl.registerLazySingleton<MeasurementRepository>(
+    () => MeasurementRepositoryImpl(sl()),
   );
 
   // UseCases
@@ -90,7 +90,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => VerifyEmailOtpUseCase(sl()));
   sl.registerLazySingleton(() => ForgotPasswordUsecase(sl()));
   sl.registerLazySingleton(() => ChangePasswordUsecase(sl()));
-  sl.registerLazySingleton(() => OnboardUserUseCase(sl()));
+  sl.registerLazySingleton(() => AddMeasurementUseCase(sl()));
 
   // Blocs
   sl.registerFactory(() => LoginBloc(loginUseCase: sl()));
@@ -98,10 +98,11 @@ Future<void> init() async {
   sl.registerFactory(() => OtpBloc(
         verifyEmailOtpUseCase: sl(),
         verifyOtpUseCase: sl(),
+        loginUseCase: sl(),
       ));
   sl.registerFactory(() => ForgotPasswordBloc(
         forgotPasswordUsecase: sl(),
         changePasswordUsecase: sl(),
       ));
-  sl.registerFactory(() => OnboardingBloc(onboardUserUseCase: sl()));
+  sl.registerFactory(() => MeasurementBloc(onboardUserUseCase: sl()));
 }

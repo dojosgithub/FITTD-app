@@ -30,10 +30,10 @@ class AppText extends StatelessWidget {
       AppText._(
         text: text,
         style: AppTextStyles.poppinsRegular(
-          fontSize: fontSize,
-          color: color,
-          height: height,
-        ),
+            fontSize: fontSize,
+            color: color,
+            height: height,
+            letterSpacing: letterSpacing),
         textAlign: textAlign,
         maxLines: maxLines,
         overflow: overflow,

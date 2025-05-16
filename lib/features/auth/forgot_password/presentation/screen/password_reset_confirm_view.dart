@@ -52,7 +52,7 @@ class PasswordResetConfirmView extends StatelessWidget {
                   listener: (context, state) {
                     if (state.isSuccess) {
                       context.pushNamed(
-                        AppRoutesEnum.home.name,
+                        AppRoutesEnum.main.name,
                       );
                     } else if (state.isError && state.showVerfication) {
                       context.pushNamed(

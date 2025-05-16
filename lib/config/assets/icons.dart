@@ -24,4 +24,13 @@ class AppVectors {
   static const String signOut = '${baseUrl}sign_out$extension';
   static const String signOutColored = '${baseUrl}sign_out_colored$extension';
   static const String upload = '${baseUrl}upload$extension';
+  static const String apparelActive = '${baseUrl}apparel_active$extension';
+  static const String homeActive = '${baseUrl}home_active$extension';
+  static const String measurementActive =
+      '${baseUrl}measurement_active$extension';
+  static const String settingsActive = '${baseUrl}settings_active$extension';
+  static const String apparel = '${baseUrl}apparel$extension';
+  static const String home = '${baseUrl}home$extension';
+  static const String measurement = '${baseUrl}measurement$extension';
+  static const String shareRounded = '${baseUrl}share_rounded$extension';
 }

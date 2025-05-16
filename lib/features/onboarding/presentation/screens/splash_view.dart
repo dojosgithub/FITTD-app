@@ -29,7 +29,7 @@ class _SplashViewState extends State<SplashView> {
     final userId = SharedPrefsStorage.getUserId();
     if (mounted) {
       if (userId != null && userId.isNotEmpty) {
-        context.goNamed(AppRoutesEnum.home.name);
+        context.goNamed(AppRoutesEnum.main.name);
       } else {
         context.goNamed(AppRoutesEnum.login.name);
       }

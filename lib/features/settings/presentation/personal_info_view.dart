@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../config/widgets/app_text.dart';
-import '../../home/data/mock_data.dart';
+import '../../main/data/mock_data.dart';
 
 class PersonalInfoView extends StatelessWidget {
   const PersonalInfoView({super.key});
