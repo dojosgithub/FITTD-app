@@ -4,6 +4,7 @@ import 'package:fitted/features/measurement/data/datasources/measurement_remote_
 import 'package:fitted/features/measurement/domain/repository/measurement_repository.dart';
 import 'package:fitted/features/measurement/domain/repository/measurement_repositoy_impl.dart';
 import 'package:fitted/features/measurement/domain/usecase/measurement_usecase.dart';
+import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../network/api_client.dart';
@@ -105,4 +106,5 @@ Future<void> init() async {
         changePasswordUsecase: sl(),
       ));
   sl.registerFactory(() => MeasurementBloc(onboardUserUseCase: sl()));
+  sl.registerFactory(() => SettingsBloc());
 }

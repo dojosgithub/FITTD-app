@@ -1,27 +1,50 @@
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
+import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/features/home/presentation/screens/home_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/measurement_view.dart';
 import 'package:fitted/features/profile/presentation/screens/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class MainView extends StatefulWidget {
-  const MainView({super.key});
-
+  const MainView({
+    super.key,
+    required this.index,
+    required this.showDialog,
+  });
+  final int? index;
+  final bool showDialog;
   @override
   State<MainView> createState() => _MainViewState();
 }
 
 class _MainViewState extends State<MainView> {
-  int selectedIndex = 0;
-  List<Widget> screens = [
-    HomeView(),
-    HomeView(),
-    MeasurementView(),
-    ProfileView(),
-  ];
+  late int selectedIndex;
+  late List<Widget> screens;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedIndex = widget.index ?? 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.showDialog) {
+        context.pushNamed(AppRoutesEnum.updateOtherMeasurements.name);
+      }
+    });
+
+    screens = [
+      HomeView(),
+      HomeView(),
+      MeasurementView(index: widget.index),
+      ProfileView(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,11 +106,11 @@ class CustomBottomNavBar extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(_icons.length, (_index) {
-          final isSelected = index == _index;
+        children: List.generate(_icons.length, (_) {
+          final isSelected = _ == index;
 
           return GestureDetector(
-            onTap: () => onTabSelected(_index),
+            onTap: () => onTabSelected(_),
             child: AnimatedContainer(
               duration: Duration(milliseconds: 250),
               padding: EdgeInsets.symmetric(
@@ -100,13 +123,12 @@ class CustomBottomNavBar extends StatelessWidget {
               child: Row(
                 children: [
                   FittedImageProvider.localSvg(
-                    imagePath: _icons[_index]
-                        [isSelected ? "iconActive" : "icon"]!,
+                    imagePath: _icons[_][isSelected ? "iconActive" : "icon"]!,
                   ),
                   if (isSelected) ...[
                     SizedBox(width: 8),
                     Text(
-                      _labels[index],
+                      _labels[_],
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

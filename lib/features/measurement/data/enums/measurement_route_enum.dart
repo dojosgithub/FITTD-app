@@ -1,0 +1,1 @@
+enum MeasurementRouteEnum { home, back }

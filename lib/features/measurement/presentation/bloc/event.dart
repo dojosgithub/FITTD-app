@@ -29,3 +29,9 @@ class SelectStyle extends MeasurementEvent {
 class IncrementIndex extends MeasurementEvent {}
 
 class OnboardUser extends MeasurementEvent {}
+
+class PickFromCamera extends MeasurementEvent {}
+
+class PickFromGallery extends MeasurementEvent {}
+
+class ClearImage extends MeasurementEvent {}

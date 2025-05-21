@@ -6,18 +6,29 @@ import 'package:fitted/features/auth/forgot_password/presentation/screen/passwor
 import 'package:fitted/features/auth/login/presentation/screens/login_view.dart';
 import 'package:fitted/features/auth/forgot_password/presentation/screen/new_password_view.dart';
 import 'package:fitted/features/main/presentation/main_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/face_measurement_form_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/feet_measurement_form_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/hand_measurement_form_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/head_measurement_form_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/size_preview_view.dart';
 import 'package:fitted/features/onboarding/presentation/screens/onboarding_view.dart';
 import 'package:fitted/features/auth/signup/presentation/screens/signup_view.dart';
 import 'package:fitted/features/onboarding/presentation/screens/splash_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/user_info_view.dart';
 import 'package:fitted/features/profile/presentation/screens/profile_view.dart';
+import 'package:fitted/features/measurement/presentation/dialogs/confirmation_dialog.dart';
 import 'package:fitted/features/settings/dialogs/delete_dialog.dart';
 import 'package:fitted/features/settings/dialogs/log_out_dialog.dart';
-import 'package:fitted/features/settings/presentation/change_password_view.dart';
-import 'package:fitted/features/settings/presentation/personal_info_view.dart';
-import 'package:fitted/features/settings/presentation/settings_view.dart';
+import 'package:fitted/features/measurement/presentation/dialogs/update_other_measurements.dart';
+import 'package:fitted/features/settings/presentation/screens/change_password_view.dart';
+import 'package:fitted/features/settings/presentation/screens/personal_info_view.dart';
+import 'package:fitted/features/settings/presentation/screens/settings_view.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../features/measurement/presentation/screen/face_measurement_view.dart';
+import '../../features/measurement/presentation/screen/feet_measurement_view.dart';
+import '../../features/measurement/presentation/screen/hand_measurement_view.dart';
+import '../../features/measurement/presentation/screen/head_measurement_view.dart';
 
 class AppRoutes {
   static final routes = [
@@ -78,16 +89,22 @@ class AppRoutes {
     GoRoute(
       path: AppRoutesEnum.userInfoView.path,
       name: AppRoutesEnum.userInfoView.name,
-      pageBuilder: (context, state) => buildTransitionPage(
-        child: UserInfoView(),
-      ),
+      builder: (context, state) => UserInfoView.fromState(state),
     ),
     GoRoute(
       path: AppRoutesEnum.main.path,
       name: AppRoutesEnum.main.name,
-      pageBuilder: (context, state) => buildTransitionPage(
-        child: MainView(),
-      ),
+      pageBuilder: (context, state) {
+        final extra = state.extra;
+        final extrasMap = extra is Map ? extra : {};
+
+        return buildTransitionPage(
+          child: MainView(
+            index: (extrasMap['index'] ?? 0) as int,
+            showDialog: (extrasMap['showDialog'] ?? false) as bool,
+          ),
+        );
+      },
     ),
     GoRoute(
       path: AppRoutesEnum.profile.path,
@@ -132,10 +149,80 @@ class AppRoutes {
       ),
     ),
     GoRoute(
+      path: AppRoutesEnum.confirmationDialog.path,
+      name: AppRoutesEnum.confirmationDialog.name,
+      pageBuilder: (context, state) => DialogPage(
+        builder: (_) => ConfirmationDialog(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.updateOtherMeasurements.path,
+      name: AppRoutesEnum.updateOtherMeasurements.name,
+      pageBuilder: (context, state) => DialogPage(
+        builder: (_) => UpdateOtherMeasurements(),
+      ),
+    ),
+    GoRoute(
       path: AppRoutesEnum.sizePreview.path,
       name: AppRoutesEnum.sizePreview.name,
       pageBuilder: (context, state) => buildTransitionPage(
         child: SizePreviewView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.faceMeasurementFormView.path,
+      name: AppRoutesEnum.faceMeasurementFormView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: FaceMeasurementFormView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.feetMeasurementFormView.path,
+      name: AppRoutesEnum.feetMeasurementFormView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: FeetMeasurementFormView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.handMeasurementFormView.path,
+      name: AppRoutesEnum.handMeasurementFormView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: HandMeasurementFormView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.headMeasurementFormView.path,
+      name: AppRoutesEnum.headMeasurementFormView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: HeadMeasurementFormView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.faceMeasurementView.path,
+      name: AppRoutesEnum.faceMeasurementView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: FaceMeasurementView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.feetMeasurementView.path,
+      name: AppRoutesEnum.feetMeasurementView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: FeetMeasurementView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.handMeasurementView.path,
+      name: AppRoutesEnum.handMeasurementView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: HandMeasurementView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.headMeasurementView.path,
+      name: AppRoutesEnum.headMeasurementView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: HeadMeasurementView(),
       ),
     ),
   ];
@@ -159,6 +246,16 @@ enum AppRoutesEnum {
   sizePreview,
   deleteDialog,
   logOutDialog,
+  confirmationDialog,
+  updateOtherMeasurements,
+  feetMeasurementFormView,
+  handMeasurementFormView,
+  faceMeasurementFormView,
+  headMeasurementFormView,
+  feetMeasurementView,
+  handMeasurementView,
+  faceMeasurementView,
+  headMeasurementView,
 }
 
 extension AppRoutesExtension on AppRoutesEnum {
@@ -196,8 +293,29 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/deleteDialog';
       case AppRoutesEnum.logOutDialog:
         return '/logOutDialog';
+      case AppRoutesEnum.updateOtherMeasurements:
+        return '/updateOtherMeasurements';
+      case AppRoutesEnum.confirmationDialog:
+        return '/confirmationDialog';
       case AppRoutesEnum.sizePreview:
         return '/sizePreview';
+
+      case AppRoutesEnum.faceMeasurementFormView:
+        return '/faceMeasurementFormView';
+      case AppRoutesEnum.feetMeasurementFormView:
+        return '/feetMeasurementFormView';
+      case AppRoutesEnum.headMeasurementFormView:
+        return '/headMeasurementFormView';
+      case AppRoutesEnum.handMeasurementFormView:
+        return '/handMeasurementFormView';
+      case AppRoutesEnum.faceMeasurementView:
+        return '/faceMeasurementView';
+      case AppRoutesEnum.feetMeasurementView:
+        return '/feetMeasurementView';
+      case AppRoutesEnum.headMeasurementView:
+        return '/headMeasurementView';
+      case AppRoutesEnum.handMeasurementView:
+        return '/handMeasurementView';
     }
   }
 

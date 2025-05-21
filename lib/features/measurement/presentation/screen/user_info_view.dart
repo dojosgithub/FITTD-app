@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
+import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/features/measurement/data/enums/measurement_route_enum.dart';
 import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/choose_height.dart';
 import '../widgets/choose_your_fit.dart';
 import '../widgets/choose_your_style.dart';
@@ -13,12 +18,51 @@ import '../widgets/male/enter_measurements_lower.dart';
 import '../widgets/male/enter_measurements_upper.dart';
 
 class UserInfoView extends StatelessWidget {
-  const UserInfoView({super.key});
+  final MeasurementRouteEnum contextType;
 
+  const UserInfoView({
+    super.key,
+    required this.contextType,
+  });
+
+  static MeasurementRouteEnum _getContextTypeFromString(String value) {
+    return MeasurementRouteEnum.values.firstWhere(
+      (e) => e.name == value,
+      orElse: () => MeasurementRouteEnum.home,
+    );
+  }
+
+  factory UserInfoView.fromState(GoRouterState state) {
+    final contextTypeString = state.uri.queryParameters['context'] ?? '';
+    log("contextTypeString" + contextTypeString);
+    final contextType = _getContextTypeFromString(contextTypeString);
+    log("contextType" + contextType.name);
+
+    return UserInfoView(contextType: contextType);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<MeasurementBloc, MeasurementState>(
+      body: BlocConsumer<MeasurementBloc, MeasurementState>(
+        listener: (context, state) {
+          // if (state.isSuccess && MeasurementRouteEnum.home == contextType) {
+          // context.pushReplacementNamed(
+          //   AppRoutesEnum.main.name,
+          //   extra: {
+          //     "showDialog": true,
+          //   },
+          // );
+          // } else
+          if (state.isSuccess && MeasurementRouteEnum.back == contextType) {
+            context.pushReplacementNamed(
+              AppRoutesEnum.main.name,
+              extra: {
+                // "index": 2
+                "showDialog": true,
+              },
+            );
+          }
+        },
         builder: (context, state) {
           final widgets = _buildOnboardingWidgets(state);
 

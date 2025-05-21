@@ -33,4 +33,9 @@ class AppVectors {
   static const String home = '${baseUrl}home$extension';
   static const String measurement = '${baseUrl}measurement$extension';
   static const String shareRounded = '${baseUrl}share_rounded$extension';
+  static const String uploadColored = '${baseUrl}upload_colored$extension';
+  static const String camera = '${baseUrl}camera$extension';
+  static const String gallery = '${baseUrl}gallery$extension';
+  static const String confirmation = '${baseUrl}confirmation$extension';
+  static const String update = '${baseUrl}update$extension';
 }

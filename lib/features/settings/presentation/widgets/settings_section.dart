@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/colors/colors.dart';
-import '../../../config/helper/spacers/spacers.dart';
-import '../../../config/widgets/app_text.dart';
+import '../../../../config/colors/colors.dart';
+import '../../../../config/helper/spacers/spacers.dart';
+import '../../../../config/widgets/app_text.dart';
 import 'settings_card.dart';
 
 class SettingsSection extends StatelessWidget {

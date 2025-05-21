@@ -49,7 +49,7 @@ class UnitDropdown extends StatelessWidget {
             if (newValue != null) {
               context.read<MeasurementBloc>().add(
                     UpdateMeasurement(
-                      field: field, // Will accept any enum
+                      field: field,
                       value: Measurement(
                         value: value,
                         unit: newValue,

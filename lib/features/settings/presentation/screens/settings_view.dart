@@ -6,7 +6,7 @@ import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import '../../../config/assets/icons.dart';
+import '../../../../config/assets/icons.dart';
 import '../widgets/section_seprator.dart';
 import '../widgets/settings_card.dart';
 import '../widgets/settings_section.dart';

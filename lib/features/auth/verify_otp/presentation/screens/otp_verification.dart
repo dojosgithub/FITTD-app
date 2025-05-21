@@ -8,6 +8,7 @@ import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/auth/verify_otp/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/widgets/back_to_login.dart';
+import 'package:fitted/features/measurement/data/enums/measurement_route_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,7 +88,10 @@ class ConfirmOtpView extends StatelessWidget {
                       switch (contextType) {
                         case OtpContextType.signUp:
                           context.pushReplacementNamed(
-                              AppRoutesEnum.userInfoView.name);
+                              AppRoutesEnum.userInfoView.name,
+                              queryParameters: {
+                                'context': MeasurementRouteEnum.home,
+                              });
                           break;
                         case OtpContextType.resetPassword:
                           context.pushReplacementNamed(

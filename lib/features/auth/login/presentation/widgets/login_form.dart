@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../config/helper/flutter_toast/show_toast.dart';
+import '../../../../measurement/data/enums/measurement_route_enum.dart';
 
 class LoginFormWidget extends StatelessWidget {
   const LoginFormWidget({super.key, required this.formKey});
@@ -36,9 +37,10 @@ class LoginFormWidget extends StatelessWidget {
               },
             );
           } else if (state.isSuccess && !state.hasMeasurements) {
-            context.pushReplacementNamed(
-              AppRoutesEnum.userInfoView.name,
-            );
+            context.pushReplacementNamed(AppRoutesEnum.userInfoView.name,
+                queryParameters: {
+                  'context': MeasurementRouteEnum.home,
+                });
           } else if (state.isError) {
             ToastUtil.showToast(
               message: state.errorMessage,

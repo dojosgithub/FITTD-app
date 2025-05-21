@@ -16,4 +16,8 @@ class AppImages {
   static const String head = '${baseUrl}head$extension';
   static const String hand = '${baseUrl}hand$extension';
   static const String face = '${baseUrl}face$extension';
+  static const String feet2 = '${baseUrl}feet2$extension';
+  static const String head2 = '${baseUrl}head2$extension';
+  static const String hand2 = '${baseUrl}hand2$extension';
+  static const String face2 = '${baseUrl}face2$extension';
 }
