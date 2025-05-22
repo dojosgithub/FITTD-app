@@ -58,8 +58,23 @@ class ApiClient {
           await _dio.get(endpoint, queryParameters: queryParameters);
       return response;
     } on DioException catch (e) {
-      print("sa $e");
-      throw Exception('Unknown Error');
+      throw Exception(e.response?.data['message'] ?? 'Unknown Error');
+    }
+  }
+
+  Future<Response> putMultipart(
+    String endpoint, {
+    required FormData formData,
+  }) async {
+    if (!await networkInfo.isConnected) {
+      throw Exception("No internet connection");
+    }
+
+    try {
+      final response = await _dio.put(endpoint, data: formData);
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Unknown Error');
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:fitted/features/measurement/data/enums/other_measurements_enum.dart';
 
+import '../enums/other_measurements_enum.dart';
 import 'measurement_model.dart';
 
 class OtherMeasurementModel extends Equatable {
@@ -9,7 +9,8 @@ class OtherMeasurementModel extends Equatable {
   final Measurement handLength;
   final Measurement handWidth;
   final Measurement head;
-  final Measurement face;
+  final Measurement faceLength;
+  final Measurement faceWidth;
 
   const OtherMeasurementModel({
     required this.feetLength,
@@ -17,7 +18,8 @@ class OtherMeasurementModel extends Equatable {
     required this.handLength,
     required this.handWidth,
     required this.head,
-    required this.face,
+    required this.faceLength,
+    required this.faceWidth,
   });
 
   @override
@@ -27,7 +29,8 @@ class OtherMeasurementModel extends Equatable {
         handLength,
         handWidth,
         head,
-        face,
+        faceLength,
+        faceWidth,
       ];
 
   OtherMeasurementModel copyWith({
@@ -36,11 +39,13 @@ class OtherMeasurementModel extends Equatable {
     Measurement? handLength,
     Measurement? handWidth,
     Measurement? head,
-    Measurement? face,
+    Measurement? faceLength,
+    Measurement? faceWidth,
   }) {
     return OtherMeasurementModel(
       head: head ?? this.head,
-      face: face ?? this.face,
+      faceLength: faceLength ?? this.faceLength,
+      faceWidth: faceWidth ?? this.faceWidth,
       feetLength: feetLength ?? this.feetLength,
       feetWidth: feetWidth ?? this.feetWidth,
       handLength: handLength ?? this.handLength,
@@ -51,8 +56,10 @@ class OtherMeasurementModel extends Equatable {
   OtherMeasurementModel updateMeasurement(
       OtherMeasurementsEnum field, Measurement newValue) {
     switch (field) {
-      case OtherMeasurementsEnum.face:
-        return copyWith(face: newValue);
+      case OtherMeasurementsEnum.faceLength:
+        return copyWith(faceLength: newValue);
+      case OtherMeasurementsEnum.faceWidth:
+        return copyWith(faceWidth: newValue);
       case OtherMeasurementsEnum.feetLength:
         return copyWith(feetLength: newValue);
       case OtherMeasurementsEnum.feetWidth:

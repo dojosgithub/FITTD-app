@@ -5,9 +5,12 @@ import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/features/measurement/presentation/widgets/measurement_appbar.dart';
 import 'package:fitted/features/measurement/presentation/widgets/measurement_marker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import '../bloc/bloc.dart';
 import '../widgets/background_grid.dart';
+import '../widgets/male_measurement_label.dart';
 
 class HeadMeasurementView extends StatelessWidget {
   const HeadMeasurementView({super.key});
@@ -47,7 +50,11 @@ class HeadMeasurementView extends StatelessWidget {
             child: MeasurementMarker(
               width: 110,
               part: "Head Circumference",
-              value: "12 cm",
+              value: formatMeasurement(context
+                  .read<MeasurementBloc>()
+                  .state
+                  .otherMeasurementModel
+                  .head),
               hasTop: true,
               hasbottom: false,
             ),

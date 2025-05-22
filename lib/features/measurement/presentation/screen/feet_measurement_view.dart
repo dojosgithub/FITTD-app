@@ -3,9 +3,12 @@ import 'package:fitted/config/assets/images.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
+import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
+import 'package:fitted/features/measurement/presentation/widgets/male_measurement_label.dart';
 import 'package:fitted/features/measurement/presentation/widgets/measurement_appbar.dart';
 import 'package:fitted/features/measurement/presentation/widgets/measurement_marker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/background_grid.dart';
@@ -50,7 +53,11 @@ class FeetMeasurementView extends StatelessWidget {
             child: MeasurementMarker(
               width: 57,
               part: "Foot Width",
-              value: "12 cm",
+              value: formatMeasurement(context
+                  .read<MeasurementBloc>()
+                  .state
+                  .otherMeasurementModel
+                  .feetWidth),
               hasTop: true,
               hasbottom: false,
             ),
@@ -61,7 +68,11 @@ class FeetMeasurementView extends StatelessWidget {
             child: MeasurementMarker(
               width: 61,
               part: "Foot Length",
-              value: "12 cm",
+              value: formatMeasurement(context
+                  .read<MeasurementBloc>()
+                  .state
+                  .otherMeasurementModel
+                  .feetLength),
               hasTop: true,
               hasbottom: false,
             ),

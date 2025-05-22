@@ -9,7 +9,6 @@ class FemaleMeasurementModel extends Equatable {
   final Measurement sleevesLength;
   final Measurement waist;
   final Measurement torsoHeight;
-  final Measurement lowerWaist;
   final Measurement hip;
   final Measurement inseam;
   final Measurement legLength;
@@ -22,7 +21,6 @@ class FemaleMeasurementModel extends Equatable {
     required this.sleevesLength,
     required this.waist,
     required this.torsoHeight,
-    required this.lowerWaist,
     required this.hip,
     required this.inseam,
     required this.legLength,
@@ -37,7 +35,6 @@ class FemaleMeasurementModel extends Equatable {
         sleevesLength,
         waist,
         torsoHeight,
-        lowerWaist,
         hip,
         inseam,
         legLength,
@@ -51,7 +48,6 @@ class FemaleMeasurementModel extends Equatable {
     Measurement? sleevesLength,
     Measurement? waist,
     Measurement? torsoHeight,
-    Measurement? lowerWaist,
     Measurement? hip,
     Measurement? inseam,
     Measurement? legLength,
@@ -64,7 +60,6 @@ class FemaleMeasurementModel extends Equatable {
       sleevesLength: sleevesLength ?? this.sleevesLength,
       waist: waist ?? this.waist,
       torsoHeight: torsoHeight ?? this.torsoHeight,
-      lowerWaist: lowerWaist ?? this.lowerWaist,
       hip: hip ?? this.hip,
       inseam: inseam ?? this.inseam,
       legLength: legLength ?? this.legLength,

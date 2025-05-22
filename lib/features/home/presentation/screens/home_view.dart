@@ -38,8 +38,7 @@ class HomeView extends StatelessWidget {
                 Spacer(),
                 RoundedButton(
                   onTap: () {
-                    SharedPrefsStorage.removeToken();
-                    SharedPrefsStorage.removeUserId();
+                    print(SharedPrefsStorage.getToken());
                   },
                   child: FittedImageProvider.localSvg(
                     imagePath: AppVectors.notification,

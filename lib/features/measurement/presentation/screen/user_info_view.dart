@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/router/app_routes.dart';
@@ -34,10 +32,7 @@ class UserInfoView extends StatelessWidget {
 
   factory UserInfoView.fromState(GoRouterState state) {
     final contextTypeString = state.uri.queryParameters['context'] ?? '';
-    log("contextTypeString" + contextTypeString);
     final contextType = _getContextTypeFromString(contextTypeString);
-    log("contextType" + contextType.name);
-
     return UserInfoView(contextType: contextType);
   }
   @override
@@ -45,21 +40,17 @@ class UserInfoView extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<MeasurementBloc, MeasurementState>(
         listener: (context, state) {
-          // if (state.isSuccess && MeasurementRouteEnum.home == contextType) {
-          // context.pushReplacementNamed(
-          //   AppRoutesEnum.main.name,
-          //   extra: {
-          //     "showDialog": true,
-          //   },
-          // );
-          // } else
-          if (state.isSuccess && MeasurementRouteEnum.back == contextType) {
+          if (state.isSuccess && MeasurementRouteEnum.home == contextType) {
             context.pushReplacementNamed(
               AppRoutesEnum.main.name,
               extra: {
-                // "index": 2
                 "showDialog": true,
               },
+            );
+          } else if (state.isSuccess &&
+              MeasurementRouteEnum.back == contextType) {
+            context.pushReplacementNamed(
+              AppRoutesEnum.main.name,
             );
           }
         },
@@ -69,7 +60,13 @@ class UserInfoView extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                _buildProgressIndicator(state, widgets.length),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildProgressIndicator(state, widgets.length),
+                  ],
+                ),
                 widgets[state.currentIndex.clamp(0, widgets.length - 1)],
               ],
             ),
@@ -103,21 +100,26 @@ class UserInfoView extends StatelessWidget {
       width: 1.sw,
       height: 6,
       alignment: Alignment.center,
-      child: ListView.separated(
-        itemCount: length,
-        physics: const NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        separatorBuilder: (context, index) => Spacers.spacer8,
-        itemBuilder: (context, index) => Container(
-          width: 59,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(43.r),
-            color: index <= state.currentIndex
-                ? AppColors.orangePrimary
-                : AppColors.grey.withValues(alpha: 0.4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ListView.separated(
+            itemCount: length,
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            separatorBuilder: (context, index) => Spacers.spacer8,
+            itemBuilder: (context, index) => Container(
+              width: 59,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(43.r),
+                color: index <= state.currentIndex
+                    ? AppColors.orangePrimary
+                    : AppColors.grey.withValues(alpha: 0.4),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

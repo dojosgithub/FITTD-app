@@ -13,7 +13,6 @@ class MaleMeasurementModel extends Equatable {
   final Measurement height;
   final Measurement bicep;
   final Measurement shoulderWidth;
-  final Measurement lowerWaist;
   final Measurement thighCircumference;
 
   const MaleMeasurementModel({
@@ -27,7 +26,6 @@ class MaleMeasurementModel extends Equatable {
     required this.height,
     required this.bicep,
     required this.shoulderWidth,
-    required this.lowerWaist,
     required this.thighCircumference,
   });
 
@@ -43,7 +41,6 @@ class MaleMeasurementModel extends Equatable {
         height,
         bicep,
         shoulderWidth,
-        lowerWaist,
         thighCircumference,
       ];
 
@@ -58,7 +55,6 @@ class MaleMeasurementModel extends Equatable {
     Measurement? height,
     Measurement? bicep,
     Measurement? shoulderWidth,
-    Measurement? lowerWaist,
     Measurement? thighCircumference,
   }) {
     return MaleMeasurementModel(
@@ -72,7 +68,6 @@ class MaleMeasurementModel extends Equatable {
       height: height ?? this.height,
       bicep: bicep ?? this.bicep,
       shoulderWidth: shoulderWidth ?? this.shoulderWidth,
-      lowerWaist: lowerWaist ?? this.lowerWaist,
       thighCircumference: thighCircumference ?? this.thighCircumference,
     );
   }

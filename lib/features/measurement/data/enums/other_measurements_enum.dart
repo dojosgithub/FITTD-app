@@ -1,6 +1,7 @@
 enum OtherMeasurementsEnum {
   head,
-  face,
+  faceWidth,
+  faceLength,
   feetLength,
   feetWidth,
   handLength,

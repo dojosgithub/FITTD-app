@@ -1,11 +1,13 @@
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
+import 'package:fitted/config/helper/form_validation/form_validator.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
-import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
+import 'package:fitted/config/widgets/loading_indicator.dart';
+import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +18,8 @@ import '../../../../config/widgets/app_text.dart';
 import '../../../main/data/mock_data.dart';
 
 class PersonalInfoView extends StatelessWidget {
-  const PersonalInfoView({super.key});
+  PersonalInfoView({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,10 @@ class PersonalInfoView extends StatelessWidget {
           bottom: 40.h,
           top: 68.h,
         ),
-        child: BlocBuilder<SettingsBloc, SettingsState>(
+        child: BlocConsumer<ProfileBloc, ProfileState>(
+          listenWhen: (previous, current) =>
+              previous.isSuccess != current.isSuccess,
+          listener: (context, state) => state.isSuccess ? context.pop() : null,
           builder: (context, state) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -67,9 +73,7 @@ class PersonalInfoView extends StatelessWidget {
                               right: 0,
                               child: GestureDetector(
                                 onTap: () {
-                                  context
-                                      .read<SettingsBloc>()
-                                      .add(ClearImage());
+                                  context.read<ProfileBloc>().add(ClearImage());
                                 },
                                 child: Container(
                                   width: 40,
@@ -87,11 +91,33 @@ class PersonalInfoView extends StatelessWidget {
                             ),
                           ],
                         )
-                      : FittedImageProvider.circularNetwork(
-                          imagePath: HomeMockData.avatarImg,
-                          imageSize: Size.square(134.w),
-                          boxFit: BoxFit.cover,
-                        ),
+                      : state.profile.imageUrl == null
+                          ? Container(
+                              height: 134.h,
+                              width: 134.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.grey,
+                                  width: 2,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: AppText.poppinsBold(
+                                state.profile.name
+                                    .toString()
+                                    .substring(0, 2)
+                                    .toUpperCase(),
+                                fontSize: 28,
+                                color: AppColors.black,
+                              ),
+                            )
+                          : FittedImageProvider.circularNetwork(
+                              imagePath: state.profile.imageUrl ??
+                                  HomeMockData.avatarImg,
+                              imageSize: Size.square(134.w),
+                              boxFit: BoxFit.cover,
+                            ),
                   CustomButton.icon(
                     text: "Upload New",
                     icon: AppVectors.upload,
@@ -120,13 +146,13 @@ class PersonalInfoView extends StatelessWidget {
                                               onCamera: () {
                                                 context.pop();
                                                 context
-                                                    .read<SettingsBloc>()
+                                                    .read<ProfileBloc>()
                                                     .add(PickFromCamera());
                                               },
                                               onGallery: () {
                                                 context.pop();
                                                 context
-                                                    .read<SettingsBloc>()
+                                                    .read<ProfileBloc>()
                                                     .add(PickFromGallery());
                                               },
                                             );
@@ -141,26 +167,42 @@ class PersonalInfoView extends StatelessWidget {
                 color: AppColors.deepBurgundy.withValues(alpha: 0.14),
               ),
               SpacersVertical.spacer42,
-              FittedInputField(
-                label: "First Name",
-                width: 1.sw,
-              ),
-              SpacersVertical.spacer28,
-              FittedInputField(
-                label: "Last Name",
-                width: 1.sw,
-              ),
-              SpacersVertical.spacer32,
-              FittedInputField(
-                label: "Email",
-                width: 1.sw,
-              ),
-              Spacer(),
-              Center(
-                child: CustomButton(
-                  text: "Upload New",
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    FittedInputField.basic(
+                      validator: InputValidators.notEmpty(),
+                      label: "First Name",
+                      width: 1.sw,
+                      controller: state.firstName,
+                    ),
+                    // SpacersVertical.spacer28,
+                    // FittedInputField.basic(
+                    //   validator: InputValidators.notEmpty(),
+                    //   label: "Last Name",
+                    //   width: 1.sw,
+                    // ),
+                    SpacersVertical.spacer32,
+                    FittedInputField.email(
+                      label: "Email",
+                      width: 1.sw,
+                      controller: state.emailName,
+                    ),
+                  ],
                 ),
               ),
+              Spacer(),
+              state.isLoading
+                  ? LoadingIndicator()
+                  : Center(
+                      child: CustomButton(
+                        text: "Upload New",
+                        onTap: () => _formKey.currentState!.validate()
+                            ? context.read<ProfileBloc>().add(UpdateProfile())
+                            : null,
+                      ),
+                    ),
             ],
           ),
         ),

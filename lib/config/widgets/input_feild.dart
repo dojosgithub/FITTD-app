@@ -18,7 +18,7 @@ class FittedInputField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
   final double? width;
-
+  final String? initialValue;
   final Widget? prefixIcon; // Add this line
 
   const FittedInputField(
@@ -34,6 +34,7 @@ class FittedInputField extends StatelessWidget {
       this.height,
       this.spacing,
       this.onChanged,
+      this.initialValue,
       this.width});
 
   factory FittedInputField.email({
@@ -142,6 +143,7 @@ class FittedInputField extends StatelessWidget {
     double? width,
     required String label,
     String? hint,
+    String? initialValue,
     TextEditingController? controller,
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
@@ -161,6 +163,7 @@ class FittedInputField extends StatelessWidget {
       validator: validator,
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
+      initialValue: initialValue,
       height: height,
       spacing: spacing,
       onChanged: onChanged,
@@ -191,6 +194,7 @@ class FittedInputField extends StatelessWidget {
           SizedBox(
             height: height,
             child: TextFormField(
+              initialValue: initialValue,
               controller: controller,
               obscureText: obscureText,
               keyboardType: keyboardType,

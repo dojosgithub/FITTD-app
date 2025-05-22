@@ -15,3 +15,13 @@ class AddMeasurementUseCase {
     return await repository.submitMeasurement(request);
   }
 }
+
+class GetMeasurementUseCase {
+  final MeasurementRepository repository;
+
+  GetMeasurementUseCase(this.repository);
+
+  Future<Either<Failure, MeasurementEntity>> call() async {
+    return await repository.getMeasurement();
+  }
+}

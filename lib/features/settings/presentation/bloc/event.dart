@@ -2,8 +2,16 @@ part of 'bloc.dart';
 
 class SettingsEvent {}
 
-class PickFromCamera extends SettingsEvent {}
+class PasswordVisibilityChanged extends SettingsEvent {
+  final bool seePassword;
+  final bool seeConfirmPassword;
 
-class PickFromGallery extends SettingsEvent {}
+  PasswordVisibilityChanged({
+    required this.seePassword,
+    required this.seeConfirmPassword,
+  });
+}
 
-class ClearImage extends SettingsEvent {}
+class ChangePassword extends SettingsEvent {}
+
+class DeleteAccount extends SettingsEvent {}

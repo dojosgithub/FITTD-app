@@ -1,12 +1,10 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../config/colors/colors.dart';
 import '../../../../config/helper/image_provider/fitted_image_provider.dart';
-import '../bloc/bloc.dart';
 
 class ShowPickedImage extends StatelessWidget {
   const ShowPickedImage({
@@ -46,7 +44,7 @@ class ShowPickedImage extends StatelessWidget {
             right: 0,
             child: GestureDetector(
               onTap: () {
-                context.read<MeasurementBloc>().add(ClearImage());
+                // context.read<MeasurementBloc>().add(ClearImage());
               },
               child: Container(
                 width: 35,

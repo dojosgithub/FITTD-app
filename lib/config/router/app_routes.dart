@@ -21,7 +21,7 @@ import 'package:fitted/features/settings/dialogs/delete_dialog.dart';
 import 'package:fitted/features/settings/dialogs/log_out_dialog.dart';
 import 'package:fitted/features/measurement/presentation/dialogs/update_other_measurements.dart';
 import 'package:fitted/features/settings/presentation/screens/change_password_view.dart';
-import 'package:fitted/features/settings/presentation/screens/personal_info_view.dart';
+import 'package:fitted/features/profile/presentation/screens/personal_info_view.dart';
 import 'package:fitted/features/settings/presentation/screens/settings_view.dart';
 import 'package:go_router/go_router.dart';
 

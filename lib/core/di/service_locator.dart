@@ -4,9 +4,18 @@ import 'package:fitted/features/measurement/data/datasources/measurement_remote_
 import 'package:fitted/features/measurement/domain/repository/measurement_repository.dart';
 import 'package:fitted/features/measurement/domain/repository/measurement_repositoy_impl.dart';
 import 'package:fitted/features/measurement/domain/usecase/measurement_usecase.dart';
+import 'package:fitted/features/profile/domain/usecases/profile_usecase.dart';
+import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
+import 'package:fitted/features/settings/domain/repositories/settings_repository.dart';
+import 'package:fitted/features/settings/domain/usecases/settings_usecase.dart';
 import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/profile/data/datasources/profile_remote_datasource.dart';
+import '../../features/profile/domain/repositories/profile_repository.dart';
+import '../../features/profile/domain/repositories/profile_repository_impl.dart';
+import '../../features/settings/data/datasources/settings_remotedatasource.dart';
+import '../../features/settings/domain/repositories/settings_repository_impl.dart';
 import '../network/api_client.dart';
 import '../network/network_info.dart';
 import '../../features/auth/login/data/datasources/login_remote_datasources.dart';
@@ -66,6 +75,12 @@ Future<void> init() async {
   sl.registerLazySingleton<MeasurementRemoteDataSource>(
     () => MeasurementRemoteDataSourceImpl(sl()),
   );
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<SettingsRemoteDataSource>(
+    () => SettingsRemoteDataSourceImpl(sl()),
+  );
 
   // Repositories
   sl.registerLazySingleton<LoginRepository>(
@@ -83,15 +98,25 @@ Future<void> init() async {
   sl.registerLazySingleton<MeasurementRepository>(
     () => MeasurementRepositoryImpl(sl()),
   );
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<SettingsRepository>(
+    () => SettingsRepositoryImpl(sl()),
+  );
 
   // UseCases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
   sl.registerLazySingleton(() => VerifyOtpUseCase(sl()));
   sl.registerLazySingleton(() => VerifyEmailOtpUseCase(sl()));
-  sl.registerLazySingleton(() => ForgotPasswordUsecase(sl()));
-  sl.registerLazySingleton(() => ChangePasswordUsecase(sl()));
+  sl.registerLazySingleton(() => ForgotPasswordUseCase(sl()));
+  sl.registerLazySingleton(() => UpdatePasswordUseCase(sl()));
   sl.registerLazySingleton(() => AddMeasurementUseCase(sl()));
+  sl.registerLazySingleton(() => GetMeasurementUseCase(sl()));
+  sl.registerLazySingleton(() => GetProfileUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
+  sl.registerLazySingleton(() => ChangePasswordUseCase(sl()));
 
   // Blocs
   sl.registerFactory(() => LoginBloc(loginUseCase: sl()));
@@ -105,6 +130,9 @@ Future<void> init() async {
         forgotPasswordUsecase: sl(),
         changePasswordUsecase: sl(),
       ));
-  sl.registerFactory(() => MeasurementBloc(onboardUserUseCase: sl()));
-  sl.registerFactory(() => SettingsBloc());
+  sl.registerFactory(() => MeasurementBloc(
+      addMeasurementsUseCase: sl(), getMeasurementsUseCase: sl()));
+  sl.registerFactory(() => SettingsBloc(changePasswordUseCase: sl()));
+  sl.registerFactory(
+      () => ProfileBloc(profileUseCase: sl(), updateProfileUseCase: sl()));
 }

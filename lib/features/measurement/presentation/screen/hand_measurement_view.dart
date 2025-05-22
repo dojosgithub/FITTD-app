@@ -2,12 +2,15 @@ import 'package:fitted/config/assets/images.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
+import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
 import 'package:fitted/features/measurement/presentation/widgets/measurement_appbar.dart';
 import 'package:fitted/features/measurement/presentation/widgets/measurement_marker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/background_grid.dart';
+import '../widgets/male_measurement_label.dart';
 
 class HandMeasurementView extends StatelessWidget {
   const HandMeasurementView({super.key});
@@ -49,7 +52,11 @@ class HandMeasurementView extends StatelessWidget {
             child: MeasurementMarker(
               width: 62,
               part: "Hand Width",
-              value: "12 cm",
+              value: formatMeasurement(context
+                  .read<MeasurementBloc>()
+                  .state
+                  .otherMeasurementModel
+                  .handWidth),
               hasTop: true,
               hasbottom: false,
             ),
@@ -60,7 +67,11 @@ class HandMeasurementView extends StatelessWidget {
             child: MeasurementMarker(
               width: 67,
               part: "Hand Length",
-              value: "12 cm",
+              value: formatMeasurement(context
+                  .read<MeasurementBloc>()
+                  .state
+                  .otherMeasurementModel
+                  .handLength),
               hasTop: true,
               hasbottom: false,
             ),

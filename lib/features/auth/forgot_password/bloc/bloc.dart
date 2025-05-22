@@ -9,8 +9,8 @@ part 'event.dart';
 
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  final ForgotPasswordUsecase forgotPasswordUsecase;
-  final ChangePasswordUsecase changePasswordUsecase;
+  final ForgotPasswordUseCase forgotPasswordUsecase;
+  final UpdatePasswordUseCase changePasswordUsecase;
   ForgotPasswordBloc({
     required this.forgotPasswordUsecase,
     required this.changePasswordUsecase,

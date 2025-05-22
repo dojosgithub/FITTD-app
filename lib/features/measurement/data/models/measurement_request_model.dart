@@ -1,22 +1,22 @@
 import 'measurement_model.dart';
 
 class MeasurementRequestModel {
-  final String gender;
-  final String fit;
-  final Measurement height;
-  final UpperBodyMeasurement upperBody;
-  final LowerBodyMeasurement lowerBody;
+  final String? gender;
+  final String? fit;
+  final Measurement? height;
+  final UpperBodyMeasurement? upperBody;
+  final LowerBodyMeasurement? lowerBody;
   final FootMeasurement? footMeasurement;
   final HandMeasurement? handMeasurement;
   final HeadMeasurement? headMeasurement;
   final FaceMeasurement? faceMeasurement;
 
   MeasurementRequestModel({
-    required this.gender,
-    required this.fit,
-    required this.height,
-    required this.upperBody,
-    required this.lowerBody,
+    this.gender,
+    this.fit,
+    this.height,
+    this.upperBody,
+    this.lowerBody,
     this.footMeasurement,
     this.handMeasurement,
     this.headMeasurement,
@@ -26,9 +26,9 @@ class MeasurementRequestModel {
   Map<String, dynamic> toJson() => {
         "gender": gender,
         "fit": fit,
-        "height": height.toMap(),
-        "upperBody": upperBody.toMap(),
-        "lowerBody": lowerBody.toMap(),
+        "height": height?.toMap(),
+        "upperBody": upperBody?.toMap(),
+        "lowerBody": lowerBody?.toMap(),
         if (footMeasurement != null)
           "footMeasurement": footMeasurement!.toMap(),
         if (handMeasurement != null)
@@ -135,12 +135,10 @@ class LowerBodyMeasurement {
 class FootMeasurement {
   final Measurement? footLength;
   final Measurement? footWidth;
-  final Measurement? ankleCircumference;
 
   FootMeasurement({
     this.footLength,
     this.footWidth,
-    this.ankleCircumference,
   });
 
   factory FootMeasurement.fromMap(Map<String, dynamic> map) {
@@ -151,54 +149,46 @@ class FootMeasurement {
       footWidth: map['footWidth'] != null
           ? Measurement.fromMap(map['footWidth'])
           : null,
-      ankleCircumference: map['ankleCircumference'] != null
-          ? Measurement.fromMap(map['ankleCircumference'])
-          : null,
     );
   }
 
   Map<String, dynamic> toMap() => {
         'footLength': footLength?.toMap(),
         'footWidth': footWidth?.toMap(),
-        'ankleCircumference': ankleCircumference?.toMap(),
       };
 }
 
 class HandMeasurement {
-  final Measurement? palmWidth;
-  final Measurement? fingerLength;
+  final Measurement? handLength;
+  final Measurement? handWidth;
 
   HandMeasurement({
-    this.palmWidth,
-    this.fingerLength,
+    this.handLength,
+    this.handWidth,
   });
 
   factory HandMeasurement.fromMap(Map<String, dynamic> map) {
     return HandMeasurement(
-      palmWidth: map['palmWidth'] != null
+      handLength: map['palmWidth'] != null
           ? Measurement.fromMap(map['palmWidth'])
           : null,
-      fingerLength: map['fingerLength'] != null
+      handWidth: map['fingerLength'] != null
           ? Measurement.fromMap(map['fingerLength'])
           : null,
     );
   }
 
   Map<String, dynamic> toMap() => {
-        'palmWidth': palmWidth?.toMap(),
-        'fingerLength': fingerLength?.toMap(),
+        'palmWidth': handLength?.toMap(),
+        'fingerLength': handWidth?.toMap(),
       };
 }
 
 class HeadMeasurement {
   final Measurement? headCircumference;
-  final Measurement? faceWidth;
-  final Measurement? faceLength;
 
   HeadMeasurement({
     this.headCircumference,
-    this.faceWidth,
-    this.faceLength,
   });
 
   factory HeadMeasurement.fromMap(Map<String, dynamic> map) {
@@ -206,6 +196,25 @@ class HeadMeasurement {
       headCircumference: map['headCircumference'] != null
           ? Measurement.fromMap(map['headCircumference'])
           : null,
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'headCircumference': headCircumference?.toMap(),
+      };
+}
+
+class FaceMeasurement {
+  final Measurement? faceWidth;
+  final Measurement? faceLength;
+
+  FaceMeasurement({
+    this.faceWidth,
+    this.faceLength,
+  });
+
+  factory FaceMeasurement.fromMap(Map<String, dynamic> map) {
+    return FaceMeasurement(
       faceWidth: map['faceWidth'] != null
           ? Measurement.fromMap(map['faceWidth'])
           : null,
@@ -216,39 +225,7 @@ class HeadMeasurement {
   }
 
   Map<String, dynamic> toMap() => {
-        'headCircumference': headCircumference?.toMap(),
         'faceWidth': faceWidth?.toMap(),
         'faceLength': faceLength?.toMap(),
-      };
-}
-
-class FaceMeasurement {
-  final Measurement? cheekboneWidth;
-  final Measurement? jawWidth;
-  final Measurement? noseWidth;
-
-  FaceMeasurement({
-    this.cheekboneWidth,
-    this.jawWidth,
-    this.noseWidth,
-  });
-
-  factory FaceMeasurement.fromMap(Map<String, dynamic> map) {
-    return FaceMeasurement(
-      cheekboneWidth: map['cheekboneWidth'] != null
-          ? Measurement.fromMap(map['cheekboneWidth'])
-          : null,
-      jawWidth:
-          map['jawWidth'] != null ? Measurement.fromMap(map['jawWidth']) : null,
-      noseWidth: map['noseWidth'] != null
-          ? Measurement.fromMap(map['noseWidth'])
-          : null,
-    );
-  }
-
-  Map<String, dynamic> toMap() => {
-        'cheekboneWidth': cheekboneWidth?.toMap(),
-        'jawWidth': jawWidth?.toMap(),
-        'noseWidth': noseWidth?.toMap(),
       };
 }

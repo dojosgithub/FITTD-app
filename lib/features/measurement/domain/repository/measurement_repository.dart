@@ -6,4 +6,5 @@ import 'package:fitted/features/measurement/domain/entities/measurement_entity.d
 abstract class MeasurementRepository {
   Future<Either<Failure, MeasurementEntity>> submitMeasurement(
       MeasurementRequestModel request);
+  Future<Either<Failure, MeasurementEntity>> getMeasurement();
 }

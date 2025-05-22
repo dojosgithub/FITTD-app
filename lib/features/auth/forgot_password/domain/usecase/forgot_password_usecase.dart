@@ -7,9 +7,9 @@ import 'package:fitted/features/auth/forgot_password/domain/repository/forgot_pa
 
 import '../../../../../core/errors/failure.dart';
 
-class ForgotPasswordUsecase {
+class ForgotPasswordUseCase {
   final ForgotPasswordRepository forgotPasswordRepository;
-  ForgotPasswordUsecase(
+  ForgotPasswordUseCase(
     this.forgotPasswordRepository,
   );
 
@@ -24,9 +24,9 @@ class ForgotPasswordUsecase {
   }
 }
 
-class ChangePasswordUsecase {
+class UpdatePasswordUseCase {
   final ForgotPasswordRepository forgotPasswordRepository;
-  ChangePasswordUsecase(
+  UpdatePasswordUseCase(
     this.forgotPasswordRepository,
   );
 

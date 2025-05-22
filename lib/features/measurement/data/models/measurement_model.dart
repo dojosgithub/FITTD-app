@@ -15,6 +15,6 @@ class Measurement {
 
   Map<String, dynamic> toMap() => {
         'value': value,
-        'unit': unit.display,
+        'unit': unit.name,
       };
 }

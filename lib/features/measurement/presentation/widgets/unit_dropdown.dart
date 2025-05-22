@@ -48,7 +48,7 @@ class UnitDropdown extends StatelessWidget {
           onChanged: (Unit? newValue) {
             if (newValue != null) {
               context.read<MeasurementBloc>().add(
-                    UpdateMeasurement(
+                    UpdateOtherMeasurement(
                       field: field,
                       value: Measurement(
                         value: value,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
@@ -6,12 +8,16 @@ import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
+import 'package:fitted/config/widgets/loading_indicator.dart';
+import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ChangePasswordView extends StatelessWidget {
-  const ChangePasswordView({super.key});
+  ChangePasswordView({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,55 +29,92 @@ class ChangePasswordView extends StatelessWidget {
           bottom: 40.h,
           top: 68.h,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RoundedButton(
-              onTap: () => context.pop(),
-              child: Padding(
-                padding: EdgeInsets.only(top: 4.h),
-                child: FittedImageProvider.localSvg(
-                  imagePath: AppVectors.backArrow2,
-                  imageSize: Size(13.w, 17.h),
-                  boxFit: BoxFit.contain,
+        child: BlocConsumer<SettingsBloc, SettingsState>(
+          listenWhen: (previous, current) =>
+              previous.isSucess != current.isSucess,
+          listener: (context, state) => state.isSucess ? context.pop() : null,
+          builder: (context, state) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RoundedButton(
+                onTap: () => context.pop(),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 4.h),
+                  child: FittedImageProvider.localSvg(
+                    imagePath: AppVectors.backArrow2,
+                    imageSize: Size(13.w, 17.h),
+                    boxFit: BoxFit.contain,
+                  ),
                 ),
               ),
-            ),
-            SpacersVertical.spacer16,
-            AppText.poppinsRegular(
-              'Change Password',
-              fontSize: 27,
-              color: AppColors.deepBurgundy,
-            ),
-            SpacersVertical.spacer26,
-            AppText.poppinsRegular(
-              'My Password',
-              fontSize: 22,
-              color: AppColors.deepBurgundy,
-            ),
-            SpacersVertical.spacer28,
-            FittedInputField.password(
-              width: 1.sw,
-              label: "Current Password",
-              isHidden: true,
-              onToggle: () {},
-            ),
-            SpacersVertical.spacer28,
-            FittedInputField.confirmPassword(
-              width: 1.sw,
-              label: "New Password",
-              confirmController: TextEditingController(),
-              originalController: TextEditingController(),
-              isHidden: true,
-              onToggle: () {},
-            ),
-            SpacersVertical.spacer40,
-            Center(
-              child: CustomButton(
-                text: "Update Password",
+              SpacersVertical.spacer16,
+              AppText.poppinsRegular(
+                'Change Password',
+                fontSize: 27,
+                color: AppColors.deepBurgundy,
               ),
-            )
-          ],
+              SpacersVertical.spacer26,
+              AppText.poppinsRegular(
+                'My Password',
+                fontSize: 22,
+                color: AppColors.deepBurgundy,
+              ),
+              SpacersVertical.spacer28,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    FittedInputField.email(
+                      width: 1.sw,
+                      label: "Email",
+                      controller: state.emailController,
+                    ),
+                    SpacersVertical.spacer28,
+                    FittedInputField.password(
+                      width: 1.sw,
+                      label: "Current Password",
+                      isHidden: state.seePassword,
+                      controller: state.passwordController,
+                      onToggle: () => context
+                          .read<SettingsBloc>()
+                          .add(PasswordVisibilityChanged(
+                            seePassword: !state.seePassword,
+                            seeConfirmPassword: state.seeConfirmPassword,
+                          )),
+                    ),
+                    SpacersVertical.spacer28,
+                    FittedInputField.password(
+                      width: 1.sw,
+                      label: "New Password",
+                      controller: state.newPasswordController,
+                      isHidden: state.seeConfirmPassword,
+                      onToggle: () => context
+                          .read<SettingsBloc>()
+                          .add(PasswordVisibilityChanged(
+                            seePassword: state.seePassword,
+                            seeConfirmPassword: !state.seeConfirmPassword,
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+              SpacersVertical.spacer40,
+              Center(
+                child: state.isLoading
+                    ? LoadingIndicator()
+                    : CustomButton(
+                        text: "Update Password",
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<SettingsBloc>().add(ChangePassword());
+                          } else {
+                            log('Form is not valid');
+                          }
+                        },
+                      ),
+              )
+            ],
+          ),
         ),
       ),
     );

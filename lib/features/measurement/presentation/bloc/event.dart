@@ -16,6 +16,13 @@ class UpdateMeasurement extends MeasurementEvent {
   UpdateMeasurement({required this.field, required this.value});
 }
 
+class UpdateOtherMeasurement extends MeasurementEvent {
+  final Object field;
+  final Measurement value;
+
+  UpdateOtherMeasurement({required this.field, required this.value});
+}
+
 class SelectFit extends MeasurementEvent {
   final String fit;
   SelectFit({required this.fit});
@@ -28,10 +35,6 @@ class SelectStyle extends MeasurementEvent {
 
 class IncrementIndex extends MeasurementEvent {}
 
-class OnboardUser extends MeasurementEvent {}
+class AddMeasurements extends MeasurementEvent {}
 
-class PickFromCamera extends MeasurementEvent {}
-
-class PickFromGallery extends MeasurementEvent {}
-
-class ClearImage extends MeasurementEvent {}
+class GetMeasurements extends MeasurementEvent {}

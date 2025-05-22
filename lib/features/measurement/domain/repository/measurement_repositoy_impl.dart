@@ -25,4 +25,19 @@ class MeasurementRepositoryImpl implements MeasurementRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, MeasurementEntity>> getMeasurement() async {
+    try {
+      final responseModel = await remoteDataSource.getMeasurement();
+
+      return Right(responseModel.data);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          e.toString(),
+        ),
+      );
+    }
+  }
 }

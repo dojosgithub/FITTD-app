@@ -22,6 +22,7 @@ Widget buildMeasurementField({
     spacing: SpacersVertical.spacer8,
     label: label,
     hint: "eg. 150",
+    initialValue: value.toString(),
     keyboardType: TextInputType.number,
     onChanged: (p0) {
       if (p0.isNotEmpty) {

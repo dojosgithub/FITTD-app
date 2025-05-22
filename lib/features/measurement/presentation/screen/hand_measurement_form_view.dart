@@ -1,5 +1,7 @@
 import 'package:fitted/config/colors/colors.dart';
+import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
+import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/measurement/data/enums/other_measurements_enum.dart';
 import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,15 @@ class HandMeasurementFormView extends StatelessWidget {
       appBar: MeasurementAppbarWidget(
         appbarTitle: "Hand Measurement",
       ),
-      body: BlocBuilder<MeasurementBloc, MeasurementState>(
+      body: BlocConsumer<MeasurementBloc, MeasurementState>(
+        listener: (context, state) {
+          if (state.isSuccess) {
+            context.pushReplacementNamed(
+              AppRoutesEnum.main.name,
+              extra: {"index": 2},
+            );
+          }
+        },
         builder: (context, state) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -47,6 +57,8 @@ class HandMeasurementFormView extends StatelessWidget {
               ),
               SpacersVertical.spacer26,
               FittedInputField.withIcon(
+                initialValue:
+                    state.otherMeasurementModel.handLength.value.toString(),
                 validator: InputValidators.notEmpty(),
                 spacing: SpacersVertical.spacer8,
                 label: "Hand Length",
@@ -54,7 +66,7 @@ class HandMeasurementFormView extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 onChanged: (p0) {
                   if (p0.isNotEmpty) {
-                    context.read<MeasurementBloc>().add(UpdateMeasurement(
+                    context.read<MeasurementBloc>().add(UpdateOtherMeasurement(
                           field: OtherMeasurementsEnum.handLength,
                           value: Measurement(
                               value: num.parse(p0),
@@ -71,6 +83,8 @@ class HandMeasurementFormView extends StatelessWidget {
               ),
               SpacersVertical.spacer32,
               FittedInputField.withIcon(
+                initialValue:
+                    state.otherMeasurementModel.handWidth.value.toString(),
                 validator: InputValidators.notEmpty(),
                 spacing: SpacersVertical.spacer8,
                 label: "Hand Width",
@@ -78,7 +92,7 @@ class HandMeasurementFormView extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 onChanged: (p0) {
                   if (p0.isNotEmpty) {
-                    context.read<MeasurementBloc>().add(UpdateMeasurement(
+                    context.read<MeasurementBloc>().add(UpdateOtherMeasurement(
                           field: OtherMeasurementsEnum.handWidth,
                           value: Measurement(
                               value: num.parse(p0),
@@ -93,11 +107,16 @@ class HandMeasurementFormView extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              CustomButton(
-                text: "Save",
-                width: 336,
-                height: 52,
-              ),
+              state.isLoading
+                  ? LoadingIndicator()
+                  : CustomButton(
+                      onTap: () => context
+                          .read<MeasurementBloc>()
+                          .add(AddMeasurements()),
+                      text: "Save",
+                      width: 336,
+                      height: 52,
+                    ),
               SpacersVertical.spacer34,
             ],
           ),

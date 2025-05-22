@@ -2,6 +2,7 @@ import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
+import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,16 +29,16 @@ class SizePreviewView extends StatelessWidget {
         ),
         centerTitle: false,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final height = constraints.maxHeight;
-                final width = constraints.maxWidth;
+      body: BlocBuilder<MeasurementBloc, MeasurementState>(
+        builder: (context, state) => Column(
+          children: [
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final height = constraints.maxHeight;
+                  final width = constraints.maxWidth;
 
-                return BlocBuilder<MeasurementBloc, MeasurementState>(
-                  builder: (context, state) => state.style == "male"
+                  return state.style == "male"
                       ? MaleSizePreview(
                           width: width,
                           height: height,
@@ -47,19 +48,21 @@ class SizePreviewView extends StatelessWidget {
                           width: width,
                           height: height,
                           model: state.femaleMeasurementModel,
-                        ),
-                );
-              },
+                        );
+                },
+              ),
             ),
-          ),
-          CustomButton(
-            text: "Confirm",
-            onTap: () {
-              context.read<MeasurementBloc>().add(OnboardUser());
-            },
-          ),
-          SpacersVertical.spacer40,
-        ],
+            state.isLoading
+                ? LoadingIndicator()
+                : CustomButton(
+                    text: "Confirm",
+                    onTap: () {
+                      context.read<MeasurementBloc>().add(AddMeasurements());
+                    },
+                  ),
+            SpacersVertical.spacer40,
+          ],
+        ),
       ),
     );
   }
