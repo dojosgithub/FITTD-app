@@ -16,17 +16,19 @@ class ForgotPasswordBloc
     required this.changePasswordUsecase,
   }) : super(
           ForgotPasswordState(
-            isLoading: false,
-            isSucess: false,
-            isError: false,
-            errorMessage: "",
-            emailController: TextEditingController(),
-            passwordController: TextEditingController(),
-            confirmPasswordController: TextEditingController(),
-          ),
+              isLoading: false,
+              isSucess: false,
+              isError: false,
+              errorMessage: "",
+              emailController: TextEditingController(),
+              passwordController: TextEditingController(),
+              confirmPasswordController: TextEditingController(),
+              seeConfirmPassword: true,
+              seePassword: true),
         ) {
     on<SendEmailEvent>(_handleEmailSend);
     on<ChangePasswordEvent>(_handlePasswordChange);
+    on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
   }
 
   _handleEmailSend(
@@ -86,5 +88,12 @@ class ForgotPasswordBloc
         ));
       },
     );
+  }
+
+  void _onPasswordVisibilityChanged(
+      PasswordVisibilityChanged event, Emitter<ForgotPasswordState> emit) {
+    emit(state.copyWith(
+        seePassword: event.seePassword,
+        seeConfirmPassword: event.seeConfirmPassword));
   }
 }

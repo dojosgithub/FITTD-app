@@ -9,10 +9,14 @@ class ForgotPasswordState extends Equatable {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
+  final bool seePassword;
+  final bool seeConfirmPassword;
   const ForgotPasswordState({
     required this.isLoading,
     required this.isSucess,
     required this.isError,
+    required this.seeConfirmPassword,
+    required this.seePassword,
     required this.errorMessage,
     required this.emailController,
     required this.passwordController,
@@ -27,13 +31,17 @@ class ForgotPasswordState extends Equatable {
         errorMessage,
         emailController,
         passwordController,
-        confirmPasswordController
+        confirmPasswordController,
+        seeConfirmPassword,
+        seePassword
       ];
 
   ForgotPasswordState copyWith({
     bool? isLoading,
     bool? isSucess,
     bool? isError,
+    bool? seeConfirmPassword,
+    bool? seePassword,
     String? errorMessage,
     TextEditingController? emailController,
     TextEditingController? passwordController,
@@ -43,6 +51,8 @@ class ForgotPasswordState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       isSucess: isSucess ?? this.isSucess,
       isError: isError ?? this.isError,
+      seeConfirmPassword: seeConfirmPassword ?? this.seeConfirmPassword,
+      seePassword: seePassword ?? this.seePassword,
       errorMessage: errorMessage ?? this.errorMessage,
       emailController: emailController ?? this.emailController,
       passwordController: passwordController ?? this.passwordController,

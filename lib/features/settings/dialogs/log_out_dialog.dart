@@ -2,11 +2,14 @@ import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
+import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../config/storage/app_storage.dart';
 
 class LogOutDialog extends StatelessWidget {
   const LogOutDialog({super.key});
@@ -63,6 +66,10 @@ class LogOutDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
               CustomButton(
+                onTap: () {
+                  SharedPrefsStorage.clearUserDetails();
+                  context.pushReplacementNamed(AppRoutesEnum.splash.name);
+                },
                 text: "Logout",
                 width: 128.w,
                 height: 52,

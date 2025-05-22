@@ -90,7 +90,7 @@ class ConfirmOtpView extends StatelessWidget {
                           context.pushReplacementNamed(
                               AppRoutesEnum.userInfoView.name,
                               queryParameters: {
-                                'context': MeasurementRouteEnum.home,
+                                'context': MeasurementRouteEnum.home.name,
                               });
                           break;
                         case OtpContextType.resetPassword:

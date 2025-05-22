@@ -71,5 +71,6 @@ class SharedPrefsStorage {
   static Future<void> clearUserDetails() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(StorageKeys.accessToken);
+    await prefs.remove(StorageKeys.userId);
   }
 }

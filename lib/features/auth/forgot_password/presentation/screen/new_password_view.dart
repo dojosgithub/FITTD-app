@@ -9,42 +9,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewPasswordView extends StatelessWidget {
-  const NewPasswordView({super.key});
+  NewPasswordView({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 96.w),
-        child: Center(
-          child: SizedBox(
-            width: 342.w,
-            child: Column(
-              children: [
-                FittedImageProvider.localSvg(
-                  imagePath: AppVectors.key,
-                ),
-                SpacersVertical.spacer20,
-                SpacersVertical.spacer2,
-                AppText.poppinsSemiBold(
-                  "Set new password",
-                  fontSize: 24,
-                  height: 32 / 24,
-                  color: AppColors.tealPrimary,
-                ),
-                SpacersVertical.spacer4,
-                AppText.poppinsRegular(
-                  "Your new password must be different to previously used passwords.",
-                  fontSize: 16,
-                  height: 24 / 16,
-                  color: AppColors.tealSecondary,
-                  textAlign: TextAlign.center,
-                ),
-                SpacersVertical.spacer32,
-                ChangePasswordFormWidget(),
-                SpacersVertical.spacer30,
-                BackToLoginWidget(),
-              ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(top: 96.w),
+          child: Center(
+            child: SizedBox(
+              width: 342.w,
+              child: Column(
+                children: [
+                  FittedImageProvider.localSvg(
+                    imagePath: AppVectors.key,
+                  ),
+                  SpacersVertical.spacer20,
+                  SpacersVertical.spacer2,
+                  AppText.poppinsSemiBold(
+                    "Set new password",
+                    fontSize: 24,
+                    height: 32 / 24,
+                    color: AppColors.tealPrimary,
+                  ),
+                  SpacersVertical.spacer4,
+                  AppText.poppinsRegular(
+                    "Your new password must be different to previously used passwords.",
+                    fontSize: 16,
+                    height: 24 / 16,
+                    color: AppColors.tealSecondary,
+                    textAlign: TextAlign.center,
+                  ),
+                  SpacersVertical.spacer32,
+                  ChangePasswordFormWidget(
+                    formKey: _formKey,
+                  ),
+                  SpacersVertical.spacer30,
+                  BackToLoginWidget(),
+                ],
+              ),
             ),
           ),
         ),

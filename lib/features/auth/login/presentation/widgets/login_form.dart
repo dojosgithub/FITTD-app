@@ -39,7 +39,7 @@ class LoginFormWidget extends StatelessWidget {
           } else if (state.isSuccess && !state.hasMeasurements) {
             context.pushReplacementNamed(AppRoutesEnum.userInfoView.name,
                 queryParameters: {
-                  'context': MeasurementRouteEnum.home,
+                  'context': MeasurementRouteEnum.home.name,
                 });
           } else if (state.isError) {
             ToastUtil.showToast(
