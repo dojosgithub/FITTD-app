@@ -17,7 +17,8 @@ class ForgotPasswordBloc
   }) : super(
           ForgotPasswordState(
               isLoading: false,
-              isSucess: false,
+              isEmailSucess: false,
+              isResetSucess: false,
               isError: false,
               errorMessage: "",
               emailController: TextEditingController(),
@@ -35,7 +36,13 @@ class ForgotPasswordBloc
     SendEmailEvent event,
     Emitter<ForgotPasswordState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, isError: false, errorMessage: ""));
+    emit(state.copyWith(
+      isLoading: true,
+      isError: false,
+      errorMessage: "",
+      isEmailSucess: false,
+      isResetSucess: false,
+    ));
     final result = await forgotPasswordUsecase(
       email: state.emailController.text,
     );
@@ -51,7 +58,7 @@ class ForgotPasswordBloc
       (success) {
         emit(state.copyWith(
           isLoading: false,
-          isSucess: true,
+          isEmailSucess: true,
         ));
       },
     );
@@ -64,7 +71,8 @@ class ForgotPasswordBloc
         isLoading: true,
         isError: false,
         errorMessage: "",
-        isSucess: false,
+        isEmailSucess: false,
+        isResetSucess: false,
       ),
     );
     final result = await changePasswordUsecase(
@@ -78,13 +86,13 @@ class ForgotPasswordBloc
           isError: true,
           errorMessage: failure.message,
         ));
-        print(failure.message);
+
         ToastUtil.showToast(message: failure.message.split(":").last);
       },
       (success) {
         emit(state.copyWith(
           isLoading: false,
-          isSucess: true,
+          isResetSucess: true,
         ));
       },
     );

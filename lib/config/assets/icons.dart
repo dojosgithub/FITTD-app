@@ -38,4 +38,7 @@ class AppVectors {
   static const String gallery = '${baseUrl}gallery$extension';
   static const String confirmation = '${baseUrl}confirmation$extension';
   static const String update = '${baseUrl}update$extension';
+  static const String wishlist = '${baseUrl}wishlist$extension';
+  static const String filterBar = '${baseUrl}filter_bar$extension';
+  static const String star = '${baseUrl}star$extension';
 }

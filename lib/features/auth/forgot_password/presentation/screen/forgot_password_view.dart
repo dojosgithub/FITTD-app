@@ -54,7 +54,7 @@ class ForgotPasswordView extends StatelessWidget {
                   SpacersVertical.spacer32,
                   BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
                     listener: (context, state) {
-                      if (state.isSucess) {
+                      if (state.isEmailSucess) {
                         context.pushReplacementNamed(
                           AppRoutesEnum.confirmOtp.name,
                           queryParameters: {

@@ -7,9 +7,11 @@ class SettingsState extends Equatable {
   final bool isSucess;
   final bool seePassword;
   final bool seeConfirmPassword;
-  final TextEditingController emailController;
+
   final TextEditingController passwordController;
   final TextEditingController newPasswordController;
+  final TextEditingController deleteAccountController;
+  final bool deleteAccountSucess;
   const SettingsState({
     required this.isLoading,
     required this.isSucess,
@@ -17,7 +19,8 @@ class SettingsState extends Equatable {
     required this.seeConfirmPassword,
     required this.passwordController,
     required this.newPasswordController,
-    required this.emailController,
+    required this.deleteAccountController,
+    required this.deleteAccountSucess,
   });
 
   SettingsState copyWith({
@@ -27,7 +30,8 @@ class SettingsState extends Equatable {
     bool? seeConfirmPassword,
     TextEditingController? passwordController,
     TextEditingController? newPasswordController,
-    TextEditingController? emailController,
+    TextEditingController? deleteAccountController,
+    bool? deleteAccountSucess,
   }) {
     return SettingsState(
       isLoading: isLoading ?? this.isLoading,
@@ -35,9 +39,11 @@ class SettingsState extends Equatable {
       seePassword: seePassword ?? this.seePassword,
       seeConfirmPassword: seeConfirmPassword ?? this.seeConfirmPassword,
       passwordController: passwordController ?? this.passwordController,
-      emailController: emailController ?? this.emailController,
       newPasswordController:
           newPasswordController ?? this.newPasswordController,
+      deleteAccountController:
+          deleteAccountController ?? this.deleteAccountController,
+      deleteAccountSucess: deleteAccountSucess ?? this.deleteAccountSucess,
     );
   }
 
@@ -48,6 +54,8 @@ class SettingsState extends Equatable {
         passwordController,
         newPasswordController,
         seePassword,
-        seeConfirmPassword
+        seeConfirmPassword,
+        deleteAccountController,
+        deleteAccountSucess
       ];
 }

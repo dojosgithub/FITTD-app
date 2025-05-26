@@ -12,38 +12,44 @@ import '../../../../data/enums/male_measurement_enum.dart';
 import '../male_feilds.dart';
 
 class MaleLowerForm extends StatelessWidget {
-  const MaleLowerForm({super.key});
+  MaleLowerForm({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MeasurementBloc, MeasurementState>(
-      builder: (context, state) => Column(
-        children: [
-          for (final field in maleLowerFields) ...[
-            buildMeasurementField(
-              context: context,
-              state: state,
-              label: field['label'] as String,
-              fieldEnum: field['enum'] as MaleMeasurementEnum,
-              value: (field['getter'] as Measurement Function(
-                      MaleMeasurementModel))
-                  .call(state.maleMeasurementModel)
-                  .value,
-              unit: (field['getter'] as Measurement Function(
-                      MaleMeasurementModel))
-                  .call(state.maleMeasurementModel)
-                  .unit,
+      builder: (context, state) => Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            for (final field in maleLowerFields) ...[
+              buildMeasurementField(
+                context: context,
+                state: state,
+                label: field['label'] as String,
+                fieldEnum: field['enum'] as MaleMeasurementEnum,
+                value: (field['getter'] as Measurement Function(
+                        MaleMeasurementModel))
+                    .call(state.maleMeasurementModel)
+                    .value,
+                unit: (field['getter'] as Measurement Function(
+                        MaleMeasurementModel))
+                    .call(state.maleMeasurementModel)
+                    .unit,
+              ),
+              SpacersVertical.spacer18,
+            ],
+            CustomButton(
+              text: "Next",
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  context.pushNamed(AppRoutesEnum.sizePreview.name);
+                }
+              },
             ),
-            SpacersVertical.spacer18,
+            SpacersVertical.spacer28,
           ],
-          CustomButton(
-            text: "Next",
-            onTap: () {
-              context.pushNamed(AppRoutesEnum.sizePreview.name);
-            },
-          ),
-          SpacersVertical.spacer28,
-        ],
+        ),
       ),
     );
   }

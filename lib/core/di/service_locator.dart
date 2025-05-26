@@ -117,6 +117,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetProfileUseCase(sl()));
   sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
   sl.registerLazySingleton(() => ChangePasswordUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteAccountUseCase(sl()));
 
   // Blocs
   sl.registerFactory(() => LoginBloc(loginUseCase: sl()));
@@ -132,7 +133,8 @@ Future<void> init() async {
       ));
   sl.registerFactory(() => MeasurementBloc(
       addMeasurementsUseCase: sl(), getMeasurementsUseCase: sl()));
-  sl.registerFactory(() => SettingsBloc(changePasswordUseCase: sl()));
+  sl.registerFactory(() =>
+      SettingsBloc(changePasswordUseCase: sl(), deleteAccountUseCase: sl()));
   sl.registerFactory(
       () => ProfileBloc(profileUseCase: sl(), updateProfileUseCase: sl()));
 }

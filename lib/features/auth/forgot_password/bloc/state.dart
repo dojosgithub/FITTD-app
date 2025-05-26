@@ -3,7 +3,8 @@ part of 'bloc.dart';
 
 class ForgotPasswordState extends Equatable {
   final bool isLoading;
-  final bool isSucess;
+  final bool isEmailSucess;
+  final bool isResetSucess;
   final bool isError;
   final String errorMessage;
   final TextEditingController emailController;
@@ -13,7 +14,8 @@ class ForgotPasswordState extends Equatable {
   final bool seeConfirmPassword;
   const ForgotPasswordState({
     required this.isLoading,
-    required this.isSucess,
+    required this.isEmailSucess,
+    required this.isResetSucess,
     required this.isError,
     required this.seeConfirmPassword,
     required this.seePassword,
@@ -26,7 +28,8 @@ class ForgotPasswordState extends Equatable {
   @override
   List<Object?> get props => [
         isLoading,
-        isSucess,
+        isEmailSucess,
+        isResetSucess,
         isError,
         errorMessage,
         emailController,
@@ -38,7 +41,8 @@ class ForgotPasswordState extends Equatable {
 
   ForgotPasswordState copyWith({
     bool? isLoading,
-    bool? isSucess,
+    bool? isResetSucess,
+    bool? isEmailSucess,
     bool? isError,
     bool? seeConfirmPassword,
     bool? seePassword,
@@ -49,7 +53,8 @@ class ForgotPasswordState extends Equatable {
   }) {
     return ForgotPasswordState(
       isLoading: isLoading ?? this.isLoading,
-      isSucess: isSucess ?? this.isSucess,
+      isEmailSucess: isEmailSucess ?? this.isEmailSucess,
+      isResetSucess: isResetSucess ?? this.isResetSucess,
       isError: isError ?? this.isError,
       seeConfirmPassword: seeConfirmPassword ?? this.seeConfirmPassword,
       seePassword: seePassword ?? this.seePassword,

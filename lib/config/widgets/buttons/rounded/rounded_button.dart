@@ -14,29 +14,32 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 48.w,
-      height: 48.h,
-      alignment: Alignment.center,
-      padding: EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: AppColors.grey,
-          width: 0.1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(
-              alpha: 0.04,
-            ),
-            blurRadius: 4,
-            offset: Offset(0, 2),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 48.w,
+        height: 48.h,
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: AppColors.grey,
+            width: 0.1,
           ),
-        ],
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withValues(
+                alpha: 0.04,
+              ),
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: child,
       ),
-      child: GestureDetector(onTap: onTap, child: child),
     );
   }
 }

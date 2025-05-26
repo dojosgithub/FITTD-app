@@ -18,7 +18,7 @@ class ChangePasswordFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
       listener: (context, state) {
-        if (state.isSucess) {
+        if (state.isResetSucess) {
           context.pushReplacementNamed(
               AppRoutesEnum.passwordResetConfirmView.name);
         }

@@ -20,4 +20,5 @@ class AppImages {
   static const String head2 = '${baseUrl}head2$extension';
   static const String hand2 = '${baseUrl}hand2$extension';
   static const String face2 = '${baseUrl}face2$extension';
+  static const String homeBanner = '${baseUrl}home_banner$extension';
 }

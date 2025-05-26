@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../config/assets/icons.dart';
 import '../../../../config/helper/image_provider/fitted_image_provider.dart';
+import '../../../../config/widgets/product_card.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -156,10 +157,12 @@ class _ProfileViewState extends State<ProfileView> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 16.h,
                           crossAxisSpacing: 12.w,
-                          childAspectRatio: 171 / 230,
+                          childAspectRatio: 171 / 237,
                         ),
                         itemBuilder: (context, index) {
-                          return ProductCard();
+                          return ProductCard(
+                            height: 180.h,
+                          );
                         },
                       ),
                     ],
@@ -167,72 +170,6 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
       ),
-    );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 171.w,
-          height: 185.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(9.r),
-            border: Border.all(
-              width: 1,
-              color: AppColors.black.withValues(alpha: 0.04),
-            ),
-          ),
-          padding: EdgeInsets.all(12),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              FittedImageProvider.network(
-                imagePath: HomeMockData.productImg1,
-                imageSize: Size(107.w, 163.h),
-                boxFit: BoxFit.cover,
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: FittedImageProvider.localSvg(
-                  imagePath: AppVectors.heartFilled,
-                  imageSize: Size.square(20),
-                  boxFit: BoxFit.cover,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(4.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText.poppinsMedium(
-                "Dior Vest Cargo-Blue",
-                fontSize: 14,
-                height: 22 / 14,
-                color: AppColors.tealPrimary,
-              ),
-              AppText.poppinsLight(
-                "\$9225",
-                fontSize: 14,
-                height: 22 / 14,
-                color: AppColors.tealSecondary,
-              )
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'bloc.dart';
 
 class SettingsEvent {}
@@ -12,6 +13,11 @@ class PasswordVisibilityChanged extends SettingsEvent {
   });
 }
 
-class ChangePassword extends SettingsEvent {}
+class ChangePassword extends SettingsEvent {
+  final String email;
+  ChangePassword({
+    required this.email,
+  });
+}
 
 class DeleteAccount extends SettingsEvent {}

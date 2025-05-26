@@ -77,4 +77,20 @@ class ApiClient {
       throw Exception(e.response?.data['message'] ?? 'Unknown Error');
     }
   }
+
+  Future<Response> delete(String endpoint, {Map<String, dynamic>? data}) async {
+    if (!await networkInfo.isConnected) {
+      throw Exception("No internet connection");
+    }
+
+    try {
+      final response = await _dio.delete(
+        endpoint,
+        data: data,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Unknown Error');
+    }
+  }
 }

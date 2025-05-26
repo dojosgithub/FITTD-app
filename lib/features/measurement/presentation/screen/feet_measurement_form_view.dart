@@ -17,7 +17,8 @@ import '../widgets/measurement_appbar.dart';
 import '../widgets/unit_dropdown.dart';
 
 class FeetMeasurementFormView extends StatelessWidget {
-  const FeetMeasurementFormView({super.key});
+  FeetMeasurementFormView({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,90 +36,100 @@ class FeetMeasurementFormView extends StatelessWidget {
           }
         },
         builder: (context, state) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SpacersVertical.spacer34,
-              AppText.poppinsBold(
-                "Add Foot Measurement ",
-                fontSize: 20,
-                height: 28 / 20,
-                color: AppColors.black,
-              ),
-              SpacersVertical.spacer8,
-              AppText.poppinsRegular(
-                "Answer these questions, & we'll suggest ideal footwear tailored to your size.",
-                fontSize: 14,
-                height: 22 / 14,
-                color: AppColors.black.withValues(alpha: 0.6),
-                letterSpacing: 0.02 * 14,
-                textAlign: TextAlign.center,
-              ),
-              SpacersVertical.spacer26,
-              FittedInputField.withIcon(
-                initialValue:
-                    state.otherMeasurementModel.feetWidth.value.toString(),
-                validator: InputValidators.notEmpty(),
-                spacing: SpacersVertical.spacer8,
-                label: "Foot Length",
-                hint: "eg. 150",
-                keyboardType: TextInputType.number,
-                onChanged: (p0) {
-                  if (p0.isNotEmpty) {
-                    context.read<MeasurementBloc>().add(UpdateOtherMeasurement(
-                          field: OtherMeasurementsEnum.feetLength,
-                          value: Measurement(
-                              value: num.parse(p0),
-                              unit:
-                                  state.otherMeasurementModel.feetLength.unit),
-                        ));
-                  }
-                },
-                suffixIcon: UnitDropdown(
-                  selectedUnit: state.otherMeasurementModel.feetLength.unit,
-                  field: OtherMeasurementsEnum.feetLength,
-                  value: state.otherMeasurementModel.feetLength.value,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SpacersVertical.spacer34,
+                AppText.poppinsBold(
+                  "Add Foot Measurement ",
+                  fontSize: 20,
+                  height: 28 / 20,
+                  color: AppColors.black,
                 ),
-              ),
-              SpacersVertical.spacer32,
-              FittedInputField.withIcon(
-                initialValue:
-                    state.otherMeasurementModel.feetLength.value.toString(),
-                validator: InputValidators.notEmpty(),
-                spacing: SpacersVertical.spacer8,
-                label: "Foot Width",
-                hint: "eg. 150",
-                keyboardType: TextInputType.number,
-                onChanged: (p0) {
-                  if (p0.isNotEmpty) {
-                    context.read<MeasurementBloc>().add(UpdateOtherMeasurement(
-                          field: OtherMeasurementsEnum.feetWidth,
-                          value: Measurement(
-                              value: num.parse(p0),
-                              unit: state.otherMeasurementModel.feetWidth.unit),
-                        ));
-                  }
-                },
-                suffixIcon: UnitDropdown(
-                  selectedUnit: state.otherMeasurementModel.feetWidth.unit,
-                  field: OtherMeasurementsEnum.feetWidth,
-                  value: state.otherMeasurementModel.feetWidth.value,
+                SpacersVertical.spacer8,
+                AppText.poppinsRegular(
+                  "Answer these questions, & we'll suggest ideal footwear tailored to your size.",
+                  fontSize: 14,
+                  height: 22 / 14,
+                  color: AppColors.black.withValues(alpha: 0.6),
+                  letterSpacing: 0.02 * 14,
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              Spacer(),
-              state.isLoading
-                  ? LoadingIndicator()
-                  : CustomButton(
-                      onTap: () => context
+                SpacersVertical.spacer26,
+                FittedInputField.withIcon(
+                  initialValue:
+                      state.otherMeasurementModel.feetWidth.value.toString(),
+                  validator: InputValidators.notEmpty(),
+                  spacing: SpacersVertical.spacer8,
+                  label: "Foot Length",
+                  hint: "eg. 150",
+                  keyboardType: TextInputType.number,
+                  onChanged: (p0) {
+                    if (p0.isNotEmpty) {
+                      context
                           .read<MeasurementBloc>()
-                          .add(AddMeasurements()),
-                      text: "Save",
-                      width: 336,
-                      height: 52,
-                    ),
-              SpacersVertical.spacer34,
-            ],
+                          .add(UpdateOtherMeasurement(
+                            field: OtherMeasurementsEnum.feetLength,
+                            value: Measurement(
+                                value: num.parse(p0),
+                                unit: state
+                                    .otherMeasurementModel.feetLength.unit),
+                          ));
+                    }
+                  },
+                  suffixIcon: UnitDropdown(
+                    selectedUnit: state.otherMeasurementModel.feetLength.unit,
+                    field: OtherMeasurementsEnum.feetLength,
+                    value: state.otherMeasurementModel.feetLength.value,
+                  ),
+                ),
+                SpacersVertical.spacer32,
+                FittedInputField.withIcon(
+                  initialValue:
+                      state.otherMeasurementModel.feetLength.value.toString(),
+                  validator: InputValidators.notEmpty(),
+                  spacing: SpacersVertical.spacer8,
+                  label: "Foot Width",
+                  hint: "eg. 150",
+                  keyboardType: TextInputType.number,
+                  onChanged: (p0) {
+                    if (p0.isNotEmpty) {
+                      context
+                          .read<MeasurementBloc>()
+                          .add(UpdateOtherMeasurement(
+                            field: OtherMeasurementsEnum.feetWidth,
+                            value: Measurement(
+                                value: num.parse(p0),
+                                unit:
+                                    state.otherMeasurementModel.feetWidth.unit),
+                          ));
+                    }
+                  },
+                  suffixIcon: UnitDropdown(
+                    selectedUnit: state.otherMeasurementModel.feetWidth.unit,
+                    field: OtherMeasurementsEnum.feetWidth,
+                    value: state.otherMeasurementModel.feetWidth.value,
+                  ),
+                ),
+                Spacer(),
+                state.isLoading
+                    ? LoadingIndicator()
+                    : CustomButton(
+                        onTap: () => _formKey.currentState!.validate()
+                            ? context
+                                .read<MeasurementBloc>()
+                                .add(AddMeasurements())
+                            : null,
+                        text: "Save",
+                        width: 336,
+                        height: 52,
+                      ),
+                SpacersVertical.spacer34,
+              ],
+            ),
           ),
         ),
       ),

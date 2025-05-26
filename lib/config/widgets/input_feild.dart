@@ -20,6 +20,7 @@ class FittedInputField extends StatelessWidget {
   final double? width;
   final String? initialValue;
   final Widget? prefixIcon; // Add this line
+  final TextStyle? hintStyle;
 
   const FittedInputField(
       {super.key,
@@ -34,6 +35,7 @@ class FittedInputField extends StatelessWidget {
       this.height,
       this.spacing,
       this.onChanged,
+      this.hintStyle,
       this.initialValue,
       this.width});
 
@@ -144,6 +146,7 @@ class FittedInputField extends StatelessWidget {
     required String label,
     String? hint,
     String? initialValue,
+    TextStyle? hintStyle,
     TextEditingController? controller,
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
@@ -155,6 +158,7 @@ class FittedInputField extends StatelessWidget {
     bool obscureText = false,
   }) {
     return FittedInputField(
+      hintStyle: hintStyle,
       label: label,
       hint: hint ?? 'Enter your $label',
       controller: controller,
@@ -203,11 +207,12 @@ class FittedInputField extends StatelessWidget {
               onChanged: onChanged,
               decoration: InputDecoration(
                 hintText: hint,
-                hintStyle: AppTextStyles.poppinsRegular(
-                  fontSize: 16,
-                  height: 24 / 16,
-                  color: AppColors.tealSecondary,
-                ),
+                hintStyle: hintStyle ??
+                    AppTextStyles.poppinsRegular(
+                      fontSize: 16,
+                      height: 24 / 16,
+                      color: AppColors.tealSecondary,
+                    ),
                 errorMaxLines: 2,
                 border: outlineInputBorder,
                 enabledBorder: outlineInputBorder,

@@ -17,7 +17,8 @@ import '../widgets/measurement_appbar.dart';
 import '../widgets/unit_dropdown.dart';
 
 class HeadMeasurementFormView extends StatelessWidget {
-  const HeadMeasurementFormView({super.key});
+  HeadMeasurementFormView({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,63 +36,71 @@ class HeadMeasurementFormView extends StatelessWidget {
           }
         },
         builder: (context, state) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SpacersVertical.spacer34,
-              AppText.poppinsBold(
-                "Head Circumference",
-                fontSize: 20,
-                height: 28 / 20,
-                color: AppColors.black,
-              ),
-              SpacersVertical.spacer8,
-              AppText.poppinsRegular(
-                "Answer these questions, & we'll suggest ideal headwear choices tailored to your size.",
-                fontSize: 14,
-                height: 22 / 14,
-                color: AppColors.black.withValues(alpha: 0.6),
-                letterSpacing: 0.02 * 14,
-                textAlign: TextAlign.center,
-              ),
-              SpacersVertical.spacer26,
-              FittedInputField.withIcon(
-                initialValue: state.otherMeasurementModel.head.value.toString(),
-                validator: InputValidators.notEmpty(),
-                spacing: SpacersVertical.spacer8,
-                label: "Head Circumference",
-                hint: "eg. 150",
-                keyboardType: TextInputType.number,
-                onChanged: (p0) {
-                  if (p0.isNotEmpty) {
-                    context.read<MeasurementBloc>().add(UpdateOtherMeasurement(
-                          field: OtherMeasurementsEnum.head,
-                          value: Measurement(
-                              value: num.parse(p0),
-                              unit: state.otherMeasurementModel.head.unit),
-                        ));
-                  }
-                },
-                suffixIcon: UnitDropdown(
-                  selectedUnit: state.otherMeasurementModel.head.unit,
-                  field: OtherMeasurementsEnum.head,
-                  value: state.otherMeasurementModel.head.value,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SpacersVertical.spacer34,
+                AppText.poppinsBold(
+                  "Head Circumference",
+                  fontSize: 20,
+                  height: 28 / 20,
+                  color: AppColors.black,
                 ),
-              ),
-              Spacer(),
-              state.isLoading
-                  ? LoadingIndicator()
-                  : CustomButton(
-                      onTap: () => context
+                SpacersVertical.spacer8,
+                AppText.poppinsRegular(
+                  "Answer these questions, & we'll suggest ideal headwear choices tailored to your size.",
+                  fontSize: 14,
+                  height: 22 / 14,
+                  color: AppColors.black.withValues(alpha: 0.6),
+                  letterSpacing: 0.02 * 14,
+                  textAlign: TextAlign.center,
+                ),
+                SpacersVertical.spacer26,
+                FittedInputField.withIcon(
+                  initialValue:
+                      state.otherMeasurementModel.head.value.toString(),
+                  validator: InputValidators.notEmpty(),
+                  spacing: SpacersVertical.spacer8,
+                  label: "Head Circumference",
+                  hint: "eg. 150",
+                  keyboardType: TextInputType.number,
+                  onChanged: (p0) {
+                    if (p0.isNotEmpty) {
+                      context
                           .read<MeasurementBloc>()
-                          .add(AddMeasurements()),
-                      text: "Save",
-                      width: 336,
-                      height: 52,
-                    ),
-              SpacersVertical.spacer34,
-            ],
+                          .add(UpdateOtherMeasurement(
+                            field: OtherMeasurementsEnum.head,
+                            value: Measurement(
+                                value: num.parse(p0),
+                                unit: state.otherMeasurementModel.head.unit),
+                          ));
+                    }
+                  },
+                  suffixIcon: UnitDropdown(
+                    selectedUnit: state.otherMeasurementModel.head.unit,
+                    field: OtherMeasurementsEnum.head,
+                    value: state.otherMeasurementModel.head.value,
+                  ),
+                ),
+                Spacer(),
+                state.isLoading
+                    ? LoadingIndicator()
+                    : CustomButton(
+                        onTap: () => _formKey.currentState!.validate()
+                            ? context
+                                .read<MeasurementBloc>()
+                                .add(AddMeasurements())
+                            : null,
+                        text: "Save",
+                        width: 336,
+                        height: 52,
+                      ),
+                SpacersVertical.spacer34,
+              ],
+            ),
           ),
         ),
       ),

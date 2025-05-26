@@ -10,38 +10,44 @@ import '../../build_measurement_feild.dart';
 import '../male_feilds.dart';
 
 class MaleUpperForm extends StatelessWidget {
-  const MaleUpperForm({super.key});
+  MaleUpperForm({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MeasurementBloc, MeasurementState>(
-      builder: (context, state) => Column(
-        children: [
-          for (final field in maleUpperFields) ...[
-            buildMeasurementField(
-              context: context,
-              state: state,
-              label: field['label'] as String,
-              fieldEnum: field['enum'] as MaleMeasurementEnum,
-              value: (field['getter'] as Measurement Function(
-                      MaleMeasurementModel))
-                  .call(state.maleMeasurementModel)
-                  .value,
-              unit: (field['getter'] as Measurement Function(
-                      MaleMeasurementModel))
-                  .call(state.maleMeasurementModel)
-                  .unit,
+      builder: (context, state) => Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            for (final field in maleUpperFields) ...[
+              buildMeasurementField(
+                context: context,
+                state: state,
+                label: field['label'] as String,
+                fieldEnum: field['enum'] as MaleMeasurementEnum,
+                value: (field['getter'] as Measurement Function(
+                        MaleMeasurementModel))
+                    .call(state.maleMeasurementModel)
+                    .value,
+                unit: (field['getter'] as Measurement Function(
+                        MaleMeasurementModel))
+                    .call(state.maleMeasurementModel)
+                    .unit,
+              ),
+              SpacersVertical.spacer18,
+            ],
+            CustomButton(
+              text: "Next",
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  context.read<MeasurementBloc>().add(IncrementIndex());
+                }
+              },
             ),
-            SpacersVertical.spacer18,
+            SpacersVertical.spacer28,
           ],
-          CustomButton(
-            text: "Next",
-            onTap: () {
-              context.read<MeasurementBloc>().add(IncrementIndex());
-            },
-          ),
-          SpacersVertical.spacer28,
-        ],
+        ),
       ),
     );
   }

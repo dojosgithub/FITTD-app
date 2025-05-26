@@ -9,6 +9,7 @@ import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
+import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,12 +65,6 @@ class ChangePasswordView extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    FittedInputField.email(
-                      width: 1.sw,
-                      label: "Email",
-                      controller: state.emailController,
-                    ),
-                    SpacersVertical.spacer28,
                     FittedInputField.password(
                       width: 1.sw,
                       label: "Current Password",
@@ -106,7 +101,13 @@ class ChangePasswordView extends StatelessWidget {
                         text: "Update Password",
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            context.read<SettingsBloc>().add(ChangePassword());
+                            context.read<SettingsBloc>().add(ChangePassword(
+                                  email: context
+                                      .read<ProfileBloc>()
+                                      .state
+                                      .profile
+                                      .email!,
+                                ));
                           } else {
                             log('Form is not valid');
                           }

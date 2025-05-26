@@ -1,5 +1,6 @@
 import 'package:fitted/config/helper/dialog/dialog_page.dart';
 import 'package:fitted/config/helper/transitions/page_transition.dart';
+import 'package:fitted/features/apparel/presentation/screens/apparel_detail_view.dart';
 import 'package:fitted/features/auth/verify_otp/presentation/screens/otp_verification.dart';
 import 'package:fitted/features/auth/forgot_password/presentation/screen/forgot_password_view.dart';
 import 'package:fitted/features/auth/forgot_password/presentation/screen/password_reset_confirm_view.dart';
@@ -15,6 +16,7 @@ import 'package:fitted/features/onboarding/presentation/screens/onboarding_view.
 import 'package:fitted/features/auth/signup/presentation/screens/signup_view.dart';
 import 'package:fitted/features/onboarding/presentation/screens/splash_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/user_info_view.dart';
+import 'package:fitted/features/products/presentation/screens/products_detail_view.dart';
 import 'package:fitted/features/profile/presentation/screens/profile_view.dart';
 import 'package:fitted/features/measurement/presentation/dialogs/confirmation_dialog.dart';
 import 'package:fitted/features/settings/dialogs/delete_dialog.dart';
@@ -225,6 +227,20 @@ class AppRoutes {
         child: HeadMeasurementView(),
       ),
     ),
+    GoRoute(
+      path: AppRoutesEnum.apparelDetailView.path,
+      name: AppRoutesEnum.apparelDetailView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: ApparelDetailView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.productsDetailView.path,
+      name: AppRoutesEnum.productsDetailView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: ProductsDetailView(),
+      ),
+    ),
   ];
 }
 
@@ -256,6 +272,8 @@ enum AppRoutesEnum {
   handMeasurementView,
   faceMeasurementView,
   headMeasurementView,
+  apparelDetailView,
+  productsDetailView,
 }
 
 extension AppRoutesExtension on AppRoutesEnum {
@@ -299,7 +317,6 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/confirmationDialog';
       case AppRoutesEnum.sizePreview:
         return '/sizePreview';
-
       case AppRoutesEnum.faceMeasurementFormView:
         return '/faceMeasurementFormView';
       case AppRoutesEnum.feetMeasurementFormView:
@@ -316,6 +333,10 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/headMeasurementView';
       case AppRoutesEnum.handMeasurementView:
         return '/handMeasurementView';
+      case AppRoutesEnum.apparelDetailView:
+        return '/apparelDetailView';
+      case AppRoutesEnum.productsDetailView:
+        return '/productsDetailView';
     }
   }
 
