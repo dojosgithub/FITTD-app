@@ -39,6 +39,8 @@ class UserInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<MeasurementBloc, MeasurementState>(
+        listenWhen: (previous, current) =>
+            previous.isSuccess != current.isSuccess,
         listener: (context, state) {
           if (state.isSuccess && MeasurementRouteEnum.home == contextType) {
             context.pushReplacementNamed(

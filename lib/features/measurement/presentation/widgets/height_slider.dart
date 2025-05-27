@@ -48,7 +48,7 @@ class HeightSliderWidget extends StatelessWidget {
                 ),
               ),
             ],
-            text: value.toString(),
+            text: value.toStringAsFixed(0),
             style: AppTextStyles.poppinsLight(
               fontSize: 38,
               color: AppColors.tealSecondary,
@@ -72,7 +72,7 @@ class HeightSliderWidget extends StatelessWidget {
           },
           blendMode: BlendMode.dstIn,
           child: WheelSlider(
-            totalCount: unit == Unit.inch ? 107 : 251,
+            totalCount: unit == Unit.inch ? 610 : 1530,
             initValue: value,
             isInfinite: false,
             lineColor: AppColors.tealAccent,

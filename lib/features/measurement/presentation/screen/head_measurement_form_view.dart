@@ -27,6 +27,8 @@ class HeadMeasurementFormView extends StatelessWidget {
         appbarTitle: "Head Circumference",
       ),
       body: BlocConsumer<MeasurementBloc, MeasurementState>(
+        listenWhen: (previous, current) =>
+            previous.isSuccess != current.isSuccess,
         listener: (context, state) {
           if (state.isSuccess) {
             context.pushReplacementNamed(

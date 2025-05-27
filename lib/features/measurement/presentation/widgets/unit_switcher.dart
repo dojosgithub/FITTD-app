@@ -6,11 +6,11 @@ import 'package:fitted/features/measurement/data/models/measurement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../data/enums/male_measurement_enum.dart';
 import '../../data/enums/unit_enum.dart';
 
 class UnitSwitcher extends StatelessWidget {
-  const UnitSwitcher({super.key, required this.selectedUnit});
-  final Unit selectedUnit;
+  const UnitSwitcher({super.key});
   @override
   Widget build(BuildContext context) {
     final unit = context.select<MeasurementBloc, Unit>((bloc) =>
@@ -57,25 +57,36 @@ class UnitSwitcher extends StatelessWidget {
   }
 
   Widget _buildOption(String label, Unit unit, BuildContext context) {
-    final state = context.read<MeasurementBloc>().state;
-    final currentUnit = state.style == "male"
-        ? state.maleMeasurementModel.height.unit
-        : state.femaleMeasurementModel.height.unit;
-    final isSelected = currentUnit == unit;
+    final bloc = context.read<MeasurementBloc>();
+    final state = bloc.state;
+    final isMale = state.style == "male";
+
+    final currentMeasurement = isMale
+        ? state.maleMeasurementModel.height
+        : state.femaleMeasurementModel.height;
+
+    final isSelected = currentMeasurement.unit == unit;
 
     return Expanded(
       child: GestureDetector(
         onTap: () {
           if (!isSelected) {
-            final currentValue = state.style == "male"
-                ? state.maleMeasurementModel.height.value
-                : state.femaleMeasurementModel.height.value;
-            context.read<MeasurementBloc>().add(
-                  UpdateMeasurement(
-                    field: FemaleMeasurementEnum.height,
-                    value: Measurement(value: currentValue, unit: unit),
-                  ),
-                );
+            final currentValue = currentMeasurement.value;
+
+            final field = isMale
+                ? MaleMeasurementEnum.height
+                : FemaleMeasurementEnum.height;
+
+            final double convertedValue = unit == Unit.inch
+                ? (currentValue / 2.54) // cm → inch
+                : (currentValue * 2.54); // inch → cm
+
+            bloc.add(
+              UpdateMeasurement(
+                field: field,
+                value: Measurement(value: convertedValue, unit: unit),
+              ),
+            );
           }
         },
         child: Container(

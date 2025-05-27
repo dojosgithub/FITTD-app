@@ -27,6 +27,8 @@ class HandMeasurementFormView extends StatelessWidget {
         appbarTitle: "Hand Measurement",
       ),
       body: BlocConsumer<MeasurementBloc, MeasurementState>(
+        listenWhen: (previous, current) =>
+            previous.isSuccess != current.isSuccess,
         listener: (context, state) {
           if (state.isSuccess) {
             context.pushReplacementNamed(
