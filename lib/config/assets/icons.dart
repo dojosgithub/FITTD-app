@@ -41,4 +41,5 @@ class AppVectors {
   static const String wishlist = '${baseUrl}wishlist$extension';
   static const String filterBar = '${baseUrl}filter_bar$extension';
   static const String star = '${baseUrl}star$extension';
+  static const String share = '${baseUrl}share$extension';
 }

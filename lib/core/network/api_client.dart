@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:fitted/core/constants/app_constants.dart';
 import 'package:fitted/core/network/network_info.dart';
@@ -56,8 +58,12 @@ class ApiClient {
     try {
       final response =
           await _dio.get(endpoint, queryParameters: queryParameters);
+      log(response.requestOptions.uri.toString());
+
       return response;
     } on DioException catch (e) {
+      log(e.response?.requestOptions.uri.toString() ?? 'Unknown Error');
+
       throw Exception(e.response?.data['message'] ?? 'Unknown Error');
     }
   }

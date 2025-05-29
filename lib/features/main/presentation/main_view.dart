@@ -2,6 +2,7 @@ import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/features/apparel/presentation/screens/apparel_detail_view.dart';
 import 'package:fitted/features/apparel/presentation/screens/apparel_view.dart';
 import 'package:fitted/features/home/presentation/screens/home_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/measurement_view.dart';
@@ -43,6 +44,7 @@ class _MainViewState extends State<MainView> {
       ApparelView(),
       MeasurementView(index: widget.index),
       ProfileView(),
+      ApparelDetailView(),
     ];
   }
 
@@ -108,8 +110,7 @@ class CustomBottomNavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(_icons.length, (_) {
-          final isSelected = _ == index;
-
+          final isSelected = _ == (index == 4 ? 1 : index);
           return GestureDetector(
             onTap: () => onTabSelected(_),
             child: AnimatedContainer(

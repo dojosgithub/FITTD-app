@@ -1,3 +1,4 @@
+import 'package:fitted/config/providers/apparel/apparel_providers.dart';
 import 'package:fitted/config/providers/auth/auth_providers.dart';
 import 'package:fitted/config/providers/settings/settings_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ class AppProviders {
       ...AuthProviders.getProviders(),
       ...MeasurementProvider.getProviders(),
       ...SettingsProvider.getProviders(),
+      ...ApparelProvider.getProviders(),
     ];
   }
 }

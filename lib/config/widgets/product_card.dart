@@ -11,9 +11,19 @@ import '../router/app_routes.dart';
 import 'app_text.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, this.height});
+  const ProductCard(
+      {super.key,
+      this.height,
+      this.name = "",
+      this.price = "",
+      this.image = HomeMockData.productImg1,
+      this.isLiked = false});
 
   final double? height;
+  final String name;
+  final String price;
+  final bool isLiked;
+  final String image;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,7 +35,7 @@ class ProductCard extends StatelessWidget {
         children: [
           Container(
             width: 171.w,
-            height: height ?? 195.h,
+            // height: height ?? 195.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(9.r),
               border: Border.all(
@@ -38,7 +48,7 @@ class ProductCard extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 FittedImageProvider.network(
-                  imagePath: HomeMockData.productImg1,
+                  imagePath: image,
                   imageSize: Size(107.w, 163.h),
                   boxFit: BoxFit.cover,
                 ),
@@ -46,7 +56,8 @@ class ProductCard extends StatelessWidget {
                   top: 0,
                   right: 0,
                   child: FittedImageProvider.localSvg(
-                    imagePath: AppVectors.heartFilled,
+                    imagePath:
+                        isLiked ? AppVectors.heartFilled : AppVectors.heart,
                     imageSize: Size.square(20),
                     boxFit: BoxFit.cover,
                   ),
@@ -62,13 +73,13 @@ class ProductCard extends StatelessWidget {
               spacing: 6.h,
               children: [
                 AppText.poppinsMedium(
-                  "Dior Vest Cargo-Blue",
+                  name,
                   fontSize: 14,
                   height: 22 / 14,
                   color: AppColors.tealPrimary,
                 ),
                 AppText.poppinsLight(
-                  "\$9225",
+                  price,
                   fontSize: 14,
                   height: 22 / 14,
                   color: AppColors.tealSecondary,

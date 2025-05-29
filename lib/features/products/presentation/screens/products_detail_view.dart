@@ -4,12 +4,14 @@ import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
+import 'package:fitted/config/widgets/product_card.dart';
 import 'package:fitted/features/main/data/mock_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:math' as math;
 
+import '../../../../config/helper/typography/app_text_styles.dart';
 import '../widgets/curved_painter.dart';
 
 class ProductsDetailView extends StatelessWidget {
@@ -237,10 +239,20 @@ class ProductsDetailView extends StatelessWidget {
                           ),
                         ),
                         alignment: Alignment.center,
-                        child: AppText.poppinsRegular(
-                          sizeList[index],
-                          fontSize: 22,
-                          color: AppColors.tealPrimary,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AppText.poppinsRegular(
+                              sizeList[index],
+                              fontSize: 22,
+                              color: AppColors.tealPrimary,
+                            ),
+                            AppText.poppinsRegular(
+                              "(Out of Stock)",
+                              fontSize: 10,
+                              color: AppColors.tealSecondary,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -260,11 +272,160 @@ class ProductsDetailView extends StatelessWidget {
                   color: AppColors.tealSecondary,
                   letterSpacing: 0,
                 ),
+                SpacersVertical.spacer16,
+                SizedBox(
+                  width: 360.w,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppText.poppinsSemiBold(
+                            "Alternation Recommended",
+                            fontSize: 16,
+                            height: 24 / 16,
+                            color: AppColors.charcoal,
+                          ),
+                          FittedImageProvider.localSvg(
+                            imagePath: AppVectors.share,
+                          ),
+                        ],
+                      ),
+                      SpacersVertical.spacer8,
+                      AlterationRecommendations(
+                        headline: "Hemming & Waistband adjustments:",
+                        description: " 2 inch reduction in waist",
+                      ),
+                      SpacersVertical.spacer8,
+                      AlterationRecommendations(
+                        headline: "Reduce thigh width:",
+                        description: " 1 inch reduction in thigh width",
+                      ),
+                      SpacersVertical.spacer8,
+                      AlterationRecommendations(
+                        headline: "Crotch reinforcement",
+                        description: "",
+                      ),
+                    ],
+                  ),
+                ),
+                SpacersVertical.spacer40,
+                AppText.poppinsRegular(
+                  "You may also like",
+                  fontSize: 22,
+                  color: AppColors.tealPrimary,
+                ),
+                SpacersVertical.spacer18,
+                GridView.builder(
+                  itemCount: 4,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.h,
+                    crossAxisSpacing: 12.w,
+                    childAspectRatio: 171 / 243,
+                  ),
+                  itemBuilder: (context, index) {
+                    return ProductCard(
+                      height: 180.h,
+                    );
+                  },
+                ),
+                SpacersVertical.spacer28,
+                Container(
+                  height: 68.h,
+                  width: 363.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.orangePrimary,
+                    borderRadius: BorderRadius.circular(90.r),
+                  ),
+                  padding: EdgeInsets.all(12.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText.poppinsRegular(
+                        "\$217",
+                        fontSize: 22,
+                        height: 24 / 22,
+                        letterSpacing: 0,
+                        color: AppColors.white,
+                      ),
+                      Container(
+                        height: 48.h,
+                        width: 135.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(90.r),
+                        ),
+                        padding: EdgeInsets.all(12.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 12.w,
+                          children: [
+                            FittedImageProvider.localSvg(
+                              imagePath: AppVectors.wishlist,
+                              imageSize: Size(18.w, 17.h),
+                              boxFit: BoxFit.contain,
+                            ),
+                            AppText.poppinsSemiBold(
+                              "Buy Now",
+                              fontSize: 13,
+                              height: 24 / 13,
+                              letterSpacing: 0,
+                              color: AppColors.tealPrimary,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SpacersVertical.spacer64
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class AlterationRecommendations extends StatelessWidget {
+  const AlterationRecommendations({
+    super.key,
+    required this.headline,
+    required this.description,
+  });
+  final String headline;
+  final String description;
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: headline,
+            style: AppTextStyles.poppinsMedium(
+              fontSize: 14,
+              height: 22 / 14,
+              color: AppColors.black,
+            ),
+          ),
+          TextSpan(
+            text: description,
+            style: AppTextStyles.poppinsLight(
+              fontSize: 14,
+              height: 22 / 14,
+              color: AppColors.charcoal.withValues(alpha: 0.6),
+            ),
+          ),
+        ],
+      ),
+      maxLines: null, // allows text to wrap
+      overflow: TextOverflow.visible,
     );
   }
 }
