@@ -51,7 +51,10 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[selectedIndex],
+      body: Padding(
+        padding: EdgeInsets.only(bottom: selectedIndex != 2 ? 80.h : 0),
+        child: screens[selectedIndex],
+      ),
       floatingActionButton: CustomBottomNavBar(
         index: selectedIndex,
         onTabSelected: (index) {

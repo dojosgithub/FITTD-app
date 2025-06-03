@@ -1,4 +1,3 @@
-
 import 'package:fitted/features/measurement/data/enums/measurement_route_enum.dart';
 import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
 import 'package:fitted/features/measurement/presentation/widgets/female_measurement_label.dart';

@@ -17,3 +17,16 @@ class SetCategory extends ApparelEvent {
     required this.category,
   });
 }
+
+class LoadMoreCategoryProducts extends ApparelEvent {}
+
+class WishList extends ApparelEvent {
+  final String productId;
+  final bool isAdded;
+  final bool skip;
+  WishList({
+    required this.productId,
+    required this.isAdded,
+    this.skip = false,
+  });
+}

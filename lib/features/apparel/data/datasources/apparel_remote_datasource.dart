@@ -30,7 +30,7 @@ class ApparelRemoteDataSourceImpl implements ApparelRemoteDataSource {
       {String? brand, required String category, required int page}) async {
     final response = await apiClient.get(
       brand == null
-          ? '/api/product/brands-and-categories?category=${category.toLowerCase()}&page=$page'
+          ? '/api/product/brands-and-categories?category=${category.toLowerCase()}&page=$page&brand=EB_Denim,Agolde,Self_Potrait, J_Crew, Lululemon, Reformation,House_Of_CB'
           : '/api/product/get-categories-count?brand=$brand&category=$category&page=$page',
     );
 

@@ -42,8 +42,13 @@ class ApiClient {
 
     try {
       final response = await _dio.post(endpoint, data: data);
+      log(response.requestOptions.uri.toString());
+
       return response;
     } on DioException catch (e) {
+      log(endpoint);
+      log(e.response!.data);
+
       throw Exception(e.response?.data['message'] ?? 'Unknown Error');
     }
   }
@@ -94,6 +99,8 @@ class ApiClient {
         endpoint,
         data: data,
       );
+      log(response.requestOptions.uri.toString());
+
       return response;
     } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Unknown Error');

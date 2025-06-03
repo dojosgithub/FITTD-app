@@ -1,3 +1,6 @@
+import 'package:fitted/features/home/domain/usecases/home_usecase.dart';
+import 'package:fitted/features/home/presentation/bloc/bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fitted/core/network/token_provider.dart';
 import 'package:fitted/features/apparel/presentation/bloc/bloc.dart';
@@ -5,17 +8,24 @@ import 'package:fitted/features/measurement/data/datasources/measurement_remote_
 import 'package:fitted/features/measurement/domain/repository/measurement_repository.dart';
 import 'package:fitted/features/measurement/domain/repository/measurement_repositoy_impl.dart';
 import 'package:fitted/features/measurement/domain/usecase/measurement_usecase.dart';
+import 'package:fitted/features/products/domain/usecase/products_usecase.dart';
+import 'package:fitted/features/products/presentation/bloc/bloc.dart';
 import 'package:fitted/features/profile/domain/usecases/profile_usecase.dart';
 import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:fitted/features/settings/domain/repositories/settings_repository.dart';
 import 'package:fitted/features/settings/domain/usecases/settings_usecase.dart';
 import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../features/apparel/data/datasources/apparel_remotedatasource.dart';
+import '../../features/apparel/data/datasources/apparel_remote_datasource.dart';
 import '../../features/apparel/domain/repositories/apparel_repository.dart';
 import '../../features/apparel/domain/repositories/apparel_repository_impl.dart';
 import '../../features/apparel/domain/usecases/apparel_usecase.dart';
+import '../../features/home/data/datasources/home_remotedatasource.dart';
+import '../../features/home/domain/repositories/home_repository.dart';
+import '../../features/home/domain/repositories/home_repository_impl.dart';
+import '../../features/products/data/datasources/products_remote_datasource.dart';
+import '../../features/products/domain/repositories/products_repository.dart';
+import '../../features/products/domain/repositories/products_repository_impl.dart';
 import '../../features/profile/data/datasources/profile_remote_datasource.dart';
 import '../../features/profile/domain/repositories/profile_repository.dart';
 import '../../features/profile/domain/repositories/profile_repository_impl.dart';
@@ -100,6 +110,12 @@ Future<void> init() async {
   sl.registerLazySingleton<ApparelRemoteDataSource>(
     () => ApparelRemoteDataSourceImpl(sl()),
   );
+  sl.registerLazySingleton<ProductsRemoteDataSource>(
+    () => ProductsRemoteDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImpl(sl()),
+  );
 
   // Repositories
   sl.registerLazySingleton<LoginRepository>(
@@ -139,6 +155,16 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<ApparelRepository>(
     () => ApparelRepositoryImpl(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton<ProductsRepository>(
+    () => ProductsRepositoryImpl(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(
       sl(),
     ),
   );
@@ -214,6 +240,31 @@ Future<void> init() async {
       sl(),
     ),
   );
+  sl.registerLazySingleton(
+    () => GetProductsDetailUsecase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => AddClickUseCase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => WishListUseCase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => GetWishlistUseCase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => GetTrendingProductsUseCase(
+      sl(),
+    ),
+  );
 
   // Blocs
   sl.registerFactory(
@@ -255,12 +306,26 @@ Future<void> init() async {
     () => ProfileBloc(
       profileUseCase: sl(),
       updateProfileUseCase: sl(),
+      getWishListUseCase: sl(),
     ),
   );
   sl.registerFactory(
     () => ApparelBloc(
       apparelUsecase: sl(),
       getCategoryProductsUseCase: sl(),
+      wishListUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => ProductsBloc(
+      wishListUseCase: sl(),
+      getProductsDetailUsecase: sl(),
+      addClickUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => HomeBloc(
+      getTrendingProductsUseCase: sl(),
     ),
   );
 }

@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "bloc.dart";
 
 class ProfileState extends Equatable {
   final bool isLoading;
   final bool isSuccess;
   final Profile profile;
+  final WishlistEntity? wishlistEntity;
   final XFile? image;
   final TextEditingController firstName;
   final TextEditingController lastName;
@@ -12,6 +14,7 @@ class ProfileState extends Equatable {
     required this.isLoading,
     required this.isSuccess,
     required this.profile,
+    required this.wishlistEntity,
     required this.image,
     required this.firstName,
     required this.lastName,
@@ -28,6 +31,7 @@ class ProfileState extends Equatable {
       lastName,
       emailName,
       image,
+      wishlistEntity
     ];
   }
 
@@ -39,6 +43,7 @@ class ProfileState extends Equatable {
       TextEditingController? firstName,
       TextEditingController? lastName,
       TextEditingController? emailName,
+      WishlistEntity? wishlistEntity,
       bool clearImage = false}) {
     return ProfileState(
       isLoading: isLoading ?? this.isLoading,
@@ -47,6 +52,7 @@ class ProfileState extends Equatable {
       image: clearImage ? null : (image ?? this.image),
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
+      wishlistEntity: wishlistEntity ?? this.wishlistEntity,
       emailName: emailName ?? this.emailName,
     );
   }

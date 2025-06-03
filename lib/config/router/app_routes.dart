@@ -16,6 +16,7 @@ import 'package:fitted/features/onboarding/presentation/screens/onboarding_view.
 import 'package:fitted/features/auth/signup/presentation/screens/signup_view.dart';
 import 'package:fitted/features/onboarding/presentation/screens/splash_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/user_info_view.dart';
+import 'package:fitted/features/products/presentation/dialog/product_url_dialog.dart';
 import 'package:fitted/features/products/presentation/screens/products_detail_view.dart';
 import 'package:fitted/features/profile/presentation/screens/profile_view.dart';
 import 'package:fitted/features/measurement/presentation/dialogs/confirmation_dialog.dart';
@@ -144,6 +145,13 @@ class AppRoutes {
       ),
     ),
     GoRoute(
+      path: AppRoutesEnum.productUrlDialog.path,
+      name: AppRoutesEnum.productUrlDialog.name,
+      pageBuilder: (context, state) => DialogPage(
+        builder: (_) => ProductUrlDialog(),
+      ),
+    ),
+    GoRoute(
       path: AppRoutesEnum.logOutDialog.path,
       name: AppRoutesEnum.logOutDialog.name,
       pageBuilder: (context, state) => DialogPage(
@@ -238,7 +246,9 @@ class AppRoutes {
       path: AppRoutesEnum.productsDetailView.path,
       name: AppRoutesEnum.productsDetailView.name,
       pageBuilder: (context, state) => buildTransitionPage(
-        child: ProductsDetailView(),
+        child: ProductsDetailView(
+          productId: (state.extra as Map)['id'],
+        ),
       ),
     ),
   ];
@@ -263,6 +273,7 @@ enum AppRoutesEnum {
   deleteDialog,
   logOutDialog,
   confirmationDialog,
+  productUrlDialog,
   updateOtherMeasurements,
   feetMeasurementFormView,
   handMeasurementFormView,
@@ -309,6 +320,8 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/changePasswordView';
       case AppRoutesEnum.deleteDialog:
         return '/deleteDialog';
+      case AppRoutesEnum.productUrlDialog:
+        return '/productUrlDialog';
       case AppRoutesEnum.logOutDialog:
         return '/logOutDialog';
       case AppRoutesEnum.updateOtherMeasurements:

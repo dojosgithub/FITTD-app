@@ -3,7 +3,7 @@ import 'package:fitted/core/errors/failure.dart';
 import 'package:fitted/features/apparel/data/model/apparel_response_model.dart';
 import 'package:fitted/features/apparel/domain/repositories/apparel_repository.dart';
 
-import '../../data/datasources/apparel_remotedatasource.dart';
+import '../../data/datasources/apparel_remote_datasource.dart';
 import '../../data/model/category_products_response_model.dart';
 
 class ApparelRepositoryImpl extends ApparelRepository {

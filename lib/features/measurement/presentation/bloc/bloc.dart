@@ -144,7 +144,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
               handWidth: state.otherMeasurementModel.handWidth,
             )),
       );
-
       result.fold(
         (failure) {
           log(failure.message.toString());

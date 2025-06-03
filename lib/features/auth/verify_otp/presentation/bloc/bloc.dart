@@ -56,6 +56,13 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
         ToastUtil.showToast(message: failure.message);
       },
       (response) async {
+        if (OtpContextType.resetPassword == event.contextType) {
+          emit(state.copyWith(
+            isLoading: false,
+            isValid: true,
+          ));
+          return;
+        }
         log(SharedPrefsStorage.getRefreshToken().toString());
         final loginResult = await loginUseCase(
           password: SharedPrefsStorage.getRefreshToken().toString(),

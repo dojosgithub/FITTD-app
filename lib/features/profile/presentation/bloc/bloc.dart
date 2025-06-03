@@ -1,10 +1,10 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/features/profile/data/models/update_profile_request_model.dart';
-import 'package:fitted/features/profile/domain/entities/profile_entities.dart';
+import 'package:fitted/features/profile/domain/entities/profile_entity.dart';
+import 'package:fitted/features/profile/domain/entities/wishlist_entity.dart';
 import 'package:fitted/features/profile/domain/usecases/profile_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,11 +15,14 @@ part 'state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetProfileUseCase profileUseCase;
   final UpdateProfileUseCase updateProfileUseCase;
+  final GetWishlistUseCase getWishListUseCase;
   final ImagePicker _picker = ImagePicker();
 
-  ProfileBloc(
-      {required this.profileUseCase, required this.updateProfileUseCase})
-      : super(
+  ProfileBloc({
+    required this.profileUseCase,
+    required this.updateProfileUseCase,
+    required this.getWishListUseCase,
+  }) : super(
           ProfileState(
             isLoading: true,
             isSuccess: false,
@@ -34,6 +37,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             firstName: TextEditingController(),
             lastName: TextEditingController(),
             emailName: TextEditingController(),
+            wishlistEntity: null,
           ),
         ) {
     on<GetProfile>((event, emit) async {
@@ -82,6 +86,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<PickFromCamera>(_pickFromCamera);
     on<PickFromGallery>(_pickFromGallery);
     on<ClearImage>((event, emit) => emit(state.copyWith(clearImage: true)));
+    on<GetWishlist>((event, emit) async {
+      final result = await getWishListUseCase.call();
+      result.fold((failure) {
+        log(failure.message.toString());
+        emit(state.copyWith(isLoading: false));
+      }, (sucess) {
+        emit(state.copyWith(wishlistEntity: sucess));
+      });
+    });
+    on<RemoveFromWishlist>((event, emit) {
+      final newItems = List<Product>.from(state.wishlistEntity!.items)
+        ..removeAt(event.index);
+
+      final updatedWishlist = state.wishlistEntity!.copyWith(items: newItems);
+
+      emit(state.copyWith(wishlistEntity: updatedWishlist));
+    });
   }
   Future<void> _pickFromCamera(
       PickFromCamera event, Emitter<ProfileState> emit) async {

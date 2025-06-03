@@ -2,10 +2,12 @@ import 'package:fitted/features/profile/data/models/update_profile_request_model
 
 import '../../../../core/network/api_client.dart';
 import '../models/profile_response_model.dart';
+import '../models/wishlist_response_model.dart';
 
 abstract class ProfileRemoteDataSource {
   Future<ProfileResponseModel> getProfile();
   Future<ProfileResponseModel> updateProfile(UpdateProfileRequestModel request);
+  Future<WishlistResponseModel> getWishlist();
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -30,5 +32,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     );
 
     return ProfileResponseModel.fromJson(response.data);
+  }
+
+  @override
+  Future<WishlistResponseModel> getWishlist() async {
+    final response = await apiClient.get('/api/wishlist/');
+
+    return WishlistResponseModel.fromJson(response.data);
   }
 }

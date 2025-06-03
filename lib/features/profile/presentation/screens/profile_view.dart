@@ -4,6 +4,7 @@ import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
+import 'package:fitted/features/apparel/presentation/bloc/bloc.dart';
 import 'package:fitted/features/main/data/mock_data.dart';
 import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     context.read<ProfileBloc>().add(GetProfile());
+    context.read<ProfileBloc>().add(GetWishlist());
     super.initState();
   }
 
@@ -37,9 +39,10 @@ class _ProfileViewState extends State<ProfileView> {
             ? LoadingIndicator()
             : SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 68.h,
+                  padding: EdgeInsets.only(
+                    left: 12.w,
+                    right: 12.w,
+                    top: 68.h,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,23 +151,44 @@ class _ProfileViewState extends State<ProfileView> {
                         color: AppColors.black,
                       ),
                       SpacersVertical.spacer34,
-                      GridView.builder(
-                        itemCount: 4,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 16.h,
-                          crossAxisSpacing: 12.w,
-                          childAspectRatio: 171 / 237,
+                      if (state.wishlistEntity != null)
+                        GridView.builder(
+                          itemCount: state.wishlistEntity!.items.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12.w,
+                            childAspectRatio: 162.w / 270.h,
+                          ),
+                          itemBuilder: (context, index) {
+                            final wishListProducts =
+                                state.wishlistEntity!.items[index];
+                            return ProductCard(
+                              name: wishListProducts.name,
+                              price: wishListProducts.price,
+                              id: wishListProducts.id,
+                              isLiked: true,
+                              image: wishListProducts.imageUrl,
+                              onTap: () async {
+                                context.read<ApparelBloc>().add(
+                                      WishList(
+                                        productId: wishListProducts.id,
+                                        isAdded: true,
+                                        skip: true,
+                                      ),
+                                    );
+                                context.read<ProfileBloc>().add(
+                                      RemoveFromWishlist(
+                                        index: index,
+                                      ),
+                                    );
+                              },
+                            );
+                          },
                         ),
-                        itemBuilder: (context, index) {
-                          return ProductCard(
-                            height: 180.h,
-                          );
-                        },
-                      ),
                     ],
                   ),
                 ),

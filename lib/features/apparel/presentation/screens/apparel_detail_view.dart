@@ -14,22 +14,46 @@ import '../../../../config/widgets/product_card.dart';
 import '../bloc/bloc.dart';
 import '../widgets/apparel_header.dart';
 
-class ApparelDetailView extends StatelessWidget {
+class ApparelDetailView extends StatefulWidget {
   const ApparelDetailView({super.key});
+
+  @override
+  State<ApparelDetailView> createState() => _ApparelDetailViewState();
+}
+
+class _ApparelDetailViewState extends State<ApparelDetailView> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 300) {
+      final bloc = context.read<ApparelBloc>();
+      if (!bloc.state.isLoading && bloc.state.hasMore) {
+        bloc.add(LoadMoreCategoryProducts());
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<ApparelBloc, ApparelState>(
-        builder: (context, state) => state.isLoading
+        builder: (context, state) => state.isLoading &&
+                state.productsEntity == null
             ? LoadingIndicator()
             : SingleChildScrollView(
+                controller: _scrollController,
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 22.0,
                     left: 18,
                     right: 18,
-                    bottom: 80.h,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,15 +67,6 @@ class ApparelDetailView extends StatelessWidget {
                         color: AppColors.tealPrimary,
                       ),
                       SpacersVertical.spacer22,
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   crossAxisAlignment: CrossAxisAlignment.end,
-                      //   children: [
-                      // RoundedButton(
-                      //   child: FittedImageProvider.localSvg(
-                      //     imagePath: AppVectors.filterBar,
-                      //   ),q
-                      // ),
                       FittedInputField.withIcon(
                         height: 48.h,
                         width: 1.sw,
@@ -71,10 +86,58 @@ class ApparelDetailView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      //   ],
-                      // ),
-                      SpacersVertical.spacer52,
-                      // AppText.poppinsMedium(
+                      SpacersVertical.spacer34,
+                      GridView.builder(
+                        itemCount: state.productsEntity?.length ?? 0,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10.h,
+                          crossAxisSpacing: 12.w,
+                          childAspectRatio: 162.w / 290.h,
+                        ),
+                        itemBuilder: (context, index) {
+                          final product = state.productsEntity![index];
+                          return ProductCard(
+                            name: product.name,
+                            price: product.price,
+                            id: product.id,
+                            isLiked: product.isWishlist,
+                            image: product.imageUrl,
+                            onTap: () => context.read<ApparelBloc>().add(
+                                  WishList(
+                                    productId: product.id,
+                                    isAdded: product.isWishlist,
+                                  ),
+                                ),
+                          );
+                        },
+                      ),
+                      if (state.isLoading) Center(child: LoadingIndicator()),
+                    ],
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+}
+
+// List filterList = ["Bags", "\$20-\$15 000", "Medium"];
+
+
+//Filter Section
+
+
+// AppText.poppinsMedium(
                       //   "Applied filters:",
                       //   fontSize: 22,
                       //   color: AppColors.tealPrimary,
@@ -119,34 +182,18 @@ class ApparelDetailView extends StatelessWidget {
                       //     },
                       //   ),
                       // ),
-                      SpacersVertical.spacer34,
-                      GridView.builder(
-                        itemCount: state.productsEntity!.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10.h,
-                          crossAxisSpacing: 12.w,
-                          childAspectRatio: 162 / 260,
-                        ),
-                        itemBuilder: (context, index) {
-                          return ProductCard(
-                            name: state.productsEntity![index].name,
-                            price: state.productsEntity![index].price,
-                            isLiked: state.productsEntity![index].isWishlist,
-                            image: state.productsEntity![index].imageUrl,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-      ),
-    );
-  }
-}
 
-// List filterList = ["Bags", "\$20-\$15 000", "Medium"];
+
+
+// Search Bar
+
+   // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   crossAxisAlignment: CrossAxisAlignment.end,
+                      //   children: [
+                      // RoundedButton(
+                      //   child: FittedImageProvider.localSvg(
+                      //     imagePath: AppVectors.filterBar,
+                      //   ),q
+                      // ),    //   ],
+                      // ),

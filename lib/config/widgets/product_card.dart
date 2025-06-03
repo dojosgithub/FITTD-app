@@ -11,31 +11,31 @@ import '../router/app_routes.dart';
 import 'app_text.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard(
-      {super.key,
-      this.height,
-      this.name = "",
-      this.price = "",
-      this.image = HomeMockData.productImg1,
-      this.isLiked = false});
+  const ProductCard({
+    super.key,
+    this.name = "",
+    this.price = "",
+    this.id = "",
+    this.image = HomeMockData.productImg1,
+    this.isLiked = false,
+    required this.onTap,
+  });
 
-  final double? height;
   final String name;
   final String price;
   final bool isLiked;
   final String image;
+  final String id;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.pushNamed(
-        AppRoutesEnum.productsDetailView.name,
-      ),
+      onTap: () => context
+          .pushNamed(AppRoutesEnum.productsDetailView.name, extra: {"id": id}),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 171.w,
-            // height: height ?? 195.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(9.r),
               border: Border.all(
@@ -43,23 +43,25 @@ class ProductCard extends StatelessWidget {
                 color: AppColors.black.withValues(alpha: 0.04),
               ),
             ),
-            padding: EdgeInsets.all(12),
             child: Stack(
               alignment: Alignment.center,
               children: [
                 FittedImageProvider.network(
                   imagePath: image,
-                  imageSize: Size(107.w, 163.h),
+                  imageSize: Size(171.w, 195.h),
                   boxFit: BoxFit.cover,
                 ),
                 Positioned(
-                  top: 0,
-                  right: 0,
-                  child: FittedImageProvider.localSvg(
-                    imagePath:
-                        isLiked ? AppVectors.heartFilled : AppVectors.heart,
-                    imageSize: Size.square(20),
-                    boxFit: BoxFit.cover,
+                  top: 10,
+                  right: 12,
+                  child: GestureDetector(
+                    onTap: onTap,
+                    child: FittedImageProvider.localSvg(
+                      imagePath:
+                          isLiked ? AppVectors.heartFilled : AppVectors.heart,
+                      imageSize: Size.square(20),
+                      boxFit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ],
@@ -77,9 +79,11 @@ class ProductCard extends StatelessWidget {
                   fontSize: 14,
                   height: 22 / 14,
                   color: AppColors.tealPrimary,
+                  overflow: TextOverflow.clip,
+                  maxLines: 2,
                 ),
                 AppText.poppinsLight(
-                  price,
+                  price == "" ? "Not Available" : price,
                   fontSize: 14,
                   height: 22 / 14,
                   color: AppColors.tealSecondary,
