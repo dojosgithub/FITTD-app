@@ -304,7 +304,11 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               );
                           context.read<HomeBloc>().add(
-                              EditWishlist(index: index, isTrending: false));
+                                EditWishlist(
+                                  index: index,
+                                  isTrending: false,
+                                ),
+                              );
                         },
                       );
                     },

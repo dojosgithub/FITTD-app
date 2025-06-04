@@ -60,10 +60,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           .copyWith(isWishlist: !newItems[event.index].isWishlist);
       newItems[event.index] = updatedProduct;
 
-      final updatedEntity =
-          state.trendingProductsEntity!.copyWith(products: newItems);
+      final updatedEntity = event.isTrending
+          ? state.trendingProductsEntity!.copyWith(products: newItems)
+          : state.recommendedProductsEntity!.copyWith(products: newItems);
 
-      emit(state.copyWith(trendingProductsEntity: updatedEntity));
+      emit(state.copyWith(
+        trendingProductsEntity:
+            event.isTrending ? updatedEntity as TrendingProductsEntity : null,
+        recommendedProductsEntity: !event.isTrending
+            ? updatedEntity as RecommendedProductsEntity
+            : null,
+      ));
     });
   }
 }
