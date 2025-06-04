@@ -16,10 +16,11 @@ class ProductDetailHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         RoundedButton(
-          onTap: () => context.pushNamed(
-            AppRoutesEnum.main.name,
-            extra: {"index": 4},
-          ),
+          // onTap: () => context.pushNamed(
+          //   AppRoutesEnum.main.name,
+          //   extra: {"index": 4},
+          // ),
+          onTap: () => context.pop(),
           child: Padding(
             padding: EdgeInsets.only(top: 4.h),
             child: FittedImageProvider.localSvg(

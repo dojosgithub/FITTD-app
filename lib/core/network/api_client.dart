@@ -68,7 +68,7 @@ class ApiClient {
       return response;
     } on DioException catch (e) {
       log(e.response?.requestOptions.uri.toString() ?? 'Unknown Error');
-
+      log(e.toString());
       throw Exception(e.response?.data['message'] ?? 'Unknown Error');
     }
   }

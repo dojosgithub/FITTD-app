@@ -265,6 +265,11 @@ Future<void> init() async {
       sl(),
     ),
   );
+  sl.registerLazySingleton(
+    () => GetRecommendedProductsUseCase(
+      sl(),
+    ),
+  );
 
   // Blocs
   sl.registerFactory(
@@ -325,6 +330,7 @@ Future<void> init() async {
   );
   sl.registerFactory(
     () => HomeBloc(
+      getRecommendedProductsUseCase: sl(),
       getTrendingProductsUseCase: sl(),
     ),
   );

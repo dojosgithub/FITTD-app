@@ -17,7 +17,7 @@ class ApparelRemoteDataSourceImpl implements ApparelRemoteDataSource {
   @override
   Future<ApparelResponseModel> getApparel({String? brand}) async {
     final response = await apiClient.get(
-      brand == null
+      brand == "" || brand == null
           ? '/api/product/get-categories-count'
           : '/api/product/get-categories-count?brand=$brand',
     );
@@ -29,9 +29,9 @@ class ApparelRemoteDataSourceImpl implements ApparelRemoteDataSource {
   Future<CategoryProductsResponseModel> getCategoryProducts(
       {String? brand, required String category, required int page}) async {
     final response = await apiClient.get(
-      brand == null
+      brand == "" || brand == null
           ? '/api/product/brands-and-categories?category=${category.toLowerCase()}&page=$page&brand=EB_Denim,Agolde,Self_Potrait, J_Crew, Lululemon, Reformation,House_Of_CB'
-          : '/api/product/get-categories-count?brand=$brand&category=$category&page=$page',
+          : '/api/product/brands-and-categories?brand=$brand&category=$category&page=$page',
     );
 
     return CategoryProductsResponseModel.fromJson(response.data);

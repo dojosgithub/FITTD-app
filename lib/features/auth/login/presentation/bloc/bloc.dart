@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/storage/app_storage.dart';
@@ -59,6 +61,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       (response) {
         SharedPrefsStorage.setToken(response.accessToken!);
         SharedPrefsStorage.setUserId(response.user!.id!);
+        SharedPrefsStorage.setUserFit(response.user!.measurements['fit']);
+        log("FIT +++++ ${response.user!.measurements['fit']}");
 
         emit(state.copyWith(
           isLoading: false,

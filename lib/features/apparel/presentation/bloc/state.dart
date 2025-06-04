@@ -5,6 +5,7 @@ class ApparelState extends Equatable {
   final bool isLoading;
   final String? error;
   final String selectedCategory;
+  final String? selectedBrand;
   final int currentPage;
   final bool hasMore;
   final List<ApparelCategoryEntity>? apparelEntity;
@@ -14,6 +15,7 @@ class ApparelState extends Equatable {
     this.isLoading = true,
     this.error,
     this.selectedCategory = "",
+    this.selectedBrand,
     this.apparelEntity,
     this.productsEntity,
     this.currentPage = 1,
@@ -21,13 +23,22 @@ class ApparelState extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [isLoading, error, apparelEntity, productsEntity, currentPage, hasMore];
+  List<Object?> get props => [
+        isLoading,
+        error,
+        apparelEntity,
+        productsEntity,
+        currentPage,
+        hasMore,
+        selectedBrand,
+        selectedCategory,
+      ];
 
   ApparelState copyWith({
     bool? isLoading,
     String? error,
     String? selectedCategory,
+    String? selectedBrand,
     int? currentPage,
     bool? hasMore,
     List<ApparelCategoryEntity>? apparelEntity,
@@ -37,6 +48,7 @@ class ApparelState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
       selectedCategory: selectedCategory ?? this.selectedCategory,
+      selectedBrand: selectedBrand ?? this.selectedBrand,
       currentPage: currentPage ?? this.currentPage,
       hasMore: hasMore ?? this.hasMore,
       apparelEntity: apparelEntity ?? this.apparelEntity,

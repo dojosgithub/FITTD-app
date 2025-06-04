@@ -5,16 +5,19 @@ abstract class ApparelEvent {
   const ApparelEvent();
 }
 
-class GetApparelEvent extends ApparelEvent {
-  final String? brand;
-
-  const GetApparelEvent({this.brand});
-}
+class GetApparelEvent extends ApparelEvent {}
 
 class SetCategory extends ApparelEvent {
   final String category;
   SetCategory({
     required this.category,
+  });
+}
+
+class SetBrand extends ApparelEvent {
+  final String brand;
+  SetBrand({
+    required this.brand,
   });
 }
 

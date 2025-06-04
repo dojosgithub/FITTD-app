@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
@@ -8,8 +10,11 @@ import 'package:fitted/features/home/presentation/screens/home_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/measurement_view.dart';
 import 'package:fitted/features/profile/presentation/screens/profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../apparel/presentation/bloc/bloc.dart';
 
 class MainView extends StatefulWidget {
   const MainView({
@@ -58,6 +63,9 @@ class _MainViewState extends State<MainView> {
       floatingActionButton: CustomBottomNavBar(
         index: selectedIndex,
         onTabSelected: (index) {
+          if (index != 1) {
+            context.read<ApparelBloc>().add(SetBrand(brand: ""));
+          }
           setState(() {
             selectedIndex = index;
           });

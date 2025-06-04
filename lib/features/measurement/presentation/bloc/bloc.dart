@@ -185,20 +185,23 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
           );
         },
         (successData) {
-          log(successData.toString());
+          log(successData.toMap().toString());
           if (successData.gender == "male") {
             final maleMeasurement = MaleMeasurementModel(
-              chest: successData.upperBody!.chest!,
-              sleevesLength: successData.upperBody!.sleevesLength!,
-              waist: successData.lowerBody!.waist!,
-              torsoHeight: successData.upperBody!.torsoHeight!,
-              hip: successData.lowerBody!.hip!,
-              inseam: successData.lowerBody!.inseam!,
-              legLength: successData.lowerBody!.legLength!,
-              height: successData.height!,
-              bicep: successData.upperBody!.bicep!,
-              shoulderWidth: successData.upperBody!.shoulderWidth!,
-              thighCircumference: successData.lowerBody!.thighCircumference!,
+              chest: safeMeasurement(successData.upperBody!.chest),
+              sleevesLength:
+                  safeMeasurement(successData.upperBody!.sleevesLength),
+              waist: safeMeasurement(successData.lowerBody!.waist),
+              torsoHeight: safeMeasurement(successData.upperBody!.torsoHeight),
+              hip: safeMeasurement(successData.lowerBody!.hip),
+              inseam: safeMeasurement(successData.lowerBody!.inseam),
+              legLength: safeMeasurement(successData.lowerBody!.legLength),
+              bicep: safeMeasurement(successData.upperBody!.bicep),
+              shoulderWidth:
+                  safeMeasurement(successData.upperBody!.shoulderWidth),
+              thighCircumference:
+                  safeMeasurement(successData.lowerBody!.thighCircumference),
+              height: safeMeasurement(successData.height),
             );
             emit(
               state.copyWith(
@@ -226,16 +229,17 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
             );
           } else {
             final femaleMeasurement = FemaleMeasurementModel(
-              bust: successData.upperBody!.bust!,
-              bandSize: successData.upperBody!.bandSize!,
-              cupSize: successData.upperBody!.cupSize!,
-              sleevesLength: successData.upperBody!.sleevesLength!,
-              waist: successData.lowerBody!.waist!,
-              torsoHeight: successData.upperBody!.torsoHeight!,
-              hip: successData.lowerBody!.hip!,
-              inseam: successData.lowerBody!.inseam!,
-              legLength: successData.lowerBody!.legLength!,
-              height: successData.height!,
+              bust: safeMeasurement(successData.upperBody!.bust),
+              bandSize: safeMeasurement(successData.upperBody!.bandSize),
+              cupSize: safeMeasurement(successData.upperBody!.cupSize),
+              sleevesLength:
+                  safeMeasurement(successData.upperBody!.sleevesLength),
+              waist: safeMeasurement(successData.lowerBody!.waist),
+              torsoHeight: safeMeasurement(successData.upperBody!.torsoHeight),
+              hip: safeMeasurement(successData.lowerBody!.hip),
+              inseam: safeMeasurement(successData.lowerBody!.inseam),
+              legLength: safeMeasurement(successData.lowerBody!.legLength),
+              height: safeMeasurement(successData.height),
             );
             emit(
               state.copyWith(

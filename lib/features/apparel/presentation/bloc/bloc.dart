@@ -27,6 +27,13 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
         ) {
     on<GetApparelEvent>(_onGetApparel);
     on<SetCategory>(_onSetCategory);
+    on<SetBrand>((event, emit) {
+      log(event.brand.toString());
+      emit(state.copyWith(
+        selectedBrand: event.brand,
+      ));
+      log(state.selectedBrand.toString());
+    });
     on<LoadMoreCategoryProducts>(_onLoadMoreCategoryProducts);
     on<WishList>((event, emit) async {
       if (!event.skip) {
@@ -61,8 +68,8 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
         productsEntity: [],
         selectedCategory: category));
 
-    final result =
-        await getCategoryProductsUseCase(category: category, page: 1);
+    final result = await getCategoryProductsUseCase(
+        category: category, page: 1, brand: state.selectedBrand);
 
     result.fold(
       (failure) {
@@ -92,6 +99,7 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
     final result = await getCategoryProductsUseCase(
       category: state.selectedCategory,
       page: nextPage,
+      brand: state.selectedBrand,
     );
 
     result.fold(
@@ -136,7 +144,7 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
   ) async {
     emit(state.copyWith(isLoading: true));
 
-    final result = await apparelUsecase(brand: event.brand);
+    final result = await apparelUsecase(brand: state.selectedBrand);
 
     result.fold(
       (failure) {

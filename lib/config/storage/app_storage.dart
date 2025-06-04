@@ -33,8 +33,10 @@ class SharedPrefsStorage {
 
   static Future<void> setUserId(String id) async =>
       await _instance._prefs.setString(StorageKeys.userId, id);
-
   static String? getUserId() => _instance._prefs.getString(StorageKeys.userId);
+  static Future<void> setUserFit(String fit) async =>
+      await _instance._prefs.setString(StorageKeys.fit, fit);
+  static String? getUserFit() => _instance._prefs.getString(StorageKeys.fit);
 
   static Future<void> removeUserId() async =>
       await _instance._prefs.remove(StorageKeys.userId);

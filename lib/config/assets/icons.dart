@@ -1,5 +1,6 @@
 class AppVectors {
   static const String baseUrl = 'assets/svgs/';
+  static const String brandsBaseUrl = 'assets/svgs/brands/';
   static const String extension = '.svg';
   static const String welcome = '${baseUrl}welcome$extension';
   static const String google = '${baseUrl}google$extension';
@@ -42,4 +43,11 @@ class AppVectors {
   static const String filterBar = '${baseUrl}filter_bar$extension';
   static const String star = '${baseUrl}star$extension';
   static const String share = '${baseUrl}share$extension';
+  static const String agolde = '${brandsBaseUrl}agolde$extension';
+  static const String jcrew = '${brandsBaseUrl}jcrew$extension';
+  static const String lululemon = '${brandsBaseUrl}lululemon$extension';
+  static const String reformation = '${brandsBaseUrl}reformation$extension';
+  static const String selfPortrait = '${brandsBaseUrl}self_portrait$extension';
+  static const String houseOfCb = '${brandsBaseUrl}house_of_cb$extension';
+  static const String ebDenim = '${brandsBaseUrl}eb_denim$extension';
 }

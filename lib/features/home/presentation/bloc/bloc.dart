@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:equatable/equatable.dart';
+import 'package:fitted/features/home/domain/entities/recommended_products_entity.dart';
 import 'package:fitted/features/home/domain/entities/trending_products_entity.dart';
 import 'package:fitted/features/home/domain/usecases/home_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,10 @@ part 'event.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetTrendingProductsUseCase getTrendingProductsUseCase;
-  HomeBloc({required this.getTrendingProductsUseCase})
+  final GetRecommendedProductsUseCase getRecommendedProductsUseCase;
+  HomeBloc(
+      {required this.getTrendingProductsUseCase,
+      required this.getRecommendedProductsUseCase})
       : super(HomeState(isLoading: false)) {
     on<GetTrendingProducts>((event, emit) async {
       emit(state.copyWith(isLoading: true));
@@ -29,8 +33,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         },
       );
     });
+    on<GetRecommendedProducts>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
+      final result = await getRecommendedProductsUseCase.call(event.fitType);
+      result.fold(
+        (failure) {
+          log(failure.toString());
+          emit(state.copyWith(isLoading: false));
+        },
+        (sucess) {
+          emit(
+            state.copyWith(
+              isLoading: false,
+              recommendedProductsEntity: sucess,
+            ),
+          );
+        },
+      );
+    });
     on<EditWishlist>((event, emit) {
-      final currentList = state.trendingProductsEntity!.products;
+      final currentList = event.isTrending
+          ? state.trendingProductsEntity!.products
+          : state.recommendedProductsEntity!.products;
       final newItems = List<Product>.from(currentList);
       final updatedProduct = newItems[event.index]
           .copyWith(isWishlist: !newItems[event.index].isWishlist);

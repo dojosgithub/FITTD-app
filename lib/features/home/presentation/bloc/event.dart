@@ -5,9 +5,18 @@ class HomeEvent {}
 
 class GetTrendingProducts extends HomeEvent {}
 
-class GetRecommendedProducts extends HomeEvent {}
+class GetRecommendedProducts extends HomeEvent {
+  final String fitType;
+  GetRecommendedProducts({
+    required this.fitType,
+  });
+}
 
 class EditWishlist extends HomeEvent {
   final int index;
-  EditWishlist({required this.index});
+  final bool isTrending;
+  EditWishlist({
+    required this.index,
+    this.isTrending = true,
+  });
 }

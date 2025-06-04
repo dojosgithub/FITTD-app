@@ -12,7 +12,10 @@ import 'package:fitted/features/main/data/mock_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../config/router/app_routes.dart';
+import '../../../../config/storage/app_storage.dart';
 import '../../../../config/widgets/product_card.dart';
 import '../../../apparel/presentation/bloc/bloc.dart';
 import '../bloc/bloc.dart';
@@ -30,6 +33,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     context.read<HomeBloc>().add(GetTrendingProducts());
+    context.read<HomeBloc>().add(
+          GetRecommendedProducts(
+            fitType: SharedPrefsStorage.getUserFit()!,
+          ),
+        );
     super.initState();
   }
 
@@ -154,11 +162,42 @@ class _HomeViewState extends State<HomeView> {
                   height: 22 / 27,
                   color: AppColors.tealPrimary,
                 ),
-                SpacersVertical.spacer72,
-                SpacersVertical.spacer72,
-                SpacersVertical.spacer72,
-                SpacersVertical.spacer72,
-                SpacersVertical.spacer2,
+                SpacersVertical.spacer12,
+                GridView.builder(
+                  itemCount: brands.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 20.w,
+                    crossAxisCount: 3,
+                    childAspectRatio: 1.4,
+                  ),
+                  itemBuilder: (context, index) {
+                    return (index == 6 || index == 8)
+                        ? SizedBox.shrink()
+                        : GestureDetector(
+                            onTap: () {
+                              context.read<ApparelBloc>().add(
+                                    SetBrand(
+                                      brand: brands[index]['name'],
+                                    ),
+                                  );
+                              context.pushNamed(
+                                AppRoutesEnum.main.name,
+                                extra: {"index": 1},
+                              );
+                            },
+                            child: Container(
+                              padding:
+                                  EdgeInsets.only(top: index == 1 ? 18.h : 0),
+                              child: FittedImageProvider.localSvg(
+                                imagePath: brands[index]['icon'],
+                              ),
+                            ),
+                          );
+                  },
+                ),
                 AppText.poppinsRegular(
                   "Trending",
                   fontSize: 27,
@@ -236,36 +275,40 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 SpacersVertical.spacer30,
-                GridView.builder(
-                  itemCount: 4,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 12.w,
-                    childAspectRatio: 162.w / 250.h,
+                if (state.recommendedProductsEntity != null)
+                  GridView.builder(
+                    itemCount: state.recommendedProductsEntity!.products.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12.w,
+                      childAspectRatio: 162.w / 270.h,
+                    ),
+                    itemBuilder: (context, index) {
+                      final product =
+                          state.recommendedProductsEntity!.products[index];
+                      return ProductCard(
+                        name: product.name,
+                        price: product.price,
+                        id: product.id,
+                        isLiked: product.isWishlist,
+                        image: product.imageUrl,
+                        onTap: () {
+                          context.read<ApparelBloc>().add(
+                                WishList(
+                                  productId: product.id,
+                                  isAdded: product.isWishlist,
+                                  skip: true,
+                                ),
+                              );
+                          context.read<HomeBloc>().add(
+                              EditWishlist(index: index, isTrending: false));
+                        },
+                      );
+                    },
                   ),
-                  itemBuilder: (context, index) {
-                    // final product = state.productsEntity![index];
-                    return ProductCard(
-                      onTap: () {},
-                      name: "Grey Melange ",
-                      price: "\$495",
-                      id: "682c27f84b9ce968650bccba",
-                      isLiked: false,
-                      image:
-                          "https://us.self-portrait.com/cdn/shop/files/AW24-064C-GR_AW24-060MSK-BL_1.jpg?v=1733141589",
-
-                      // onTap: () => context.read<ApparelBloc>().add(
-                      //       WishList(
-                      //         productId: product.id,
-                      //         isAdded: product.isWishlist,
-                      //       ),
-                      //     ),
-                    );
-                  },
-                ),
               ],
             ),
           ),
@@ -274,3 +317,36 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
+
+final List brands = [
+  {
+    "icon": AppVectors.agolde,
+    "name": "Agolde",
+  },
+  {
+    "icon": AppVectors.ebDenim,
+    "name": "EB_Denim",
+  },
+  {
+    "icon": AppVectors.jcrew,
+    "name": "J_Crew",
+  },
+  {
+    "icon": AppVectors.reformation,
+    "name": "Reformation",
+  },
+  {
+    "icon": AppVectors.houseOfCb,
+    "name": "House_Of_CB",
+  },
+  {
+    "icon": AppVectors.lululemon,
+    "name": "Lululemon",
+  },
+  {},
+  {
+    "icon": AppVectors.selfPortrait,
+    "name": "Self_Potrait",
+  },
+  {},
+];

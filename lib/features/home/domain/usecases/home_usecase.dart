@@ -2,6 +2,8 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:fitted/core/errors/failure.dart';
+import 'package:fitted/features/home/domain/entities/recommended_products_entity.dart';
+import 'package:fitted/features/home/domain/entities/trending_products_entity.dart';
 import 'package:fitted/features/home/domain/repositories/home_repository.dart';
 
 class GetTrendingProductsUseCase {
@@ -9,18 +11,18 @@ class GetTrendingProductsUseCase {
 
   GetTrendingProductsUseCase(this.repository);
 
-  Future<Either<Failure, dynamic>> call() async {
+  Future<Either<Failure, TrendingProductsEntity>> call() async {
     return await repository.getTrendingProducts();
   }
 }
 
-// class DeleteAccountUseCase {
-//   final SettingsRepository repository;
-//   DeleteAccountUseCase(
-//     this.repository,
-//   );
-//   Future<Either<Failure, dynamic>> call(
-//       DeleteAccountRequestModel request) async {
-//     return await repository.deleteAccount(request);
-//   }
-// }
+class GetRecommendedProductsUseCase {
+  final HomeRepository repository;
+  GetRecommendedProductsUseCase(
+    this.repository,
+  );
+  Future<Either<Failure, RecommendedProductsEntity>> call(
+      String fitType) async {
+    return await repository.getRecommendedProducts(fitType);
+  }
+}
