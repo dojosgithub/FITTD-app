@@ -7,9 +7,9 @@ class Curved360Overlay extends StatelessWidget {
   final double arcHeight;
 
   const Curved360Overlay({
-    Key? key,
+    super.key,
     this.arcHeight = 48,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

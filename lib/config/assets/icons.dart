@@ -50,4 +50,9 @@ class AppVectors {
   static const String selfPortrait = '${brandsBaseUrl}self_portrait$extension';
   static const String houseOfCb = '${brandsBaseUrl}house_of_cb$extension';
   static const String ebDenim = '${brandsBaseUrl}eb_denim$extension';
+  static const String searchColored = '${baseUrl}search_colored$extension';
+  static const String womenDummy = '${baseUrl}women_dummy$extension';
+  static const String cross = '${baseUrl}cross$extension';
+  static const String chevronRight = '${baseUrl}chevron_right$extension';
+  static const String filterOrange = '${baseUrl}filter_orange$extension';
 }

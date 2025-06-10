@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';

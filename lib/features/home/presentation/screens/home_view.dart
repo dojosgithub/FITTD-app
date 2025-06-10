@@ -15,7 +15,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../config/router/app_routes.dart';
-import '../../../../config/storage/app_storage.dart';
 import '../../../../config/widgets/product_card.dart';
 import '../../../apparel/presentation/bloc/bloc.dart';
 import '../bloc/bloc.dart';
@@ -34,9 +33,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     context.read<HomeBloc>().add(GetTrendingProducts());
     context.read<HomeBloc>().add(
-          GetRecommendedProducts(
-            fitType: SharedPrefsStorage.getUserFit()!,
-          ),
+          GetRecommendedProducts(),
         );
     super.initState();
   }
@@ -326,31 +323,38 @@ final List brands = [
   {
     "icon": AppVectors.agolde,
     "name": "Agolde",
+    "displayName": "Agolde",
   },
   {
     "icon": AppVectors.ebDenim,
     "name": "EB_Denim",
+    "displayName": "EB Denim",
   },
   {
     "icon": AppVectors.jcrew,
     "name": "J_Crew",
+    "displayName": "J Crew",
   },
   {
     "icon": AppVectors.reformation,
     "name": "Reformation",
+    "displayName": "Reformation",
   },
   {
     "icon": AppVectors.houseOfCb,
     "name": "House_Of_CB",
+    "displayName": "House Of CB",
   },
   {
     "icon": AppVectors.lululemon,
     "name": "Lululemon",
+    "displayName": "Lululemon",
   },
   {},
   {
     "icon": AppVectors.selfPortrait,
     "name": "Self_Potrait",
+    "displayName": "Self Potrait",
   },
   {},
 ];

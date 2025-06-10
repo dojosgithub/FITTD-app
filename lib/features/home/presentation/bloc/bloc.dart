@@ -5,16 +5,22 @@ import 'package:fitted/features/home/domain/entities/trending_products_entity.da
 import 'package:fitted/features/home/domain/usecases/home_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/storage/app_storage.dart';
+
 part 'state.dart';
 part 'event.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetTrendingProductsUseCase getTrendingProductsUseCase;
   final GetRecommendedProductsUseCase getRecommendedProductsUseCase;
-  HomeBloc(
-      {required this.getTrendingProductsUseCase,
-      required this.getRecommendedProductsUseCase})
-      : super(HomeState(isLoading: false)) {
+  HomeBloc({
+    required this.getTrendingProductsUseCase,
+    required this.getRecommendedProductsUseCase,
+  }) : super(
+          HomeState(
+            isLoading: false,
+          ),
+        ) {
     on<GetTrendingProducts>((event, emit) async {
       emit(state.copyWith(isLoading: true));
       final result = await getTrendingProductsUseCase.call();
@@ -35,7 +41,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
     on<GetRecommendedProducts>((event, emit) async {
       emit(state.copyWith(isLoading: true));
-      final result = await getRecommendedProductsUseCase.call(event.fitType);
+      final result = await getRecommendedProductsUseCase
+          .call(SharedPrefsStorage.getUserFit()!);
       result.fold(
         (failure) {
           log(failure.toString());

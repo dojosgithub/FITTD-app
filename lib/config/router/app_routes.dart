@@ -1,3 +1,10 @@
+import 'package:fitted/features/search/presentation/screens/search_results_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fitted/features/measurement/presentation/screen/face_measurement_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/feet_measurement_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/hand_measurement_view.dart';
+import 'package:fitted/features/measurement/presentation/screen/head_measurement_view.dart';
+import 'package:fitted/features/search/presentation/screens/search_view.dart';
 import 'package:fitted/config/helper/dialog/dialog_page.dart';
 import 'package:fitted/config/helper/transitions/page_transition.dart';
 import 'package:fitted/features/apparel/presentation/screens/apparel_detail_view.dart';
@@ -26,12 +33,6 @@ import 'package:fitted/features/measurement/presentation/dialogs/update_other_me
 import 'package:fitted/features/settings/presentation/screens/change_password_view.dart';
 import 'package:fitted/features/profile/presentation/screens/personal_info_view.dart';
 import 'package:fitted/features/settings/presentation/screens/settings_view.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../features/measurement/presentation/screen/face_measurement_view.dart';
-import '../../features/measurement/presentation/screen/feet_measurement_view.dart';
-import '../../features/measurement/presentation/screen/hand_measurement_view.dart';
-import '../../features/measurement/presentation/screen/head_measurement_view.dart';
 
 class AppRoutes {
   static final routes = [
@@ -251,6 +252,20 @@ class AppRoutes {
         ),
       ),
     ),
+    GoRoute(
+      path: AppRoutesEnum.searchView.path,
+      name: AppRoutesEnum.searchView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: SearchView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.searchResultsView.path,
+      name: AppRoutesEnum.searchResultsView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: SearchResultsView(),
+      ),
+    ),
   ];
 }
 
@@ -285,6 +300,8 @@ enum AppRoutesEnum {
   headMeasurementView,
   apparelDetailView,
   productsDetailView,
+  searchView,
+  searchResultsView,
 }
 
 extension AppRoutesExtension on AppRoutesEnum {
@@ -350,6 +367,10 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/apparelDetailView';
       case AppRoutesEnum.productsDetailView:
         return '/productsDetailView';
+      case AppRoutesEnum.searchView:
+        return '/searchView';
+      case AppRoutesEnum.searchResultsView:
+        return '/searchResultsView';
     }
   }
 

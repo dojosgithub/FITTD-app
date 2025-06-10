@@ -5,12 +5,7 @@ class HomeEvent {}
 
 class GetTrendingProducts extends HomeEvent {}
 
-class GetRecommendedProducts extends HomeEvent {
-  final String fitType;
-  GetRecommendedProducts({
-    required this.fitType,
-  });
-}
+class GetRecommendedProducts extends HomeEvent {}
 
 class EditWishlist extends HomeEvent {
   final int index;

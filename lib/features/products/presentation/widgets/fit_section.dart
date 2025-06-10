@@ -10,19 +10,22 @@ class FitSection extends StatelessWidget {
   const FitSection({
     super.key,
     required this.fitType,
+    this.showHeading = true,
   });
   final String fitType;
+  final bool showHeading;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppText.poppinsSemiBold(
-          "Fit",
-          fontSize: 16,
-          height: 24 / 16,
-          color: AppColors.tealPrimary,
-        ),
+        if (showHeading)
+          AppText.poppinsSemiBold(
+            "Fit",
+            fontSize: 16,
+            height: 24 / 16,
+            color: AppColors.tealPrimary,
+          ),
         SpacersVertical.spacer8,
         SizedBox(
           height: 34.h,
