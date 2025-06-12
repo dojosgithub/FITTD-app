@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
@@ -22,8 +21,6 @@ class LoginButtons extends StatelessWidget {
           onTap: () {
             if (formKey.currentState!.validate()) {
               context.read<LoginBloc>().add(LoginButtonPressed());
-            } else {
-              log("Form is not valid");
             }
           },
         ),

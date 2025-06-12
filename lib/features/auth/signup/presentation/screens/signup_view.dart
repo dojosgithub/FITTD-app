@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-
 class SignupView extends StatelessWidget {
   SignupView({super.key});
   final _formKey = GlobalKey<FormState>();
@@ -43,7 +42,7 @@ class SignupView extends StatelessWidget {
                     fontSize: 14,
                     height: 22 / 14,
                     letterSpacing: 0.02 * 14,
-                    color: AppColors.tealSecondary,
+                    color: AppColors.tealPrimary,
                     textAlign: TextAlign.center,
                   ),
                   SpacersVertical.spacer22,

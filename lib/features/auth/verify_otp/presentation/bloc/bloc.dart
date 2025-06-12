@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
+import 'package:fitted/features/auth/forgot_password/domain/usecase/forgot_password_usecase.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:fitted/features/auth/verify_otp/data/enums/otp_enum.dart';
 
@@ -15,11 +14,13 @@ part 'state.dart';
 class OtpBloc extends Bloc<OtpEvent, OtpState> {
   final VerifyEmailOtpUseCase verifyEmailOtpUseCase;
   final VerifyOtpUseCase verifyOtpUseCase;
+  final ForgotPasswordUseCase forgotPasswordUsecase;
   final LoginUseCase loginUseCase;
 
   OtpBloc(
       {required this.verifyEmailOtpUseCase,
       required this.verifyOtpUseCase,
+      required this.forgotPasswordUsecase,
       required this.loginUseCase})
       : super(const OtpState(
           otp: '',
@@ -63,7 +64,6 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
           ));
           return;
         }
-        log(SharedPrefsStorage.getRefreshToken().toString());
         final loginResult = await loginUseCase(
           password: SharedPrefsStorage.getRefreshToken().toString(),
           email: event.email,
@@ -91,5 +91,22 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
     );
   }
 
-  void _onResendOtp(ResendOtpEvent event, Emitter<OtpState> emit) {}
+  void _onResendOtp(ResendOtpEvent event, Emitter<OtpState> emit) async {
+    switch (event.contextType) {
+      case OtpContextType.signUp:
+        break;
+      case OtpContextType.resetPassword:
+        final result = await forgotPasswordUsecase(
+          email: event.email,
+        );
+        result.fold(
+          (failure) =>
+              ToastUtil.showToast(message: failure.message.split(":").last),
+          (success) => ToastUtil.showToast(message: "OTP Resend Sucessful"),
+        );
+        break;
+      case OtpContextType.changeEmail:
+        break;
+    }
+  }
 }

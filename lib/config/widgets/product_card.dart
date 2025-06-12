@@ -27,11 +27,14 @@ class ProductCard extends StatelessWidget {
   final String image;
   final String id;
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context
-          .pushNamed(AppRoutesEnum.productsDetailView.name, extra: {"id": id}),
+      onTap: () => context.pushNamed(
+        AppRoutesEnum.productsDetailView.name,
+        extra: {"id": id},
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

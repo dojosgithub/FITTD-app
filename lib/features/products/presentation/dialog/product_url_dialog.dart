@@ -72,26 +72,19 @@ class ProductUrlDialog extends StatelessWidget {
             height: 52.h,
             width: 284.w,
             onTap: () async {
-              context.read<ProductsBloc>().add(
-                    AddClick(
-                      productId: context
-                          .read<ProductsBloc>()
-                          .state
-                          .productDetailEntity!
-                          .product
-                          .id,
-                    ),
-                  );
-              await launchUrl(
-                Uri.parse(
-                  context
-                      .read<ProductsBloc>()
-                      .state
-                      .productDetailEntity!
-                      .product
-                      .url,
-                ),
-              ).then((v) => context.pop());
+              final bloc = context.read<ProductsBloc>();
+              final product = bloc.state.productDetailEntity?.product;
+              final productId = product?.id;
+              final url = product?.url;
+
+              if (productId == null || url == null) return;
+
+              bloc.add(AddClick(productId: productId));
+
+              final uri = Uri.tryParse(url);
+              if (uri != null && await launchUrl(uri)) {
+                if (context.mounted) context.pop();
+              }
             },
           ),
           Spacer(),

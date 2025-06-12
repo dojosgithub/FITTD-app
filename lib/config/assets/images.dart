@@ -1,6 +1,8 @@
 class AppImages {
   static const String baseUrl = 'assets/images/';
+  static const String categoriesBaseUrl = 'assets/images/categories/';
   static const String extension = '.png';
+  static const String jpgExtension = '.jpg';
   static const String logo = '${baseUrl}logo$extension';
   static const String welcome = '${baseUrl}welcome$extension';
   static const String men = '${baseUrl}men$extension';
@@ -22,4 +24,13 @@ class AppImages {
   static const String face2 = '${baseUrl}face2$extension';
   static const String homeBanner = '${baseUrl}home_banner$extension';
   static const String homeRecommended = '${baseUrl}home_recommended$extension';
+
+  static const String tops = '${categoriesBaseUrl}tops$jpgExtension';
+  static const String accessories =
+      '${categoriesBaseUrl}accessories$jpgExtension';
+  static const String bottoms = '${categoriesBaseUrl}bottoms$jpgExtension';
+  static const String denims = '${categoriesBaseUrl}denims$jpgExtension';
+  static const String dresses = '${categoriesBaseUrl}dresses$jpgExtension';
+  static const String footwear = '${categoriesBaseUrl}footwear$jpgExtension';
+  static const String outerwear = '${categoriesBaseUrl}outerwear$jpgExtension';
 }

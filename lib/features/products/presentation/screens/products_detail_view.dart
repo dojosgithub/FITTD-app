@@ -54,7 +54,7 @@ class _ProductsDetailViewState extends State<ProductsDetailView> {
                     children: [
                       ProductDetailHeader(),
                       ProductImageCarousel(imageUrls: product.image.secondary),
-                      SpacersVertical.spacer42,
+                      SpacersVertical.spacer12,
                       AppText.poppinsMedium(
                         (product.brand).contains("_")
                             ? "${product.brand.split("_")[0]} ${product.brand.split("_")[1]}"

@@ -62,8 +62,8 @@ class ConfirmOtpView extends StatelessWidget {
                   color: AppColors.tealPrimary,
                 ),
                 SpacersVertical.spacer6,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Wrap(
+                  alignment: WrapAlignment.center,
                   children: [
                     AppText.poppinsRegular(
                       "We sent an OTP to ",
@@ -160,6 +160,14 @@ class ConfirmOtpView extends StatelessWidget {
                                       color: AppColors.tealSecondary,
                                     ),
                                     GestureDetector(
+                                      onTap: () {
+                                        context
+                                            .read<OtpBloc>()
+                                            .add(ResendOtpEvent(
+                                              contextType: contextType,
+                                              email: email,
+                                            ));
+                                      },
                                       child: AppText.poppinsSemiBold(
                                         "Click to resend",
                                         fontSize: 14,
@@ -175,8 +183,7 @@ class ConfirmOtpView extends StatelessWidget {
                   ),
                 ),
                 SpacersVertical.spacer30,
-                if (contextType == OtpContextType.resetPassword)
-                  BackToLoginWidget(),
+                BackToLoginWidget(),
               ],
             ),
           ),

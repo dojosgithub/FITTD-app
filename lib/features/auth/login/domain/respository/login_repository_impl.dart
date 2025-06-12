@@ -15,6 +15,7 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Failure, LoginResponse>> login(LoginRequestModel model) async {
     try {
       final responseModel = await dataSource.login(model);
+
       return Right(
         LoginResponse(
           user: responseModel.data?.user,

@@ -1,5 +1,10 @@
 import 'package:fitted/features/home/domain/usecases/home_usecase.dart';
 import 'package:fitted/features/home/presentation/bloc/bloc.dart';
+import 'package:fitted/features/search/data/datasource/search_datasource.dart';
+import 'package:fitted/features/search/domain/repository/search_respository.dart';
+import 'package:fitted/features/search/domain/repository/search_respository_impl.dart';
+import 'package:fitted/features/search/domain/usecases/search_suggestion_usecase.dart';
+import 'package:fitted/features/search/presentation/bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fitted/core/network/token_provider.dart';
@@ -56,7 +61,7 @@ import '../../features/auth/forgot_password/domain/usecase/forgot_password_useca
 import '../../features/auth/login/presentation/bloc/bloc.dart';
 import '../../features/auth/signup/presentation/bloc/bloc.dart';
 import '../../features/auth/verify_otp/presentation/bloc/bloc.dart';
-import '../../features/auth/forgot_password/bloc/bloc.dart';
+import '../../features/auth/forgot_password/presentation/bloc/bloc.dart';
 import '../../features/measurement/presentation/bloc/bloc.dart';
 
 final sl = GetIt.instance;
@@ -116,6 +121,9 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeRemoteDataSource>(
     () => HomeRemoteDataSourceImpl(sl()),
   );
+  sl.registerLazySingleton<SearchRemoteDataSource>(
+    () => SearchRemoteDataSourceImpl(sl()),
+  );
 
   // Repositories
   sl.registerLazySingleton<LoginRepository>(
@@ -165,6 +173,11 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton<SearchRepository>(
+    () => SearchRepositoryImpl(
       sl(),
     ),
   );
@@ -271,6 +284,12 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton(
+    () => SearchSuggestionUsecase(
+      sl(),
+    ),
+  );
+
   // Blocs
   sl.registerFactory(
     () => LoginBloc(
@@ -284,10 +303,10 @@ Future<void> init() async {
   );
   sl.registerFactory(
     () => OtpBloc(
-      verifyEmailOtpUseCase: sl(),
-      verifyOtpUseCase: sl(),
-      loginUseCase: sl(),
-    ),
+        verifyEmailOtpUseCase: sl(),
+        verifyOtpUseCase: sl(),
+        loginUseCase: sl(),
+        forgotPasswordUsecase: sl()),
   );
   sl.registerFactory(
     () => ForgotPasswordBloc(
@@ -332,6 +351,11 @@ Future<void> init() async {
     () => HomeBloc(
       getRecommendedProductsUseCase: sl(),
       getTrendingProductsUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => SearchBloc(
+      searchSuggestionUsecase: sl(),
     ),
   );
 }

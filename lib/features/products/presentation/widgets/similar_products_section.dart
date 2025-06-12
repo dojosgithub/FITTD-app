@@ -34,9 +34,6 @@ class SimilarProductsSection extends StatelessWidget {
           id: similarProducts[index].id,
           price: similarProducts[index].price,
           isLiked: similarProducts[index].isWishlist,
-          // onTap: () {
-          //   print("object");
-          // },
           onTap: () => context.read<ProductsBloc>().add(
                 WishList(
                   productId: similarProducts[index].id,

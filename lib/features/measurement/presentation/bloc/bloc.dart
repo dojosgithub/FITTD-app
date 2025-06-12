@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -146,8 +145,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
       );
       result.fold(
         (failure) {
-          log(failure.message.toString());
-
           ToastUtil.showToast(message: "Failed to Update Measurement");
           emit(
             state.copyWith(
@@ -176,7 +173,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
       final result = await getMeasurementsUseCase();
       result.fold(
         (failure) {
-          log(failure.message.toString());
           ToastUtil.showToast(message: "Failed to Get Measurement");
           emit(
             state.copyWith(
@@ -185,7 +181,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
           );
         },
         (successData) {
-          log(successData.toMap().toString());
           if (successData.gender == "male") {
             final maleMeasurement = MaleMeasurementModel(
               chest: safeMeasurement(successData.upperBody!.chest),

@@ -1,3 +1,4 @@
+import 'package:fitted/config/assets/images.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
@@ -5,7 +6,6 @@ import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/apparel/presentation/bloc/bloc.dart';
-import 'package:fitted/features/main/data/mock_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,8 +87,9 @@ class _ApparelViewState extends State<ApparelView> {
                                     ),
                                   ),
                                   padding: EdgeInsets.all(12),
-                                  child: FittedImageProvider.network(
-                                    imagePath: HomeMockData.productImg1,
+                                  child: FittedImageProvider.localAsset(
+                                    imagePath: apparelImages[
+                                        state.apparelEntity![index].label],
                                     imageSize: Size(107.w, 163.h),
                                     boxFit: BoxFit.cover,
                                   ),
@@ -129,3 +130,13 @@ class _ApparelViewState extends State<ApparelView> {
     );
   }
 }
+
+final Map apparelImages = {
+  "Denim": AppImages.denims,
+  "Bottoms": AppImages.bottoms,
+  "Tops": AppImages.tops,
+  "Outerwear": AppImages.outerwear,
+  "Dresses": AppImages.dresses,
+  "Footwear": AppImages.footwear,
+  "Accessories": AppImages.accessories,
+};

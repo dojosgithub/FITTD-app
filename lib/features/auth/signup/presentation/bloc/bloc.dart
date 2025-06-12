@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/storage/app_storage.dart';
@@ -28,9 +27,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         )) {
     on<SignInButtonPressed>(_onSignInButtonPressed);
     on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
-    // on<LoginErrorOccurred>(_onLoginErrorOccurred);
-    // on<LoginLoading>(_onLoginLoading);
-    // on<LoginSuccess>(_onLoginSuccess);
   }
   Future<void> _onSignInButtonPressed(
       SignInButtonPressed event, Emitter<SignInState> emit) async {
@@ -43,8 +39,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     );
     result.fold(
       (failure) {
-        log('result: ${failure.message}');
-
         emit(state.copyWith(
           isLoading: false,
           isError: true,

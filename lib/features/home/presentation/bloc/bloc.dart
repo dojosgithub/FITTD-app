@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/features/home/domain/entities/recommended_products_entity.dart';
 import 'package:fitted/features/home/domain/entities/trending_products_entity.dart';
@@ -26,7 +25,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final result = await getTrendingProductsUseCase.call();
       result.fold(
         (failure) {
-          log(failure.toString());
           emit(state.copyWith(isLoading: false));
         },
         (sucess) {
@@ -45,7 +43,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           .call(SharedPrefsStorage.getUserFit()!);
       result.fold(
         (failure) {
-          log(failure.toString());
           emit(state.copyWith(isLoading: false));
         },
         (sucess) {

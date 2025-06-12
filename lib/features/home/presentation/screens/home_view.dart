@@ -9,6 +9,7 @@ import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/features/main/data/mock_data.dart';
+import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,10 +32,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
+    context.read<ProfileBloc>().add(GetProfile());
     context.read<HomeBloc>().add(GetTrendingProducts());
-    context.read<HomeBloc>().add(
-          GetRecommendedProducts(),
-        );
+    context.read<HomeBloc>().add(GetRecommendedProducts());
     super.initState();
   }
 
@@ -51,13 +51,43 @@ class _HomeViewState extends State<HomeView> {
                 Row(
                   spacing: 12.w,
                   children: [
-                    FittedImageProvider.circularNetwork(
-                      imagePath: HomeMockData.avatarImg,
-                      imageSize: Size(48.w, 48.h),
-                      boxFit: BoxFit.cover,
-                    ),
+                    context.read<ProfileBloc>().state.profile.imageUrl == null
+                        ? Container(
+                            height: 48.h,
+                            width: 48.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.grey,
+                                width: 2,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: AppText.poppinsBold(
+                              context
+                                  .read<ProfileBloc>()
+                                  .state
+                                  .profile
+                                  .name
+                                  .toString()
+                                  .substring(0, 2)
+                                  .toUpperCase(),
+                              fontSize: 14,
+                              color: AppColors.black,
+                            ),
+                          )
+                        : FittedImageProvider.circularNetwork(
+                            imagePath: context
+                                    .read<ProfileBloc>()
+                                    .state
+                                    .profile
+                                    .imageUrl ??
+                                HomeMockData.avatarImg,
+                            imageSize: Size.square(48.w),
+                            boxFit: BoxFit.cover,
+                          ),
                     AppText.poppinsMedium(
-                      "Hello Ashleigh",
+                      "Hello ${context.read<ProfileBloc>().state.profile.name ?? ""}",
                       fontSize: 17,
                       height: 22 / 17,
                       color: AppColors.tealPrimary,
@@ -73,32 +103,43 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ),
                 SpacersVertical.spacer2,
-                FittedInputField.withIcon(
-                  height: 48.h,
-                  width: 1.sw,
-                  hint: "Search for...",
-                  hintStyle: AppTextStyles.poppinsRegular(
-                    fontSize: 13,
-                    height: 22 / 13,
-                    color: AppColors.tealSecondary,
-                  ),
-                  label: "",
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RoundedButton(
-                      child: FittedImageProvider.localSvg(
-                        imagePath: AppVectors.filter,
-                        imageSize: Size(18.w, 17.h),
-                        boxFit: BoxFit.contain,
+                GestureDetector(
+                  onTap: () => context.pushNamed(AppRoutesEnum.searchView.name),
+                  child: AbsorbPointer(
+                    child: Hero(
+                      tag: "searchField",
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: FittedInputField.withIcon(
+                          height: 48.h,
+                          width: 1.sw,
+                          hint: "Search for...",
+                          hintStyle: AppTextStyles.poppinsRegular(
+                            fontSize: 13,
+                            height: 22 / 13,
+                            color: AppColors.tealSecondary,
+                          ),
+                          label: "",
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: RoundedButton(
+                              child: FittedImageProvider.localSvg(
+                                imagePath: AppVectors.filter,
+                                imageSize: Size(18.w, 17.h),
+                                boxFit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(14.0),
+                            child: FittedImageProvider.localSvg(
+                              imagePath: AppVectors.search,
+                              imageSize: Size(8.w, 8.h),
+                              boxFit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: FittedImageProvider.localSvg(
-                      imagePath: AppVectors.search,
-                      imageSize: Size(8.w, 8.h),
-                      boxFit: BoxFit.contain,
                     ),
                   ),
                 ),

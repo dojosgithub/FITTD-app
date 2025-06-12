@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/features/products/domain/entities/product_detail_entity.dart';
@@ -41,8 +40,6 @@ class ProductsBloc extends Bloc<ProductEvent, ProductState> {
         result.fold(
           (failure) => emit(state.copyWith(isLoading: false)),
           (response) {
-            log(response.toString());
-
             emit(
               state.copyWith(
                 isLoading: false,

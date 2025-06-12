@@ -1,4 +1,3 @@
-
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
@@ -119,10 +118,10 @@ class CustomBottomNavBar extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(_icons.length, (_) {
-          final isSelected = _ == (index == 4 ? 1 : index);
+        children: List.generate(_icons.length, (listIndex) {
+          final isSelected = listIndex == (index == 4 ? 1 : index);
           return GestureDetector(
-            onTap: () => onTabSelected(_),
+            onTap: () => onTabSelected(listIndex),
             child: AnimatedContainer(
               duration: Duration(milliseconds: 250),
               padding: EdgeInsets.symmetric(
@@ -135,12 +134,13 @@ class CustomBottomNavBar extends StatelessWidget {
               child: Row(
                 children: [
                   FittedImageProvider.localSvg(
-                    imagePath: _icons[_][isSelected ? "iconActive" : "icon"]!,
+                    imagePath: _icons[listIndex]
+                        [isSelected ? "iconActive" : "icon"]!,
                   ),
                   if (isSelected) ...[
                     SizedBox(width: 8),
                     Text(
-                      _labels[_],
+                      _labels[listIndex],
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

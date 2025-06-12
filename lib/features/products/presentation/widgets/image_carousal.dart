@@ -54,7 +54,7 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
             padding: EdgeInsets.only(bottom: 12.h, top: 12.h),
             child: Container(
               height: 17.h,
-              width: 67.w,
+              width: 17.w * widget.imageUrls.length,
               decoration: BoxDecoration(
                 color: const Color(0xffF9F9F9),
                 borderRadius: BorderRadius.circular(18.r),

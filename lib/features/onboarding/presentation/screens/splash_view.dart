@@ -31,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
       if (userId != null && userId.isNotEmpty) {
         context.goNamed(AppRoutesEnum.main.name);
       } else {
-        context.goNamed(AppRoutesEnum.login.name);
+        context.goNamed(AppRoutesEnum.onboarding.name);
       }
     }
   }

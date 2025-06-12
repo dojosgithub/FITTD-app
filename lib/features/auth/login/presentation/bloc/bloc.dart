@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:flutter/widgets.dart';
@@ -28,9 +27,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginButtonPressed>(_onLoginButtonPressed);
     on<LoginRememberMeChanged>(_onLoginRememberMeChanged);
     on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
-    // on<LoginErrorOccurred>(_onLoginErrorOccurred);
-    // on<LoginLoading>(_onLoginLoading);
-    // on<LoginSuccess>(_onLoginSuccess);
   }
   void _onLoginButtonPressed(
       LoginButtonPressed event, Emitter<LoginState> emit) async {
@@ -57,12 +53,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             errorMessage: failure.message.split(":").last,
           ));
         }
+        ToastUtil.showToast(
+          message: state.errorMessage,
+        );
       },
       (response) {
         SharedPrefsStorage.setToken(response.accessToken!);
         SharedPrefsStorage.setUserId(response.user!.id!);
         SharedPrefsStorage.setUserFit(response.user!.measurements['fit']);
-        log("FIT +++++ ${response.user!.measurements['fit']}");
 
         emit(state.copyWith(
           isLoading: false,

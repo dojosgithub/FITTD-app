@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
@@ -45,11 +44,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final result = await profileUseCase();
 
       result.fold((failure) {
-        log(failure.message.toString());
         emit(state.copyWith(isLoading: false));
       }, (sucess) {
-        log(sucess.toString());
-
         emit(state.copyWith(
           isLoading: false,
           profile: sucess.profile,
@@ -69,7 +65,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
 
       result.fold((failure) {
-        log(failure.message.toString());
         emit(state.copyWith(isLoading: false));
       }, (sucess) {
         ToastUtil.showToast(message: "Profile Updated Sucessfully");
@@ -89,7 +84,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetWishlist>((event, emit) async {
       final result = await getWishListUseCase.call();
       result.fold((failure) {
-        log(failure.message.toString());
         emit(state.copyWith(isLoading: false));
       }, (sucess) {
         emit(state.copyWith(wishlistEntity: sucess));
@@ -109,7 +103,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final image = await _picker.pickImage(source: ImageSource.camera);
     if (image != null) {
       emit(state.copyWith(image: image));
-    } else {}
+    }
   }
 
   Future<void> _pickFromGallery(
@@ -117,6 +111,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       emit(state.copyWith(image: image));
-    } else {}
+    }
   }
 }

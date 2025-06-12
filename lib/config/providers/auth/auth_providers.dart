@@ -1,5 +1,5 @@
 import 'package:fitted/core/di/service_locator.dart';
-import 'package:fitted/features/auth/forgot_password/bloc/bloc.dart';
+import 'package:fitted/features/auth/forgot_password/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/login/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/signup/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/verify_otp/presentation/bloc/bloc.dart';

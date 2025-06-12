@@ -28,7 +28,6 @@ class SettingsRemoteDataSourceImpl implements SettingsRemoteDataSource {
       '/api/auth/delete-account',
       data: request.toJson(),
     );
-    print(response.data);
     return response.data;
   }
 }

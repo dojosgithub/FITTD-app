@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
@@ -63,7 +62,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
       response.fold((failure) {
         ToastUtil.showToast(message: failure.message);
-        log(failure.message);
         emit(state.copyWith(isLoading: false, deleteAccountSucess: false));
       }, (sucess) {
         ToastUtil.showToast(message: "Account Deletion Sucessfull");

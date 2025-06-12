@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -28,11 +27,9 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
     on<GetApparelEvent>(_onGetApparel);
     on<SetCategory>(_onSetCategory);
     on<SetBrand>((event, emit) {
-      log(event.brand.toString());
       emit(state.copyWith(
         selectedBrand: event.brand,
       ));
-      log(state.selectedBrand.toString());
     });
     on<LoadMoreCategoryProducts>(_onLoadMoreCategoryProducts);
     on<WishList>((event, emit) async {
@@ -123,11 +120,6 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
         final noMoreData = moreProducts.length < pageSize ||
             updatedList.length >= responseModel.results;
 
-        log("Length of All: ${responseModel.results}");
-        log("Length of updatedList: ${updatedList.length}");
-        log("More products this page: ${moreProducts.length}");
-        log("No more data? $noMoreData");
-
         emit(state.copyWith(
           isLoading: false,
           productsEntity: updatedList,
@@ -148,7 +140,6 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
 
     result.fold(
       (failure) {
-        log("Error fetching apparel: ${failure.message}");
         emit(state.copyWith(
           isLoading: false,
           error: failure.message,

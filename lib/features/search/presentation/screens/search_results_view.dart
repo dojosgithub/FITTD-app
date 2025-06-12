@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../products/data/lists/fit_list.dart';
 
 class SearchResultsView extends StatelessWidget {
   const SearchResultsView({super.key});

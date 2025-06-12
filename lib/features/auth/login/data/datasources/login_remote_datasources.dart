@@ -19,7 +19,6 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
         '/api/auth/signin',
         data: model.toJson(),
       );
-
       return LoginResponseModel.fromJson(response.data);
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');

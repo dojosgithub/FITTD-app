@@ -46,7 +46,7 @@ class ApiClient {
       return response;
     } on DioException catch (e) {
       log(endpoint);
-      log(e.response!.data);
+      log(e.toString());
 
       throw Exception(e.response?.data['message'] ?? 'Unknown Error');
     }

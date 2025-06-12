@@ -18,6 +18,7 @@ class OnboardingView extends StatelessWidget {
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(top: 145.h, bottom: 52.h),
+        alignment: Alignment.center,
         child: Column(
           children: <Widget>[
             FittedImageProvider.localAsset(
@@ -34,7 +35,7 @@ class OnboardingView extends StatelessWidget {
             ),
             SpacersVertical.spacer20,
             AppText.poppinsRegular(
-              "We will help you to pick the best fit clothes exactly for you, let’s do it!",
+              "Find the perfect fit",
               fontSize: 16,
               height: 24 / 16,
               color: AppColors.tealSecondary,

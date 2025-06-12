@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
@@ -25,8 +24,6 @@ class SignupButtons extends StatelessWidget {
               context.read<SignInBloc>().add(
                     SignInButtonPressed(),
                   );
-            } else {
-              log('Form is not valid');
             }
           },
         ),

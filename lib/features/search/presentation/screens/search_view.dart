@@ -1,12 +1,11 @@
-import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
-import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
-import 'package:fitted/config/helper/typography/app_text_styles.dart';
-import 'package:fitted/config/widgets/input_feild.dart';
+import 'package:fitted/config/widgets/app_text.dart';
+import 'package:fitted/config/widgets/loading_indicator.dart';
+import 'package:fitted/features/search/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../widgets/brands_you_love.dart';
 import '../widgets/most_popular_brands.dart';
 import '../widgets/recent_searches.dart';
@@ -18,26 +17,51 @@ class SearchView extends StatelessWidget {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 36.h, horizontal: 12.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SearchField(controller: controller),
-            controller.text != ""
-                ? BuildSearchSuggestions()
-                : Column(
-                    children: [
-                      SpacersVertical.spacer36,
-                      RecentSearchesWidget(),
-                      SpacersVertical.spacer22,
-                      MostPopularBrandsWidget(),
-                      SpacersVertical.spacer22,
-                      BrandsYouLoveWidget(),
-                    ],
-                  ),
-          ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          toolbarHeight: 40,
+          backgroundColor: Colors.white,
+          leading: Icon(Icons.arrow_back_ios),
+        ),
+        body: BlocBuilder<SearchBloc, SearchState>(
+          builder: (context, state) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SearchField(controller: controller),
+                  controller.text != ""
+                      ? state.suggestionEntity == null
+                          ? LoadingIndicator()
+                          : state.suggestionEntity == []
+                              ? Center(
+                                  child: AppText.poppinsBold(
+                                    "NO RESULTS FOUND",
+                                    fontSize: 18,
+                                    color: AppColors.black,
+                                  ),
+                                )
+                              : BuildSearchSuggestions(
+                                  suggestions: state.suggestionEntity!,
+                                )
+                      : Column(
+                          children: [
+                            SpacersVertical.spacer36,
+                            RecentSearchesWidget(),
+                            SpacersVertical.spacer22,
+                            MostPopularBrandsWidget(),
+                            SpacersVertical.spacer22,
+                            BrandsYouLoveWidget(),
+                          ],
+                        ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
