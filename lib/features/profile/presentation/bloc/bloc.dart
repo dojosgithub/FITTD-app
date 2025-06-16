@@ -31,6 +31,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               email: null,
               imageUrl: null,
               wishlist: null,
+              accountType: null,
             ),
             image: null,
             firstName: TextEditingController(),

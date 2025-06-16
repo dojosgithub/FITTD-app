@@ -9,3 +9,24 @@ class SearchQuery extends SearchEvent {
     required this.query,
   });
 }
+
+class SearchProducts extends SearchEvent {
+  final String keyword;
+  SearchProducts({
+    required this.keyword,
+  });
+}
+
+class SelectFilter extends SearchEvent {
+  final int selectedIndex;
+  SelectFilter({
+    required this.selectedIndex,
+  });
+}
+
+class SelectFit extends SearchEvent {
+  final String fit;
+  SelectFit({
+    required this.fit,
+  });
+}

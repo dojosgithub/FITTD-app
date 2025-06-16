@@ -34,10 +34,4 @@ class SignInErrorOccurred extends SignInEvent {
   });
 }
 
-class SignInLoading extends SignInEvent {
-  const SignInLoading();
-}
-
-class SignInSuccess extends SignInEvent {
-  const SignInSuccess();
-}
+class GoogleSignInRequested extends SignInEvent {}

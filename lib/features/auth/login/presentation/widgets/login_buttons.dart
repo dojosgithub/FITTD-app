@@ -35,7 +35,9 @@ class LoginButtons extends StatelessWidget {
           ),
           borderColor: AppColors.grey,
           borderWidth: 1,
-          onTap: () {},
+          onTap: () {
+            context.read<LoginBloc>().add(GoogleSignInRequested());
+          },
         ),
       ],
     );

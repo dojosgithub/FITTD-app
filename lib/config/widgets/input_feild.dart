@@ -21,6 +21,8 @@ class FittedInputField extends StatelessWidget {
   final String? initialValue;
   final Widget? prefixIcon; // Add this line
   final TextStyle? hintStyle;
+  final TextInputAction? textInputAction;
+  final Function(String)? onFieldSubmitted;
 
   const FittedInputField(
       {super.key,
@@ -37,6 +39,8 @@ class FittedInputField extends StatelessWidget {
       this.onChanged,
       this.hintStyle,
       this.initialValue,
+      this.onFieldSubmitted,
+      this.textInputAction,
       this.width});
 
   factory FittedInputField.email({
@@ -156,6 +160,8 @@ class FittedInputField extends StatelessWidget {
     double? height = 58,
     Function(String)? onChanged,
     bool obscureText = false,
+    final TextInputAction? textInputAction,
+    final Function(String)? onFieldSubmitted,
   }) {
     return FittedInputField(
       hintStyle: hintStyle,
@@ -172,6 +178,8 @@ class FittedInputField extends StatelessWidget {
       spacing: spacing,
       onChanged: onChanged,
       width: width,
+      textInputAction: textInputAction,
+      onFieldSubmitted: onFieldSubmitted,
     );
   }
 
@@ -205,6 +213,8 @@ class FittedInputField extends StatelessWidget {
               cursorColor: AppColors.orangePrimary,
               validator: validator,
               onChanged: onChanged,
+              textInputAction: textInputAction,
+              onFieldSubmitted: onFieldSubmitted,
               decoration: InputDecoration(
                 hintText: hint,
                 hintStyle: hintStyle ??

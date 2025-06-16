@@ -39,9 +39,9 @@ class SignupView extends StatelessWidget {
                   SpacersVertical.spacer4,
                   AppText.poppinsRegular(
                     "Set up your account with us.\nPlease fill the below details to create the account.",
-                    fontSize: 14,
-                    height: 22 / 14,
-                    letterSpacing: 0.02 * 14,
+                    fontSize: 16,
+                    height: 22 / 16,
+                    letterSpacing: 0.02 * 16,
                     color: AppColors.tealPrimary,
                     textAlign: TextAlign.center,
                   ),

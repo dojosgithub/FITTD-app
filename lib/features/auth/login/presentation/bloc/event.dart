@@ -42,3 +42,5 @@ class LoginLoading extends LoginEvent {
 class LoginSuccess extends LoginEvent {
   const LoginSuccess();
 }
+
+class GoogleSignInRequested extends LoginEvent {}

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../core/network/api_client.dart';
 import '../models/measurement_request_model.dart';
 import '../models/measurement_response_model.dart';
@@ -18,12 +20,14 @@ class MeasurementRemoteDataSourceImpl implements MeasurementRemoteDataSource {
       MeasurementRequestModel request) async {
     final response =
         await apiClient.post('/api/user/measurements', data: request.toJson());
+    log(request.toJson().toString());
     return MeasurementResponseModel.fromJson(response.data);
   }
 
   @override
   Future<MeasurementResponseModel> getMeasurement() async {
     final response = await apiClient.get('/api/user/measurements');
+
     return MeasurementResponseModel.fromJson(response.data);
   }
 }

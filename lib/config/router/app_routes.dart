@@ -1,3 +1,4 @@
+import 'package:fitted/features/notifications/presentation/screens/notification_view.dart';
 import 'package:fitted/features/search/presentation/screens/search_results_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fitted/features/measurement/presentation/screen/face_measurement_view.dart';
@@ -266,6 +267,13 @@ class AppRoutes {
         child: SearchResultsView(),
       ),
     ),
+    GoRoute(
+      path: AppRoutesEnum.notificationView.path,
+      name: AppRoutesEnum.notificationView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: NotificationView(),
+      ),
+    ),
   ];
 }
 
@@ -302,6 +310,7 @@ enum AppRoutesEnum {
   productsDetailView,
   searchView,
   searchResultsView,
+  notificationView,
 }
 
 extension AppRoutesExtension on AppRoutesEnum {
@@ -371,6 +380,8 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/searchView';
       case AppRoutesEnum.searchResultsView:
         return '/searchResultsView';
+      case AppRoutesEnum.notificationView:
+        return '/NotificationView';
     }
   }
 

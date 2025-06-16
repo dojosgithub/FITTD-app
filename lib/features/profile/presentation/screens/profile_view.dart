@@ -51,6 +51,10 @@ class _ProfileViewState extends State<ProfileView> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           RoundedButton(
+                            onTap: () {
+                              context.pushNamed(
+                                  AppRoutesEnum.notificationView.name);
+                            },
                             child: Padding(
                               padding: EdgeInsets.only(top: 4.h),
                               child: FittedImageProvider.localSvg(
@@ -170,6 +174,7 @@ class _ProfileViewState extends State<ProfileView> {
                               name: wishListProducts.name,
                               price: wishListProducts.price,
                               id: wishListProducts.id,
+                              alterationRequired: false,
                               isLiked: true,
                               image: wishListProducts.imageUrl,
                               onTap: () async {

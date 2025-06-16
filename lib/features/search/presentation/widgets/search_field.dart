@@ -1,11 +1,14 @@
+
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
+import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../bloc/bloc.dart';
 
@@ -27,9 +30,18 @@ class SearchField extends StatelessWidget {
             keyboardType: TextInputType.text,
             controller: controller,
             height: 48.h,
-            width: 0.9.sw,
+            width: 1.sw,
             label: "",
             hint: "Search brand & products",
+            textInputAction: TextInputAction.search,
+            onFieldSubmitted: (p0) {
+              context.read<SearchBloc>().add(
+                    SearchProducts(
+                      keyword: p0,
+                    ),
+                  );
+              context.pushNamed(AppRoutesEnum.searchResultsView.name);
+            },
             hintStyle: AppTextStyles.poppinsRegular(
               fontSize: 16,
               height: 20 / 16,
@@ -38,14 +50,16 @@ class SearchField extends StatelessWidget {
                 alpha: 0.6,
               ),
             ),
-            prefixIcon: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: FittedImageProvider.localSvg(
-                imagePath: AppVectors.searchColored,
-                imageSize: Size(8.w, 8.h),
-                boxFit: BoxFit.contain,
-              ),
-            ),
+            prefixIcon: controller.text == ""
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: FittedImageProvider.localSvg(
+                      imagePath: AppVectors.searchColored,
+                      imageSize: Size(8.w, 8.h),
+                      boxFit: BoxFit.contain,
+                    ),
+                  )
+                : null,
             suffixIcon: controller.text != ""
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12.0),

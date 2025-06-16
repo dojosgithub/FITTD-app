@@ -33,3 +33,17 @@ class WishList extends ApparelEvent {
     this.skip = false,
   });
 }
+
+class SearchQuery extends ApparelEvent {
+  final String query;
+  SearchQuery({
+    required this.query,
+  });
+}
+
+class SearchProducts extends ApparelEvent {
+  final String keyword;
+  SearchProducts({
+    required this.keyword,
+  });
+}

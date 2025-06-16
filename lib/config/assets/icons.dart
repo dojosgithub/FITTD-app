@@ -55,4 +55,7 @@ class AppVectors {
   static const String cross = '${baseUrl}cross$extension';
   static const String chevronRight = '${baseUrl}chevron_right$extension';
   static const String filterOrange = '${baseUrl}filter_orange$extension';
+  static const String fire = '${baseUrl}fire$extension';
+  static const String warning = '${baseUrl}warning$extension';
+  static const String lightning = '${baseUrl}lightning$extension';
 }

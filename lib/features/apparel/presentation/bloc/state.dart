@@ -10,6 +10,9 @@ class ApparelState extends Equatable {
   final bool hasMore;
   final List<ApparelCategoryEntity>? apparelEntity;
   final List<ProductEntity>? productsEntity;
+  final List<SuggestionEntity>? suggestionEntity;
+  final List<SearchProductEntity>? searchProductEntity;
+  final String searchQuery;
 
   const ApparelState({
     this.isLoading = true,
@@ -20,6 +23,9 @@ class ApparelState extends Equatable {
     this.productsEntity,
     this.currentPage = 1,
     this.hasMore = false,
+    this.searchQuery = '',
+    this.suggestionEntity,
+    this.searchProductEntity,
   });
 
   @override
@@ -32,6 +38,9 @@ class ApparelState extends Equatable {
         hasMore,
         selectedBrand,
         selectedCategory,
+        searchQuery,
+        suggestionEntity,
+        searchProductEntity
       ];
 
   ApparelState copyWith({
@@ -39,10 +48,13 @@ class ApparelState extends Equatable {
     String? error,
     String? selectedCategory,
     String? selectedBrand,
+    String? searchQuery,
     int? currentPage,
     bool? hasMore,
     List<ApparelCategoryEntity>? apparelEntity,
     List<ProductEntity>? productsEntity,
+    List<SuggestionEntity>? suggestionEntity,
+    List<SearchProductEntity>? searchProductEntity,
   }) {
     return ApparelState(
       isLoading: isLoading ?? this.isLoading,
@@ -53,6 +65,9 @@ class ApparelState extends Equatable {
       hasMore: hasMore ?? this.hasMore,
       apparelEntity: apparelEntity ?? this.apparelEntity,
       productsEntity: productsEntity ?? this.productsEntity,
+      suggestionEntity: suggestionEntity ?? this.suggestionEntity,
+      searchQuery: searchQuery ?? this.searchQuery,
+      searchProductEntity: searchProductEntity ?? this.searchProductEntity,
     );
   }
 }

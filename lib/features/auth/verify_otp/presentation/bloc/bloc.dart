@@ -49,6 +49,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
     await result.fold(
       (failure) async {
+        print("${failure.message}");
         emit(state.copyWith(
           isLoading: false,
           isError: true,
@@ -94,6 +95,16 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
   void _onResendOtp(ResendOtpEvent event, Emitter<OtpState> emit) async {
     switch (event.contextType) {
       case OtpContextType.signUp:
+        final loginResult = await loginUseCase(
+          password: SharedPrefsStorage.getRefreshToken().toString(),
+          email: event.email,
+        );
+
+        loginResult.fold(
+          (failure) {},
+          (success) => ToastUtil.showToast(message: "OTP Resend Sucessful"),
+        );
+
         break;
       case OtpContextType.resetPassword:
         final result = await forgotPasswordUsecase(

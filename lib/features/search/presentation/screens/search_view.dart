@@ -22,9 +22,8 @@ class SearchView extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          toolbarHeight: 40,
+          toolbarHeight: 30.h,
           backgroundColor: Colors.white,
-          leading: Icon(Icons.arrow_back_ios),
         ),
         body: BlocBuilder<SearchBloc, SearchState>(
           builder: (context, state) => Padding(
@@ -37,8 +36,10 @@ class SearchView extends StatelessWidget {
                   controller.text != ""
                       ? state.suggestionEntity == null
                           ? LoadingIndicator()
-                          : state.suggestionEntity == []
-                              ? Center(
+                          : state.suggestionEntity!.isEmpty
+                              ? Container(
+                                  height: 0.7.sw,
+                                  alignment: Alignment.bottomCenter,
                                   child: AppText.poppinsBold(
                                     "NO RESULTS FOUND",
                                     fontSize: 18,

@@ -1,7 +1,7 @@
 import '../../data/models/login_response_model.dart';
 
-class LoginResponse {
-  LoginResponse({
+class LoginEntity {
+  LoginEntity({
     required this.user,
     required this.accessToken,
   });

@@ -1,11 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fitted/config/storage/app_storage.dart';
 
 import 'package:fitted/features/apparel/domain/usecases/apparel_usecase.dart';
+import 'package:fitted/features/search/domain/entity/search_product_entity.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 import '../../../products/domain/usecase/products_usecase.dart';
+import '../../../search/domain/entity/search_suggestion_entity.dart';
 import '../../domain/entities/apparel_entity.dart';
 import '../../domain/entities/category_products_entity.dart';
 
@@ -16,11 +18,15 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
   final ApparelUseCase apparelUsecase;
   final GetCategoryProductsUseCase getCategoryProductsUseCase;
   final WishListUseCase wishListUseCase;
+  final ApparelSearchProductUsecase apparelSearchProductUsecase;
+  final ApparelSearchSuggestionUsecase apparelSearchSuggestionUsecase;
 
   ApparelBloc({
     required this.apparelUsecase,
     required this.getCategoryProductsUseCase,
     required this.wishListUseCase,
+    required this.apparelSearchProductUsecase,
+    required this.apparelSearchSuggestionUsecase,
   }) : super(
           const ApparelState(),
         ) {
@@ -52,6 +58,37 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
       result.fold(
         (failure) => emit(state.copyWith(isLoading: false)),
         (response) {},
+      );
+    });
+    on<SearchQuery>(
+      _onSearchQuery,
+      transformer: (events, mapper) {
+        return events
+            .debounce(const Duration(milliseconds: 200))
+            .asyncExpand(mapper);
+      },
+    );
+    on<SearchProducts>((event, emit) async {
+      emit(
+        state.copyWith(
+          suggestionEntity: [],
+          searchQuery: event.keyword,
+          isLoading: true,
+        ),
+      );
+      final result = await apparelSearchProductUsecase.call(
+        keyword: event.keyword,
+        category: state.selectedCategory,
+        brand: state.selectedBrand,
+        fitType: SharedPrefsStorage.getUserFit()!,
+      );
+
+      result.fold(
+        (failure) => emit(state.copyWith(isLoading: false)),
+        (success) => emit(state.copyWith(
+          searchProductEntity: success,
+          isLoading: false,
+        )),
       );
     });
   }
@@ -87,8 +124,7 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
     LoadMoreCategoryProducts event,
     Emitter<ApparelState> emit,
   ) async {
-    // Don't fetch if already loading or no more data
-    if (state.isLoading || !state.hasMore) return;
+    if (state.isLoading || !state.hasMore || state.searchQuery != "") return;
 
     final nextPage = state.currentPage + 1;
     emit(state.copyWith(isLoading: true));
@@ -151,6 +187,32 @@ class ApparelBloc extends Bloc<ApparelEvent, ApparelState> {
           apparelEntity: apparelResponseModel,
         ));
       },
+    );
+  }
+
+  Future<void> _onSearchQuery(
+      SearchQuery event, Emitter<ApparelState> emit) async {
+    emit(state.copyWith(
+      searchQuery: event.query,
+      suggestionEntity: [],
+      searchProductEntity: [],
+    ));
+
+    if (event.query.isEmpty) return;
+
+    emit(state.copyWith(isLoading: true));
+
+    final result = await apparelSearchSuggestionUsecase.call(
+        suggestion: event.query,
+        category: state.selectedCategory,
+        brand: state.selectedBrand);
+
+    result.fold(
+      (failure) => emit(state.copyWith(isLoading: false)),
+      (success) => emit(state.copyWith(
+        suggestionEntity: success,
+        isLoading: false,
+      )),
     );
   }
 }

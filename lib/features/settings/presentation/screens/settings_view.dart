@@ -1,9 +1,12 @@
+import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
+import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/assets/icons.dart';
@@ -43,19 +46,25 @@ class SettingsView extends StatelessWidget {
               title: "PROFILE",
               items: [
                 SettingsCard(
-                  title: "Edit Profile",
-                  subtitle: "View & edit your profile details",
-                  icon: AppVectors.profile,
-                  onTap: () =>
-                      context.pushNamed(AppRoutesEnum.personalInfoView.name),
-                ),
+                    title: "Edit Profile",
+                    subtitle: "View & edit your profile details",
+                    icon: AppVectors.profile,
+                    onTap: () {
+                      context.pushNamed(AppRoutesEnum.personalInfoView.name);
+                    }),
                 SettingsCard(
-                  title: "Change Password",
-                  subtitle: 'You can change your password',
-                  icon: AppVectors.lock,
-                  onTap: () =>
-                      context.pushNamed(AppRoutesEnum.changePasswordView.name),
-                ),
+                    title: "Change Password",
+                    subtitle: 'You can change your password',
+                    icon: AppVectors.lock,
+                    onTap: () {
+                      context.read<ProfileBloc>().state.profile.accountType !=
+                              "FITTD"
+                          ? ToastUtil.showToast(
+                              message:
+                                  "Password for Google Account can't be changed.")
+                          : context
+                              .pushNamed(AppRoutesEnum.changePasswordView.name);
+                    }),
               ],
             ),
             const SectionSeparator(),

@@ -1,4 +1,6 @@
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
+import 'package:fitted/features/measurement/data/enums/female_measurement_enum.dart';
+import 'package:fitted/features/measurement/data/enums/male_measurement_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,15 +49,25 @@ class UnitDropdown extends StatelessWidget {
           underline: SizedBox(),
           onChanged: (Unit? newValue) {
             if (newValue != null) {
-              context.read<MeasurementBloc>().add(
-                    UpdateOtherMeasurement(
-                      field: field,
-                      value: Measurement(
-                        value: value,
-                        unit: newValue,
-                      ),
-                    ),
-                  );
+              field is MaleMeasurementEnum || field is FemaleMeasurementEnum
+                  ? context.read<MeasurementBloc>().add(
+                        UpdateMeasurement(
+                          field: field,
+                          value: Measurement(
+                            value: value,
+                            unit: newValue,
+                          ),
+                        ),
+                      )
+                  : context.read<MeasurementBloc>().add(
+                        UpdateOtherMeasurement(
+                          field: field,
+                          value: Measurement(
+                            value: value,
+                            unit: newValue,
+                          ),
+                        ),
+                      );
             }
           },
           items: Unit.values.map((unit) {

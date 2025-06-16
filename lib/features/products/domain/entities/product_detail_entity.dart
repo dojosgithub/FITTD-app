@@ -75,6 +75,8 @@ class AttributeDifferencesEntity {
   final String? waistDirection;
   final String? sleevesDirection;
   final String? sleeves;
+  final String? hipDirection;
+  final String? hip;
 
   AttributeDifferencesEntity({
     required this.bust,
@@ -83,6 +85,8 @@ class AttributeDifferencesEntity {
     this.waistDirection,
     this.sleevesDirection,
     required this.sleeves,
+    this.hipDirection,
+    required this.hip,
   });
 }
 
@@ -131,6 +135,8 @@ extension ProductModelMapper on ProductDetailResponseModel {
               waistDirection: attributeDifferences!.waistDirection,
               sleevesDirection: attributeDifferences!.sleevesDirection,
               sleeves: attributeDifferences!.sleeves,
+              hip: attributeDifferences!.hip,
+              hipDirection: attributeDifferences!.hipDirection,
             )
           : AttributeDifferencesEntity(
               bust: '',
@@ -139,7 +145,8 @@ extension ProductModelMapper on ProductDetailResponseModel {
               waistDirection: null,
               sleevesDirection: null,
               sleeves: null,
-            ),
+              hip: null,
+              hipDirection: null),
       recommendedSize: recommendedSize ?? '',
       fitType: fitType ?? '',
       similarProducts: similarProducts

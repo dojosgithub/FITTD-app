@@ -1,4 +1,3 @@
-import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/helper/form_validation/form_validator.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/router/app_routes.dart';
@@ -6,6 +5,7 @@ import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/auth/signup/presentation/bloc/bloc.dart';
 import 'package:fitted/features/auth/signup/presentation/widgets/signup_buttons.dart';
+import 'package:fitted/features/measurement/data/enums/measurement_route_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -20,20 +20,24 @@ class SignupFormWidget extends StatelessWidget {
     return Form(
       key: formKey,
       child: BlocConsumer<SignInBloc, SignInState>(
+        listenWhen: (previous, current) =>
+            previous.isSuccess != current.isSuccess,
         listener: (context, state) {
-          if (state.isSuccess) {
-            context.pushNamed(
+          if (state.isSuccess && !state.isOAuthSuccess) {
+            context.pushReplacementNamed(
               AppRoutesEnum.confirmOtp.name,
               queryParameters: {
                 'email': state.email.text,
                 'context': OtpContextType.signUp.name,
               },
             );
-          }
-          if (state.isError) {
-            ToastUtil.showToast(
-              message: state.errorMessage,
-            );
+          } else if (state.isOAuthSuccess && !state.isSuccess) {
+            context.pushReplacementNamed(AppRoutesEnum.userInfoView.name,
+                queryParameters: {
+                  'context': MeasurementRouteEnum.home.name,
+                });
+          } else if (state.isSuccess && state.isOAuthSuccess) {
+            context.pushReplacementNamed(AppRoutesEnum.main.name);
           }
         },
         builder: (context, state) => Column(

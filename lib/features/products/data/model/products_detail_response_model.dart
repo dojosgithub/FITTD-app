@@ -50,6 +50,8 @@ class AttributeDifferences {
     required this.waistDirection,
     required this.sleevesDirection,
     required this.sleeves,
+    required this.hipDirection,
+    required this.hip,
   });
 
   final String? bust;
@@ -58,6 +60,8 @@ class AttributeDifferences {
   final String? waistDirection;
   final dynamic sleevesDirection;
   final dynamic sleeves;
+  final dynamic hipDirection;
+  final dynamic hip;
 
   factory AttributeDifferences.fromJson(Map<String, dynamic> json) {
     return AttributeDifferences(
@@ -67,6 +71,8 @@ class AttributeDifferences {
       waistDirection: json["waistDirection"],
       sleevesDirection: json["sleevesDirection"],
       sleeves: json["sleeves"],
+      hipDirection: json["hipDirection"],
+      hip: json["hip"],
     );
   }
 

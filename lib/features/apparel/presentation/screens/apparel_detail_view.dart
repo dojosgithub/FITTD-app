@@ -11,6 +11,9 @@ import '../../../../config/helper/spacers/spacers.dart';
 import '../../../../config/widgets/app_text.dart';
 import '../../../../config/widgets/input_feild.dart';
 import '../../../../config/widgets/product_card.dart';
+import '../../../search/domain/entity/search_product_entity.dart';
+import '../../../search/presentation/widgets/search_suggestions.dart';
+import '../../domain/entities/category_products_entity.dart';
 import '../bloc/bloc.dart';
 import '../widgets/apparel_header.dart';
 
@@ -23,7 +26,7 @@ class ApparelDetailView extends StatefulWidget {
 
 class _ApparelDetailViewState extends State<ApparelDetailView> {
   final ScrollController _scrollController = ScrollController();
-
+  final TextEditingController controller = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -71,11 +74,18 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
                         height: 48.h,
                         width: 1.sw,
                         hint: "Search ",
+                        controller: controller,
                         hintStyle: AppTextStyles.poppinsRegular(
                           fontSize: 13,
                           height: 22 / 13,
                           color: AppColors.tealSecondary,
                         ),
+                        onFieldSubmitted: (p0) =>
+                            context.read<ApparelBloc>().add(
+                                  SearchProducts(
+                                    keyword: p0,
+                                  ),
+                                ),
                         label: "",
                         prefixIcon: Padding(
                           padding: const EdgeInsets.all(14.0),
@@ -85,36 +95,54 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
                             boxFit: BoxFit.contain,
                           ),
                         ),
-                      ),
-                      SpacersVertical.spacer34,
-                      GridView.builder(
-                        itemCount: state.productsEntity?.length ?? 0,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10.h,
-                          crossAxisSpacing: 12.w,
-                          childAspectRatio: 162.w / 290.h,
-                        ),
-                        itemBuilder: (context, index) {
-                          final product = state.productsEntity![index];
-                          return ProductCard(
-                            name: product.name,
-                            price: product.price,
-                            id: product.id,
-                            isLiked: product.isWishlist,
-                            image: product.imageUrl,
-                            onTap: () => context.read<ApparelBloc>().add(
-                                  WishList(
-                                    productId: product.id,
-                                    isAdded: product.isWishlist,
+                        suffixIcon: controller.text != ""
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context
+                                        .read<ApparelBloc>()
+                                        .add(SearchQuery(query: ""));
+                                    controller.clear();
+                                  },
+                                  child: FittedImageProvider.localSvg(
+                                    imagePath: AppVectors.cross,
+                                    imageSize: Size(8.w, 8.h),
+                                    boxFit: BoxFit.contain,
                                   ),
                                 ),
-                          );
-                        },
+                              )
+                            : null,
+                        onChanged: (value) => context
+                            .read<ApparelBloc>()
+                            .add(SearchQuery(query: value)),
                       ),
+                      SpacersVertical.spacer34,
+                      if (state.searchQuery.isNotEmpty) ...[
+                        if (state.searchProductEntity != null &&
+                            state.searchProductEntity!.isNotEmpty)
+                          _buildProductGrid(state, state.searchProductEntity!)
+                        else if (state.suggestionEntity!.isNotEmpty)
+                          BuildSearchSuggestions(
+                            suggestions: state.suggestionEntity!,
+                            isApparel: true,
+                          )
+                        else
+                          state.isLoading
+                              ? SizedBox.shrink()
+                              : Container(
+                                  height: 0.5.sw,
+                                  alignment: Alignment.bottomCenter,
+                                  child: AppText.poppinsBold(
+                                    "NO RESULTS FOUND",
+                                    fontSize: 18,
+                                    color: AppColors.black,
+                                  ),
+                                )
+                      ] else ...[
+                        _buildProductGrid(state, state.productsEntity ?? []),
+                      ],
                       if (state.isLoading) Center(child: LoadingIndicator()),
                     ],
                   ),
@@ -131,69 +159,68 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
   }
 }
 
-// List filterList = ["Bags", "\$20-\$15 000", "Medium"];
+Widget _buildProductGrid(ApparelState state, List<Object> products) {
+  return GridView.builder(
+    itemCount: products.length,
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    padding: EdgeInsets.zero,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      mainAxisSpacing: 10.h,
+      crossAxisSpacing: 12.w,
+      childAspectRatio: 162.w / 290.h,
+    ),
+    itemBuilder: (context, index) {
+      final product = products[index];
 
+      final name = product is ProductEntity
+          ? product.name
+          : product is SearchProductEntity
+              ? product.name
+              : '';
 
-//Filter Section
+      final price = product is ProductEntity
+          ? product.price
+          : product is SearchProductEntity
+              ? product.price
+              : '';
 
+      final id = product is ProductEntity
+          ? product.id
+          : product is SearchProductEntity
+              ? product.id
+              : '';
 
-// AppText.poppinsMedium(
-                      //   "Applied filters:",
-                      //   fontSize: 22,
-                      //   color: AppColors.tealPrimary,
-                      // ),
-                      // SpacersVertical.spacer34,
-                      // SizedBox(
-                      //   height: 37.h,
-                      //   child: ListView.separated(
-                      //     padding: EdgeInsets.zero,
-                      //     shrinkWrap: true,
-                      //     physics: NeverScrollableScrollPhysics(),
-                      //     itemCount: filterList.length,
-                      //     scrollDirection: Axis.horizontal,
-                      //     separatorBuilder: (context, index) => Spacers.spacer10,
-                      //     itemBuilder: (context, index) {
-                      //       return Container(
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(40.r),
-                      //           border: Border.all(
-                      //             color: AppColors.grey,
-                      //             width: 1,
-                      //           ),
-                      //         ),
-                      //         padding: EdgeInsets.symmetric(horizontal: 18),
-                      //         alignment: Alignment.center,
-                      //         child: Row(
-                      //           spacing: 4.w,
-                      //           children: [
-                      //             AppText.poppinsMedium(
-                      //               filterList[index],
-                      //               fontSize: 12,
-                      //               color: AppColors.tealPrimary,
-                      //             ),
-                      //             Icon(
-                      //               Icons.close,
-                      //               color: AppColors.tealSecondary,
-                      //               size: 18,
-                      //             )
-                      //           ],
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
+      final isLiked = product is ProductEntity
+          ? product.isWishlist
+          : product is SearchProductEntity
+              ? product.isWishlist
+              : false;
 
+      final image = product is ProductEntity
+          ? product.imageUrl
+          : product is SearchProductEntity
+              ? product.imageUrl
+              : '';
 
+      final alterationRequired = product is ProductEntity
+          ? false
+          : product is SearchProductEntity
+              ? product.alterationRequired
+              : false;
 
-// Search Bar
-
-   // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   crossAxisAlignment: CrossAxisAlignment.end,
-                      //   children: [
-                      // RoundedButton(
-                      //   child: FittedImageProvider.localSvg(
-                      //     imagePath: AppVectors.filterBar,
-                      //   ),q
-                      // ),    //   ],
-                      // ),
+      return ProductCard(
+        name: name,
+        price: price,
+        id: id,
+        isLiked: isLiked,
+        image: image,
+        alterationRequired: alterationRequired,
+        onTap: () => context.read<ApparelBloc>().add(
+              WishList(productId: id, isAdded: isLiked),
+            ),
+      );
+    },
+  );
+}

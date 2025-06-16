@@ -86,14 +86,21 @@ class _HomeViewState extends State<HomeView> {
                             imageSize: Size.square(48.w),
                             boxFit: BoxFit.cover,
                           ),
-                    AppText.poppinsMedium(
-                      "Hello ${context.read<ProfileBloc>().state.profile.name ?? ""}",
-                      fontSize: 17,
-                      height: 22 / 17,
-                      color: AppColors.tealPrimary,
+                    SizedBox(
+                      width: 0.56.sw,
+                      child: AppText.poppinsMedium(
+                        "Hello ${context.read<ProfileBloc>().state.profile.name ?? ""}",
+                        fontSize: 17,
+                        height: 22 / 17,
+                        color: AppColors.tealPrimary,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Spacer(),
                     RoundedButton(
+                      onTap: () {
+                        context.pushNamed(AppRoutesEnum.notificationView.name);
+                      },
                       child: FittedImageProvider.localSvg(
                         imagePath: AppVectors.notification,
                         imageSize: Size(18.w, 17.h),
@@ -263,6 +270,7 @@ class _HomeViewState extends State<HomeView> {
                           id: product.id,
                           isLiked: product.isWishlist,
                           image: product.imageUrl,
+                          alterationRequired: false,
                           onTap: () {
                             context.read<ApparelBloc>().add(
                                   WishList(
@@ -333,6 +341,7 @@ class _HomeViewState extends State<HomeView> {
                         id: product.id,
                         isLiked: product.isWishlist,
                         image: product.imageUrl,
+                        alterationRequired: false,
                         onTap: () {
                           context.read<ApparelBloc>().add(
                                 WishList(

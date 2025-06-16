@@ -1,7 +1,9 @@
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
+import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/measurement/data/models/other_measurement_model.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -153,6 +155,7 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
           );
         },
         (successData) {
+          SharedPrefsStorage.setUserFit(state.fit);
           emit(
             state.copyWith(
               isSuccess: true,
@@ -173,6 +176,7 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
       final result = await getMeasurementsUseCase();
       result.fold(
         (failure) {
+          log(failure.toString());
           ToastUtil.showToast(message: "Failed to Get Measurement");
           emit(
             state.copyWith(

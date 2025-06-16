@@ -23,7 +23,8 @@ class LoginFormWidget extends StatelessWidget {
       key: formKey,
       child: BlocConsumer<LoginBloc, LoginState>(
         listenWhen: (previous, current) =>
-            previous.isSuccess != current.isSuccess,
+            previous.isSuccess != current.isSuccess ||
+            previous.isError != current.isError,
         listener: (context, state) {
           if (state.isSuccess && state.hasMeasurements) {
             context.pushReplacementNamed(

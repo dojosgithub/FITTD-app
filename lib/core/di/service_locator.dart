@@ -189,6 +189,11 @@ Future<void> init() async {
     ),
   );
   sl.registerLazySingleton(
+    () => OAuthUseCase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
     () => SignUpUseCase(
       sl(),
     ),
@@ -283,9 +288,23 @@ Future<void> init() async {
       sl(),
     ),
   );
-
   sl.registerLazySingleton(
     () => SearchSuggestionUsecase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => SearchProductUsecase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => ApparelSearchProductUsecase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => ApparelSearchSuggestionUsecase(
       sl(),
     ),
   );
@@ -294,11 +313,13 @@ Future<void> init() async {
   sl.registerFactory(
     () => LoginBloc(
       loginUseCase: sl(),
+      oAuthUseCase: sl(),
     ),
   );
   sl.registerFactory(
     () => SignInBloc(
       signUpUseCase: sl(),
+      oAuthUseCase: sl(),
     ),
   );
   sl.registerFactory(
@@ -338,6 +359,8 @@ Future<void> init() async {
       apparelUsecase: sl(),
       getCategoryProductsUseCase: sl(),
       wishListUseCase: sl(),
+      apparelSearchProductUsecase: sl(),
+      apparelSearchSuggestionUsecase: sl(),
     ),
   );
   sl.registerFactory(
@@ -355,6 +378,7 @@ Future<void> init() async {
   );
   sl.registerFactory(
     () => SearchBloc(
+      searchProductUsecase: sl(),
       searchSuggestionUsecase: sl(),
     ),
   );

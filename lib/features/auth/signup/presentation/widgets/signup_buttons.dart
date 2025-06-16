@@ -1,4 +1,3 @@
-
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
@@ -21,9 +20,7 @@ class SignupButtons extends StatelessWidget {
           text: "Sign Up",
           onTap: () {
             if (formKey.currentState!.validate()) {
-              context.read<SignInBloc>().add(
-                    SignInButtonPressed(),
-                  );
+              context.read<SignInBloc>().add(SignInButtonPressed());
             }
           },
         ),
@@ -38,7 +35,9 @@ class SignupButtons extends StatelessWidget {
           ),
           borderColor: AppColors.grey,
           borderWidth: 1,
-          onTap: () {},
+          onTap: () {
+            context.read<SignInBloc>().add(GoogleSignInRequested());
+          },
         ),
       ],
     );

@@ -19,12 +19,14 @@ class ProductCard extends StatelessWidget {
     this.image = HomeMockData.productImg1,
     this.isLiked = false,
     required this.onTap,
+    required this.alterationRequired,
   });
 
   final String name;
   final String price;
   final bool isLiked;
   final String image;
+  final bool alterationRequired;
   final String id;
   final VoidCallback onTap;
 
@@ -49,10 +51,15 @@ class ProductCard extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                FittedImageProvider.network(
+                FittedImageProvider.roundedRect(
                   imagePath: image,
                   imageSize: Size(171.w, 195.h),
                   boxFit: BoxFit.cover,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(9.r),
+                    bottomRight: Radius.circular(9.r),
+                  ),
+                  childImageType: AppImageType.network,
                 ),
                 Positioned(
                   top: 10,
@@ -67,6 +74,28 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (alterationRequired)
+                  Positioned(
+                    bottom: 0,
+                    left: 1,
+                    right: 1,
+                    child: Container(
+                      height: 26.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.orangePrimary,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(9.r),
+                          bottomRight: Radius.circular(9.r),
+                        ),
+                      ),
+                      alignment: Alignment.center,
+                      child: AppText.poppinsSemiBold(
+                        "Alternation needed",
+                        fontSize: 10,
+                        height: 22 / 10,
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -78,7 +107,7 @@ class ProductCard extends StatelessWidget {
               spacing: 6.h,
               children: [
                 AppText.poppinsMedium(
-                  name,
+                  name.replaceAll(RegExp(r'\s+'), ' ').trim(),
                   fontSize: 14,
                   height: 22 / 14,
                   color: AppColors.tealPrimary,

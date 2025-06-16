@@ -7,6 +7,7 @@ class SignInState extends Equatable {
   final TextEditingController confirmPassword;
   final bool isLoading;
   final bool isSuccess;
+  final bool isOAuthSuccess;
   final bool isError;
   final bool seePassword;
   final bool seeConfirmPassword;
@@ -17,6 +18,7 @@ class SignInState extends Equatable {
     required this.password,
     required this.isLoading,
     required this.isSuccess,
+    required this.isOAuthSuccess,
     required this.isError,
     required this.seeConfirmPassword,
     required this.seePassword,
@@ -37,6 +39,7 @@ class SignInState extends Equatable {
         name,
         confirmPassword,
         seeConfirmPassword,
+        isOAuthSuccess,
       ];
 
   SignInState copyWith({
@@ -46,6 +49,7 @@ class SignInState extends Equatable {
     TextEditingController? confirmPassword,
     bool? isLoading,
     bool? isSuccess,
+    bool? isOAuthSuccess,
     bool? isError,
     bool? seePassword,
     bool? seeConfirmPassword,
@@ -56,6 +60,7 @@ class SignInState extends Equatable {
       password: password ?? this.password,
       isLoading: isLoading ?? this.isLoading,
       isSuccess: isSuccess ?? this.isSuccess,
+      isOAuthSuccess: isOAuthSuccess ?? this.isOAuthSuccess,
       isError: isError ?? this.isError,
       errorMessage: errorMessage ?? this.errorMessage,
       name: name ?? this.name,

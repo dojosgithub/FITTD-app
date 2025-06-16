@@ -181,17 +181,19 @@ class PersonalInfoView extends StatelessWidget {
                         width: 1.sw,
                         controller: state.firstName,
                       ),
-                      // SpacersVertical.spacer28,
-                      // FittedInputField.basic(
-                      //   validator: InputValidators.notEmpty(),
-                      //   label: "Last Name",
-                      //   width: 1.sw,
-                      // ),
                       SpacersVertical.spacer32,
-                      FittedInputField.email(
-                        label: "Email",
-                        width: 1.sw,
-                        controller: state.emailName,
+                      AbsorbPointer(
+                        absorbing: context
+                                .read<ProfileBloc>()
+                                .state
+                                .profile
+                                .accountType !=
+                            "FITTD",
+                        child: FittedInputField.email(
+                          label: "Email",
+                          width: 1.sw,
+                          controller: state.emailName,
+                        ),
                       ),
                     ],
                   ),

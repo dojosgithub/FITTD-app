@@ -14,6 +14,7 @@ class Profile {
   final String? email;
   final String? imageUrl;
   final List<String>? wishlist;
+  final String? accountType;
 
   Profile({
     required this.id,
@@ -21,5 +22,6 @@ class Profile {
     required this.email,
     required this.imageUrl,
     required this.wishlist,
+    required this.accountType,
   });
 }

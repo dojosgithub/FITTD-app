@@ -1,17 +1,21 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 part 'event.dart';
 part 'state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCase loginUseCase;
+  final OAuthUseCase oAuthUseCase;
 
-  LoginBloc({required this.loginUseCase})
+  LoginBloc({required this.loginUseCase, required this.oAuthUseCase})
       : super(LoginState(
           email: TextEditingController(),
           password: TextEditingController(),
@@ -27,6 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginButtonPressed>(_onLoginButtonPressed);
     on<LoginRememberMeChanged>(_onLoginRememberMeChanged);
     on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
+    on<GoogleSignInRequested>(_onGoogleSignInRequested);
   }
   void _onLoginButtonPressed(
       LoginButtonPressed event, Emitter<LoginState> emit) async {
@@ -46,6 +51,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             errorMessage: failure.message,
             showVerfication: true,
           ));
+          SharedPrefsStorage.setRefreshToken(
+            event.password ?? state.password.text,
+          );
         } else {
           emit(state.copyWith(
             isLoading: false,
@@ -53,14 +61,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             errorMessage: failure.message.split(":").last,
           ));
         }
+
         ToastUtil.showToast(
-          message: state.errorMessage,
+          message: "Account Not Verified. Verify Your Account To Continue.",
         );
       },
       (response) {
         SharedPrefsStorage.setToken(response.accessToken!);
         SharedPrefsStorage.setUserId(response.user!.id!);
-        SharedPrefsStorage.setUserFit(response.user!.measurements['fit']);
+        response.user!.measurements == null
+            ? null
+            : SharedPrefsStorage.setUserFit(response.user!.measurements['fit']);
 
         emit(state.copyWith(
           isLoading: false,
@@ -79,5 +90,61 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _onPasswordVisibilityChanged(
       PasswordVisibilityChanged event, Emitter<LoginState> emit) {
     emit(state.copyWith(seePassword: event.seePassword));
+  }
+
+  Future<void> _onGoogleSignInRequested(
+      GoogleSignInRequested event, Emitter<LoginState> emit) async {
+    emit(state.copyWith(
+        isLoading: true, isError: false, errorMessage: '', isSuccess: false));
+    try {
+      final GoogleSignIn googleSignIn = Platform.isAndroid
+          ? GoogleSignIn(
+              clientId:
+                  "582529657919-kb8675mbd6930u4oamgd9iolplmhedko.apps.googleusercontent.com")
+          : GoogleSignIn();
+
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        log(googleAuth.idToken ?? "NOTHING");
+        final result =
+            await oAuthUseCase.call(googleTokenId: googleAuth.idToken ?? "");
+
+        result.fold(
+          (failure) {
+            emit(state.copyWith(
+              isLoading: false,
+              isError: true,
+              errorMessage: failure.message.split(":").last,
+            ));
+
+            ToastUtil.showToast(
+              message: state.errorMessage,
+            );
+          },
+          (response) {
+            SharedPrefsStorage.setToken(response.accessToken!);
+            SharedPrefsStorage.setUserId(response.user!.id!);
+            response.user!.measurements == null
+                ? null
+                : SharedPrefsStorage.setUserFit(
+                    response.user!.measurements['fit']);
+
+            emit(
+              state.copyWith(
+                isLoading: false,
+                isSuccess: true,
+                hasMeasurements:
+                    response.user?.measurements == null ? false : true,
+              ),
+            );
+          },
+        );
+      }
+    } catch (error) {
+      log("Google Sign-In Error: $error");
+      ToastUtil.showToast(message: "Google Sign-In Failed");
+    }
   }
 }

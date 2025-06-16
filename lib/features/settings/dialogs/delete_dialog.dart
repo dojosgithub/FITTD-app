@@ -4,6 +4,7 @@ import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
+import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,9 @@ class DeleteAccountDialog extends StatelessWidget {
           : null,
       builder: (context, state) => Container(
         padding: EdgeInsets.all(12.w),
-        height: 333.h,
+        height: context.read<ProfileBloc>().state.profile.accountType == "FITTD"
+            ? 340.h
+            : 270.h,
         width: 328.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
@@ -62,15 +65,17 @@ class DeleteAccountDialog extends StatelessWidget {
               ),
             ),
             SpacersVertical.spacer16,
-            FittedInputField.password(
-              label: "Type Password",
-              isHidden: state.seePassword,
-              onToggle: () =>
-                  context.read<SettingsBloc>().add(PasswordVisibilityChanged(
-                        seePassword: !state.seePassword,
-                        seeConfirmPassword: state.seeConfirmPassword,
-                      )),
-            ),
+            if (context.read<ProfileBloc>().state.profile.accountType ==
+                "FITTD")
+              FittedInputField.password(
+                label: "Type Password",
+                isHidden: state.seePassword,
+                onToggle: () =>
+                    context.read<SettingsBloc>().add(PasswordVisibilityChanged(
+                          seePassword: !state.seePassword,
+                          seeConfirmPassword: state.seeConfirmPassword,
+                        )),
+              ),
             SpacersVertical.spacer16,
             state.isLoading
                 ? LoadingIndicator()
@@ -99,7 +104,8 @@ class DeleteAccountDialog extends StatelessWidget {
                         backgroundColor: AppColors.red,
                       )
                     ],
-                  )
+                  ),
+            SpacersVertical.spacer16,
           ],
         ),
       ),

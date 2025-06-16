@@ -1,4 +1,6 @@
 import 'package:fitted/features/apparel/data/model/apparel_response_model.dart';
+import 'package:fitted/features/search/data/model/search_products_response_model.dart';
+import 'package:fitted/features/search/data/model/search_suggestions_response_model.dart';
 
 import '../../../../core/network/api_client.dart';
 import '../model/category_products_response_model.dart';
@@ -7,6 +9,17 @@ abstract class ApparelRemoteDataSource {
   Future<ApparelResponseModel> getApparel({String? brand});
   Future<CategoryProductsResponseModel> getCategoryProducts(
       {String? brand, required String category, required int page});
+  Future<SearchSuggestionsResponseModel> getSearchSuggestions({
+    required String suggestion,
+    String? brand,
+    required String category,
+  });
+  Future<SearchProductsResponseModel> getSearchProducts({
+    required String keyword,
+    required String fitType,
+    String? brand,
+    required String category,
+  });
 }
 
 class ApparelRemoteDataSourceImpl implements ApparelRemoteDataSource {
@@ -35,5 +48,30 @@ class ApparelRemoteDataSourceImpl implements ApparelRemoteDataSource {
     );
 
     return CategoryProductsResponseModel.fromJson(response.data);
+  }
+
+  @override
+  Future<SearchSuggestionsResponseModel> getSearchSuggestions({
+    required String suggestion,
+    String? brand,
+    required String category,
+  }) async {
+    final response = await apiClient.get(brand == null
+        ? '/api/product/suggestion?searchText=$suggestion&category=$category'
+        : '/api/product/suggestion?searchText=$suggestion&brand=$brand&category=$category');
+    return SearchSuggestionsResponseModel.fromJson(response.data);
+  }
+
+  @override
+  Future<SearchProductsResponseModel> getSearchProducts({
+    required String keyword,
+    required String fitType,
+    String? brand,
+    required String category,
+  }) async {
+    final response = await apiClient.get(brand == null
+        ? '/api/product/search?fitType=fitted&keyword=$keyword&category=$category'
+        : '/api/product/search?fitType=fitted&keyword=$keyword&brand=$brand&category=$category');
+    return SearchProductsResponseModel.fromJson(response.data);
   }
 }

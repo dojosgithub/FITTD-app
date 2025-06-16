@@ -2,6 +2,7 @@ import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
+import 'package:fitted/config/helper/typography/app_text_styles.dart';
 import 'package:fitted/config/router/app_routes.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
@@ -121,8 +122,8 @@ class ConfirmOtpView extends StatelessWidget {
                         defaultPinTheme: PinTheme(
                           width: 48,
                           height: 48,
-                          textStyle: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
+                          textStyle: AppTextStyles.poppinsSemiBold(
+                              fontSize: 20, color: AppColors.black),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(width: 1, color: AppColors.grey),
@@ -157,7 +158,7 @@ class ConfirmOtpView extends StatelessWidget {
                                       "Didn’t receive the email?",
                                       fontSize: 14,
                                       height: 20 / 14,
-                                      color: AppColors.tealSecondary,
+                                      color: AppColors.black,
                                     ),
                                     GestureDetector(
                                       onTap: () {

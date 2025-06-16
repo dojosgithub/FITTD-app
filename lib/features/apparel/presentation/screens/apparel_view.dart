@@ -48,7 +48,7 @@ class _ApparelViewState extends State<ApparelView> {
                       ),
                       SpacersVertical.spacer36,
                       GridView.builder(
-                        itemCount: state.apparelEntity!.length,
+                        itemCount: state.apparelEntity?.length ?? 0,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
