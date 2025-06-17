@@ -8,7 +8,10 @@ import '../../../../../core/network/api_client.dart';
 
 abstract class LoginRemoteDataSource {
   Future<LoginResponseModel> login(LoginRequestModel model);
-  Future<OAuthResponseModel> oAuth(String googleTokenId);
+  Future<OAuthResponseModel> oAuth(
+    String googleTokenId,
+    String fcmToken,
+  );
 }
 
 class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
@@ -23,6 +26,7 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
         '/api/auth/signin',
         data: model.toJson(),
       );
+
       return LoginResponseModel.fromJson(response.data);
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');
@@ -30,13 +34,17 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
   }
 
   @override
-  Future<OAuthResponseModel> oAuth(String googleTokenId) async {
+  Future<OAuthResponseModel> oAuth(
+    String googleTokenId,
+    String fcmToken,
+  ) async {
     try {
       final response = await apiClient.post(
         '/api/auth/oauth',
         data: {
           "token_id": googleTokenId,
           "auth_type": "google",
+          "fcmToken": fcmToken
         },
       );
       log(response.data.toString());

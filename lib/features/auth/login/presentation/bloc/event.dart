@@ -35,12 +35,6 @@ class LoginErrorOccurred extends LoginEvent {
   });
 }
 
-class LoginLoading extends LoginEvent {
-  const LoginLoading();
-}
-
-class LoginSuccess extends LoginEvent {
-  const LoginSuccess();
-}
-
 class GoogleSignInRequested extends LoginEvent {}
+
+class ResetLoginState extends LoginEvent {}

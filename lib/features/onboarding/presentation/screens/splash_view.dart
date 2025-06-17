@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/assets/images.dart';
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
@@ -24,6 +25,18 @@ class _SplashViewState extends State<SplashView> {
   }
 
   Future<void> _navigate() async {
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    await FirebaseMessaging.instance.getAPNSToken();
+
     await Future.delayed(const Duration(seconds: 2));
 
     final userId = SharedPrefsStorage.getUserId();

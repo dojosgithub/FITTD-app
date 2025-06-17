@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
@@ -16,31 +17,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final OAuthUseCase oAuthUseCase;
 
   LoginBloc({required this.loginUseCase, required this.oAuthUseCase})
-      : super(LoginState(
-          email: TextEditingController(),
-          password: TextEditingController(),
-          isLoading: false,
-          isSuccess: false,
-          isError: false,
-          rememberMe: false,
-          errorMessage: '',
-          showVerfication: false,
-          seePassword: true,
-          hasMeasurements: false,
-        )) {
+      : super(LoginState.initial()) {
     on<LoginButtonPressed>(_onLoginButtonPressed);
     on<LoginRememberMeChanged>(_onLoginRememberMeChanged);
     on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
     on<GoogleSignInRequested>(_onGoogleSignInRequested);
+    on<ResetLoginState>((event, emit) => emit(LoginState.initial()));
   }
   void _onLoginButtonPressed(
       LoginButtonPressed event, Emitter<LoginState> emit) async {
     emit(state.copyWith(
         isLoading: true, isError: false, errorMessage: '', isSuccess: false));
+    String fcmToken = '';
+    await FirebaseMessaging.instance
+        .getToken()
+        .then((token) => fcmToken = token ?? "");
 
     final result = await loginUseCase(
       email: event.email ?? state.email.text,
       password: event.password ?? state.password.text,
+      fcmToken: fcmToken,
     );
     result.fold(
       (failure) {
@@ -108,8 +104,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final GoogleSignInAuthentication googleAuth =
             await googleUser.authentication;
         log(googleAuth.idToken ?? "NOTHING");
-        final result =
-            await oAuthUseCase.call(googleTokenId: googleAuth.idToken ?? "");
+        String fcmToken = '';
+        await FirebaseMessaging.instance
+            .getToken()
+            .then((token) => fcmToken = token ?? "");
+        final result = await oAuthUseCase.call(
+          googleTokenId: googleAuth.idToken ?? "",
+          fcmToken: fcmToken,
+        );
 
         result.fold(
           (failure) {

@@ -29,9 +29,12 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<Either<Failure, OauthEntity>> oAuth(String googleTokenId) async {
+  Future<Either<Failure, OauthEntity>> oAuth(
+    String googleTokenId,
+    String fcmToken,
+  ) async {
     try {
-      final responseModel = await dataSource.oAuth(googleTokenId);
+      final responseModel = await dataSource.oAuth(googleTokenId, fcmToken);
 
       return Right(
         OauthEntity(

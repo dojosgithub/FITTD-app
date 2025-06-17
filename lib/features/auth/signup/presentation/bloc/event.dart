@@ -35,3 +35,5 @@ class SignInErrorOccurred extends SignInEvent {
 }
 
 class GoogleSignInRequested extends SignInEvent {}
+
+class ResetSignInState extends SignInEvent {}

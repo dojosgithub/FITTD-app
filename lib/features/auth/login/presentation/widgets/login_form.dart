@@ -26,10 +26,12 @@ class LoginFormWidget extends StatelessWidget {
             previous.isSuccess != current.isSuccess ||
             previous.isError != current.isError,
         listener: (context, state) {
+          final bloc = context.read<LoginBloc>();
           if (state.isSuccess && state.hasMeasurements) {
             context.pushReplacementNamed(
               AppRoutesEnum.main.name,
             );
+            bloc.add(ResetLoginState());
           } else if (state.isError && state.showVerfication) {
             context.pushReplacementNamed(
               AppRoutesEnum.confirmOtp.name,
@@ -38,11 +40,15 @@ class LoginFormWidget extends StatelessWidget {
                 'context': OtpContextType.signUp.name,
               },
             );
+            bloc.add(ResetLoginState());
           } else if (state.isSuccess && !state.hasMeasurements) {
-            context.pushReplacementNamed(AppRoutesEnum.userInfoView.name,
-                queryParameters: {
-                  'context': MeasurementRouteEnum.home.name,
-                });
+            context.pushReplacementNamed(
+              AppRoutesEnum.userInfoView.name,
+              queryParameters: {
+                'context': MeasurementRouteEnum.home.name,
+              },
+            );
+            bloc.add(ResetLoginState());
           }
         },
         builder: (ctx, state) => Column(

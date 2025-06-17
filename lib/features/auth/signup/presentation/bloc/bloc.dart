@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
@@ -17,25 +18,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final SignUpUseCase signUpUseCase;
   final OAuthUseCase oAuthUseCase;
 
-  // {required this.loginRepository}
-
   SignInBloc({required this.signUpUseCase, required this.oAuthUseCase})
-      : super(SignInState(
-          email: TextEditingController(),
-          password: TextEditingController(),
-          name: TextEditingController(),
-          isLoading: false,
-          isSuccess: false,
-          isError: false,
-          seeConfirmPassword: true,
-          errorMessage: '',
-          seePassword: true,
-          isOAuthSuccess: false,
-          confirmPassword: TextEditingController(),
-        )) {
+      : super(SignInState.initial()) {
     on<SignInButtonPressed>(_onSignInButtonPressed);
     on<PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
     on<GoogleSignInRequested>(_onGoogleSignInRequested);
+    on<ResetSignInState>((event, emit) => emit(SignInState.initial()));
   }
   Future<void> _onSignInButtonPressed(
       SignInButtonPressed event, Emitter<SignInState> emit) async {
@@ -94,8 +82,14 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         final GoogleSignInAuthentication googleAuth =
             await googleUser.authentication;
         log(googleAuth.idToken ?? "NOTHING");
-        final result =
-            await oAuthUseCase.call(googleTokenId: googleAuth.idToken ?? "");
+        String fcmToken = '';
+        await FirebaseMessaging.instance
+            .getToken()
+            .then((token) => fcmToken = token ?? "");
+        final result = await oAuthUseCase.call(
+          googleTokenId: googleAuth.idToken ?? "",
+          fcmToken: fcmToken,
+        );
 
         result.fold(
           (failure) {

@@ -14,10 +14,12 @@ class LoginUseCase {
   Future<Either<Failure, LoginEntity>> call({
     required String email,
     required String password,
+    required String fcmToken,
   }) async {
     return await repository.login(LoginRequestModel(
       email: email,
       password: password,
+      fcmToken: fcmToken,
     ));
   }
 }
@@ -29,7 +31,8 @@ class OAuthUseCase {
 
   Future<Either<Failure, OauthEntity>> call({
     required String googleTokenId,
+    required String fcmToken,
   }) async {
-    return await repository.oAuth(googleTokenId);
+    return await repository.oAuth(googleTokenId, fcmToken);
   }
 }

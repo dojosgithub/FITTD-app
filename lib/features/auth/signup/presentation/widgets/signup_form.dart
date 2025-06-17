@@ -23,6 +23,8 @@ class SignupFormWidget extends StatelessWidget {
         listenWhen: (previous, current) =>
             previous.isSuccess != current.isSuccess,
         listener: (context, state) {
+          final bloc = context.read<SignInBloc>();
+
           if (state.isSuccess && !state.isOAuthSuccess) {
             context.pushReplacementNamed(
               AppRoutesEnum.confirmOtp.name,
@@ -31,13 +33,18 @@ class SignupFormWidget extends StatelessWidget {
                 'context': OtpContextType.signUp.name,
               },
             );
+            bloc.add(ResetSignInState());
           } else if (state.isOAuthSuccess && !state.isSuccess) {
-            context.pushReplacementNamed(AppRoutesEnum.userInfoView.name,
-                queryParameters: {
-                  'context': MeasurementRouteEnum.home.name,
-                });
+            context.pushReplacementNamed(
+              AppRoutesEnum.userInfoView.name,
+              queryParameters: {
+                'context': MeasurementRouteEnum.home.name,
+              },
+            );
+            bloc.add(ResetSignInState());
           } else if (state.isSuccess && state.isOAuthSuccess) {
             context.pushReplacementNamed(AppRoutesEnum.main.name);
+            bloc.add(ResetSignInState());
           }
         },
         builder: (context, state) => Column(

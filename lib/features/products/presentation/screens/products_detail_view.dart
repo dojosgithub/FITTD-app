@@ -3,7 +3,6 @@ import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/products/presentation/bloc/bloc.dart';
-import 'package:fitted/features/products/presentation/widgets/alteration_section.dart';
 import 'package:fitted/features/products/presentation/widgets/product_detail_header.dart';
 import 'package:fitted/features/products/presentation/widgets/similar_products_section.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ import '../widgets/fit_section.dart';
 import '../widgets/image_carousal.dart';
 import '../widgets/info_row.dart';
 import '../widgets/rating_row.dart';
-import '../widgets/sizes_section.dart';
 
 class ProductsDetailView extends StatefulWidget {
   const ProductsDetailView({super.key, required this.productId});
@@ -75,10 +73,10 @@ class _ProductsDetailViewState extends State<ProductsDetailView> {
                         fitType: productEntity.fitType,
                       ),
                       SpacersVertical.spacer36,
-                      BuildSizes(
-                        sizesList: product.sizes,
-                        recommendedSize: productEntity.recommendedSize,
-                      ),
+                      // BuildSizes(
+                      //   sizesList: product.sizes,
+                      //   recommendedSize: productEntity.recommendedSize,
+                      // ),
                       SpacersVertical.spacer18,
                       AppText.poppinsRegular(
                         "Description",
@@ -87,12 +85,12 @@ class _ProductsDetailViewState extends State<ProductsDetailView> {
                       ),
                       Html(data: product.description),
                       SpacersVertical.spacer16,
-                      if (productEntity.alterationRequired)
-                        AlterationSection(
-                          attributeDifferences:
-                              productEntity.attributeDifferences,
-                          gender: product.gender,
-                        ),
+                      // if (productEntity.alterationRequired)
+                      //   AlterationSection(
+                      //     attributeDifferences:
+                      //         productEntity.attributeDifferences,
+                      //     gender: product.gender,
+                      //   ),
                       SpacersVertical.spacer40,
                       AppText.poppinsRegular(
                         "You may also like",

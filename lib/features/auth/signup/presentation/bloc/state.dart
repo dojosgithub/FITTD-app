@@ -16,30 +16,46 @@ class SignInState extends Equatable {
   const SignInState({
     required this.email,
     required this.password,
+    required this.name,
+    required this.confirmPassword,
     required this.isLoading,
     required this.isSuccess,
     required this.isOAuthSuccess,
     required this.isError,
-    required this.seeConfirmPassword,
     required this.seePassword,
+    required this.seeConfirmPassword,
     required this.errorMessage,
-    required this.name,
-    required this.confirmPassword,
   });
+
+  factory SignInState.initial() {
+    return SignInState(
+      email: TextEditingController(),
+      password: TextEditingController(),
+      name: TextEditingController(),
+      confirmPassword: TextEditingController(),
+      isLoading: false,
+      isSuccess: false,
+      isOAuthSuccess: false,
+      isError: false,
+      seePassword: true,
+      seeConfirmPassword: true,
+      errorMessage: '',
+    );
+  }
 
   @override
   List<Object> get props => [
         email,
         password,
-        isLoading,
-        isSuccess,
-        isError,
-        errorMessage,
-        seePassword,
         name,
         confirmPassword,
-        seeConfirmPassword,
+        isLoading,
+        isSuccess,
         isOAuthSuccess,
+        isError,
+        seePassword,
+        seeConfirmPassword,
+        errorMessage,
       ];
 
   SignInState copyWith({
@@ -58,15 +74,15 @@ class SignInState extends Equatable {
     return SignInState(
       email: email ?? this.email,
       password: password ?? this.password,
+      name: name ?? this.name,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
       isLoading: isLoading ?? this.isLoading,
       isSuccess: isSuccess ?? this.isSuccess,
       isOAuthSuccess: isOAuthSuccess ?? this.isOAuthSuccess,
       isError: isError ?? this.isError,
-      errorMessage: errorMessage ?? this.errorMessage,
-      name: name ?? this.name,
       seePassword: seePassword ?? this.seePassword,
       seeConfirmPassword: seeConfirmPassword ?? this.seeConfirmPassword,
-      confirmPassword: confirmPassword ?? this.confirmPassword,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 }

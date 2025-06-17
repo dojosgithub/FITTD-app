@@ -6,5 +6,8 @@ import '../entities/oauth_entity.dart';
 
 abstract class LoginRepository {
   Future<Either<Failure, LoginEntity>> login(LoginRequestModel model);
-  Future<Either<Failure, OauthEntity>> oAuth(String googleTokenId);
+  Future<Either<Failure, OauthEntity>> oAuth(
+    String googleTokenId,
+    String fcmToken,
+  );
 }

@@ -2,9 +2,9 @@ import '../../data/model/products_detail_response_model.dart';
 
 class ProductDetailEntity {
   final ProductEntity product;
-  final bool alterationRequired;
-  final AttributeDifferencesEntity attributeDifferences;
-  final String recommendedSize;
+  final bool? alterationRequired;
+  final AttributeDifferencesEntity? attributeDifferences;
+  final String? recommendedSize;
   final String fitType;
   final List<SimilarProductEntity> similarProducts;
 
@@ -147,7 +147,7 @@ extension ProductModelMapper on ProductDetailResponseModel {
               sleeves: null,
               hip: null,
               hipDirection: null),
-      recommendedSize: recommendedSize ?? '',
+      recommendedSize: recommendedSize,
       fitType: fitType ?? '',
       similarProducts: similarProducts
           .map((sp) => SimilarProductEntity(

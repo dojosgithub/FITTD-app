@@ -32,7 +32,6 @@ class VerificationRemoteDataSourceImpl implements VerificationRemoteDataSource {
 
   @override
   Future<VerificationResponse> verifyEmailOtp(EmailVerificationRequest model) {
-    print(model.toJson());
     return _verify(model.toJson());
   }
 }

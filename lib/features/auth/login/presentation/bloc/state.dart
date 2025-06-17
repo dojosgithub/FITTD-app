@@ -25,6 +25,21 @@ class LoginState extends Equatable {
     required this.hasMeasurements,
   });
 
+  factory LoginState.initial() {
+    return LoginState(
+      email: TextEditingController(),
+      password: TextEditingController(),
+      isLoading: false,
+      isSuccess: false,
+      isError: false,
+      rememberMe: false,
+      errorMessage: '',
+      showVerfication: false,
+      seePassword: true,
+      hasMeasurements: false,
+    );
+  }
+
   @override
   List<Object> get props => [
         email,

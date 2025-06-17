@@ -1,13 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/providers/app_providers.dart';
 import 'package:fitted/config/router/app_router.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/config/theme/app_theme.dart';
+import 'package:fitted/core/network/firebase/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/di/service_locator.dart';
+import 'core/services/push_notification_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await PushNotificationService().setupInteractedMessage();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   await ScreenUtil.ensureScreenSize();
   await SharedPrefsStorage.init();
   await init();
@@ -31,11 +39,6 @@ class MyApp extends StatelessWidget {
           theme: AppThemeData.appTheme,
           routerConfig: AppRouter.router,
         ),
-        // child: MaterialApp(
-        //   debugShowCheckedModeBanner: false,
-        //   theme: AppThemeData.appTheme,
-        //   home: ProductsDetailView(),
-        // ),
       ),
     );
   }
