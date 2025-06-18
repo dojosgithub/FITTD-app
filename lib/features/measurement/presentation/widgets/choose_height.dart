@@ -1,5 +1,6 @@
 import 'package:fitted/config/assets/images.dart';
 import 'package:fitted/config/colors/colors.dart';
+import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
@@ -53,6 +54,18 @@ class SetHeightWidget extends StatelessWidget {
         CustomButton(
           text: 'Next',
           onTap: () {
+            final bool isMale = state.style == "male";
+
+            final heightValue = isMale
+                ? state.maleMeasurementModel.height.value
+                : state.femaleMeasurementModel.height.value;
+
+            if (heightValue == 0) {
+              return ToastUtil.showToast(
+                message: "Height cannot be zero",
+              );
+            }
+
             context.read<MeasurementBloc>().add(IncrementIndex());
           },
         ),

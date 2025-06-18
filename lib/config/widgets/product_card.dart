@@ -90,7 +90,7 @@ class ProductCard extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                       child: AppText.poppinsSemiBold(
-                        "Alternation needed",
+                        "Alteration needed",
                         fontSize: 10,
                         height: 22 / 10,
                       ),

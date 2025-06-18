@@ -5,6 +5,7 @@ import 'package:fitted/config/providers/products/product_provider.dart';
 import 'package:fitted/config/providers/settings/settings_provider.dart';
 import 'package:fitted/core/di/service_locator.dart';
 import 'package:fitted/features/home/presentation/bloc/bloc.dart';
+import 'package:fitted/features/notifications/presentation/bloc/bloc.dart';
 import 'package:fitted/features/search/presentation/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +22,9 @@ class AppProviders {
       ),
       BlocProvider<SearchBloc>(
         create: (context) => sl<SearchBloc>(),
+      ),
+      BlocProvider<NotificationBloc>(
+        create: (context) => sl<NotificationBloc>(),
       ),
     ];
   }

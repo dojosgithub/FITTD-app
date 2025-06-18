@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fitted/features/measurement/data/enums/unit_enum.dart';
 import '../enums/female_measurement_enum.dart';
 import 'measurement_model.dart';
 
@@ -67,29 +68,60 @@ class FemaleMeasurementModel extends Equatable {
     );
   }
 
+  FemaleMeasurementModel convertAllFieldsToUnit(Unit newUnit) {
+    Measurement convert(Measurement m) {
+      if (m.unit == newUnit) return m;
+
+      return Measurement(value: m.value, unit: newUnit);
+    }
+
+    return FemaleMeasurementModel(
+      bust: convert(bust),
+      bandSize: convert(bandSize),
+      cupSize: convert(cupSize),
+      sleevesLength: convert(sleevesLength),
+      waist: convert(waist),
+      torsoHeight: convert(torsoHeight),
+      hip: convert(hip),
+      inseam: convert(inseam),
+      legLength: convert(legLength),
+      height: convert(height),
+    );
+  }
+
   FemaleMeasurementModel updateMeasurement(
       FemaleMeasurementEnum field, Measurement newValue) {
+    // Pick model's current unit (any field's unit)
+    final currentUnit = bust.unit;
+
+    // If units differ, convert all fields to newValue.unit first
+    FemaleMeasurementModel updatedModel = this;
+    if (currentUnit != newValue.unit) {
+      updatedModel = convertAllFieldsToUnit(newValue.unit);
+    }
+
+    // Now update the specific field with newValue (already in newValue.unit)
     switch (field) {
       case FemaleMeasurementEnum.bust:
-        return copyWith(bust: newValue);
+        return updatedModel.copyWith(bust: newValue);
       case FemaleMeasurementEnum.bandSize:
-        return copyWith(bandSize: newValue);
+        return updatedModel.copyWith(bandSize: newValue);
       case FemaleMeasurementEnum.cupSize:
-        return copyWith(cupSize: newValue);
+        return updatedModel.copyWith(cupSize: newValue);
       case FemaleMeasurementEnum.sleevesLength:
-        return copyWith(sleevesLength: newValue);
+        return updatedModel.copyWith(sleevesLength: newValue);
       case FemaleMeasurementEnum.waist:
-        return copyWith(waist: newValue);
+        return updatedModel.copyWith(waist: newValue);
       case FemaleMeasurementEnum.torsoHeight:
-        return copyWith(torsoHeight: newValue);
+        return updatedModel.copyWith(torsoHeight: newValue);
       case FemaleMeasurementEnum.hip:
-        return copyWith(hip: newValue);
+        return updatedModel.copyWith(hip: newValue);
       case FemaleMeasurementEnum.inseam:
-        return copyWith(inseam: newValue);
+        return updatedModel.copyWith(inseam: newValue);
       case FemaleMeasurementEnum.legLength:
-        return copyWith(legLength: newValue);
+        return updatedModel.copyWith(legLength: newValue);
       case FemaleMeasurementEnum.height:
-        return copyWith(height: newValue);
+        return updatedModel.copyWith(height: newValue);
     }
   }
 }

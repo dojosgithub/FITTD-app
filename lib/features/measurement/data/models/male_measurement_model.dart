@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../enums/male_measurement_enum.dart';
 import 'measurement_model.dart';
+import '../enums/unit_enum.dart'; // import your Unit enum and convertValue function
 
 class MaleMeasurementModel extends Equatable {
   final Measurement chest;
@@ -72,31 +73,65 @@ class MaleMeasurementModel extends Equatable {
     );
   }
 
+  // Helper to convert a Measurement to new unit
+  Measurement _convertMeasurement(Measurement m, Unit toUnit) {
+    if (m.unit == toUnit) return m;
+
+    return Measurement(value: m.value, unit: toUnit);
+  }
+
+  // Convert all fields to the given unit
+  MaleMeasurementModel convertAllFieldsToUnit(Unit newUnit) {
+    return MaleMeasurementModel(
+      chest: _convertMeasurement(chest, newUnit),
+      sleevesLength: _convertMeasurement(sleevesLength, newUnit),
+      waist: _convertMeasurement(waist, newUnit),
+      torsoHeight: _convertMeasurement(torsoHeight, newUnit),
+      hip: _convertMeasurement(hip, newUnit),
+      inseam: _convertMeasurement(inseam, newUnit),
+      legLength: _convertMeasurement(legLength, newUnit),
+      height: _convertMeasurement(height, newUnit),
+      bicep: _convertMeasurement(bicep, newUnit),
+      shoulderWidth: _convertMeasurement(shoulderWidth, newUnit),
+      thighCircumference: _convertMeasurement(thighCircumference, newUnit),
+    );
+  }
+
   MaleMeasurementModel updateMeasurement(
       MaleMeasurementEnum field, Measurement newValue) {
+    final currentUnit = chest.unit; // you can pick any field's unit
+
+    MaleMeasurementModel updatedModel = this;
+
+    // Convert all fields if units differ
+    if (currentUnit != newValue.unit) {
+      updatedModel = convertAllFieldsToUnit(newValue.unit);
+    }
+
+    // Update the specific field with newValue
     switch (field) {
       case MaleMeasurementEnum.chest:
-        return copyWith(chest: newValue);
+        return updatedModel.copyWith(chest: newValue);
       case MaleMeasurementEnum.sleevesLength:
-        return copyWith(sleevesLength: newValue);
+        return updatedModel.copyWith(sleevesLength: newValue);
       case MaleMeasurementEnum.waist:
-        return copyWith(waist: newValue);
+        return updatedModel.copyWith(waist: newValue);
       case MaleMeasurementEnum.torsoHeight:
-        return copyWith(torsoHeight: newValue);
+        return updatedModel.copyWith(torsoHeight: newValue);
       case MaleMeasurementEnum.hip:
-        return copyWith(hip: newValue);
+        return updatedModel.copyWith(hip: newValue);
       case MaleMeasurementEnum.inseam:
-        return copyWith(inseam: newValue);
+        return updatedModel.copyWith(inseam: newValue);
       case MaleMeasurementEnum.legLength:
-        return copyWith(legLength: newValue);
+        return updatedModel.copyWith(legLength: newValue);
       case MaleMeasurementEnum.height:
-        return copyWith(height: newValue);
+        return updatedModel.copyWith(height: newValue);
       case MaleMeasurementEnum.bicep:
-        return copyWith(bicep: newValue);
+        return updatedModel.copyWith(bicep: newValue);
       case MaleMeasurementEnum.thighCircumference:
-        return copyWith(thighCircumference: newValue);
+        return updatedModel.copyWith(thighCircumference: newValue);
       case MaleMeasurementEnum.shoulderWidth:
-        return copyWith(shoulderWidth: newValue);
+        return updatedModel.copyWith(shoulderWidth: newValue);
     }
   }
 }

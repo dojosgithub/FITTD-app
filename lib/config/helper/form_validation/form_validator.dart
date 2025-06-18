@@ -6,6 +6,21 @@ class InputValidators {
     return (value) => (value == null || value.trim().isEmpty) ? message : null;
   }
 
+  static String? Function(String?) notEmptyOrZero({
+    String emptyMessage = 'This field is required',
+    String zeroMessage = 'Value cannot be zero',
+  }) {
+    return (value) {
+      if (value == null || value.trim().isEmpty) return emptyMessage;
+
+      final numValue = num.tryParse(value);
+      if (numValue == null) return emptyMessage;
+      if (numValue == 0) return zeroMessage;
+
+      return null;
+    };
+  }
+
   static String? Function(String?) minLength(int minLength, [String? message]) {
     return (value) => (value != null && value.length < minLength)
         ? (message ?? 'Minimum $minLength characters required')

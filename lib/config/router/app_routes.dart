@@ -1,5 +1,7 @@
 import 'package:fitted/features/notifications/presentation/screens/notification_view.dart';
 import 'package:fitted/features/search/presentation/screens/search_results_view.dart';
+import 'package:fitted/features/settings/presentation/screens/privacy_and_policy_view.dart';
+import 'package:fitted/features/settings/presentation/screens/terms_and_conditions_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fitted/features/measurement/presentation/screen/face_measurement_view.dart';
 import 'package:fitted/features/measurement/presentation/screen/feet_measurement_view.dart';
@@ -274,6 +276,20 @@ class AppRoutes {
         child: NotificationView(),
       ),
     ),
+    GoRoute(
+      path: AppRoutesEnum.termsAndConditionsView.path,
+      name: AppRoutesEnum.termsAndConditionsView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: TermsAndConditionsView(),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutesEnum.privacyAndPolicyView.path,
+      name: AppRoutesEnum.privacyAndPolicyView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: PrivacyAndPolicyView(),
+      ),
+    ),
   ];
 }
 
@@ -311,6 +327,8 @@ enum AppRoutesEnum {
   searchView,
   searchResultsView,
   notificationView,
+  termsAndConditionsView,
+  privacyAndPolicyView,
 }
 
 extension AppRoutesExtension on AppRoutesEnum {
@@ -382,6 +400,10 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/searchResultsView';
       case AppRoutesEnum.notificationView:
         return '/NotificationView';
+      case AppRoutesEnum.termsAndConditionsView:
+        return '/termsAndConditionsView';
+      case AppRoutesEnum.privacyAndPolicyView:
+        return '/privacyAndPolicyView';
     }
   }
 

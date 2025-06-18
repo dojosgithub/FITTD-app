@@ -54,7 +54,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       result.fold(
         (failure) => log(failure.message),
         (success) {
-          log(success.length.toString());
           emit(state.copyWith(searchProductEntity: success));
         },
       );

@@ -18,7 +18,7 @@ Widget buildMeasurementField({
   required Unit unit,
 }) {
   return FittedInputField.withIcon(
-    validator: InputValidators.notEmpty(),
+    validator: InputValidators.notEmptyOrZero(),
     spacing: SpacersVertical.spacer8,
     label: label,
     hint: "eg. 150",

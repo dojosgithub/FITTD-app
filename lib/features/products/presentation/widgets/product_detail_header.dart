@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';

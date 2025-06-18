@@ -70,16 +70,20 @@ class SettingsView extends StatelessWidget {
             const SectionSeparator(),
             SettingsSection(
               title: "SETTINGS",
-              items: const [
+              items: [
                 SettingsCard(
                   title: "Terms & Conditions",
                   subtitle: "Read our terms & Conditions",
                   icon: AppVectors.term,
+                  onTap: () => context
+                      .pushNamed(AppRoutesEnum.termsAndConditionsView.name),
                 ),
                 SettingsCard(
                   title: "Privacy Policy",
                   subtitle: 'Read our Privacy Policy',
                   icon: AppVectors.privacy,
+                  onTap: () => context
+                      .pushNamed(AppRoutesEnum.privacyAndPolicyView.name),
                 ),
               ],
             ),

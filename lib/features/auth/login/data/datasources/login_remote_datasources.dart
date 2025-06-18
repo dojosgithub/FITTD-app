@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fitted/features/auth/login/data/models/login_request_model.dart';
 import 'package:fitted/features/auth/login/data/models/login_response_model.dart';
 import 'package:fitted/features/auth/login/data/models/oauth_response_mode.dart';
@@ -47,7 +45,6 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
           "fcmToken": fcmToken
         },
       );
-      log(response.data.toString());
       return OAuthResponseModel.fromJson(response.data);
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');

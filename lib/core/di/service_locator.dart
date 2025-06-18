@@ -1,5 +1,10 @@
 import 'package:fitted/features/home/domain/usecases/home_usecase.dart';
 import 'package:fitted/features/home/presentation/bloc/bloc.dart';
+import 'package:fitted/features/notifications/data/datasource/notification_remote_datasource.dart';
+import 'package:fitted/features/notifications/domain/repository/notification_repository.dart';
+import 'package:fitted/features/notifications/domain/repository/notification_repository_impl.dart';
+import 'package:fitted/features/notifications/domain/usecase/notification_usecase.dart';
+import 'package:fitted/features/notifications/presentation/bloc/bloc.dart';
 import 'package:fitted/features/search/data/datasource/search_datasource.dart';
 import 'package:fitted/features/search/domain/repository/search_respository.dart';
 import 'package:fitted/features/search/domain/repository/search_respository_impl.dart';
@@ -124,6 +129,9 @@ Future<void> init() async {
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(sl()),
   );
+  sl.registerLazySingleton<NotificationRemoteDatasource>(
+    () => NotificationRemoteDatasourceImpl(sl()),
+  );
 
   // Repositories
   sl.registerLazySingleton<LoginRepository>(
@@ -178,6 +186,11 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<SearchRepository>(
     () => SearchRepositoryImpl(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImpl(
       sl(),
     ),
   );
@@ -308,6 +321,16 @@ Future<void> init() async {
       sl(),
     ),
   );
+  sl.registerLazySingleton(
+    () => GetNotificaionsUsecase(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => MarkNotificaionsAsReadUsecase(
+      sl(),
+    ),
+  );
 
   // Blocs
   sl.registerFactory(
@@ -380,6 +403,12 @@ Future<void> init() async {
     () => SearchBloc(
       searchProductUsecase: sl(),
       searchSuggestionUsecase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => NotificationBloc(
+      markNotificaionsAsReadUsecase: sl(),
+      getNotificaionsUsecase: sl(),
     ),
   );
 }

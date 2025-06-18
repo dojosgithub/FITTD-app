@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -103,7 +101,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (googleUser != null) {
         final GoogleSignInAuthentication googleAuth =
             await googleUser.authentication;
-        log(googleAuth.idToken ?? "NOTHING");
+
         String fcmToken = '';
         await FirebaseMessaging.instance
             .getToken()
@@ -145,7 +143,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
       }
     } catch (error) {
-      log("Google Sign-In Error: $error");
       ToastUtil.showToast(message: "Google Sign-In Failed");
     }
   }

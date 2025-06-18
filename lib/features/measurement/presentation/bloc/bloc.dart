@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -176,7 +175,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
       final result = await getMeasurementsUseCase();
       result.fold(
         (failure) {
-          log(failure.toString());
           ToastUtil.showToast(message: "Failed to Get Measurement");
           emit(
             state.copyWith(
