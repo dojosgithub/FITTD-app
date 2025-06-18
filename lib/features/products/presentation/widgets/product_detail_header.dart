@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
 import 'package:fitted/config/widgets/buttons/rounded/rounded_button.dart';
@@ -14,11 +16,16 @@ class ProductDetailHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         RoundedButton(
-          // onTap: () => context.pushNamed(
-          //   AppRoutesEnum.main.name,
-          //   extra: {"index": 4},
-          // ),
-          onTap: () => context.pop(),
+          onTap: () {
+            final goRouter = GoRouter.of(context);
+            final matches =
+                goRouter.routerDelegate.currentConfiguration.matches;
+
+            final targetMatch = matches.lastWhere(
+              (match) => match.matchedLocation != '/productsDetailView',
+            );
+            goRouter.go(targetMatch.matchedLocation);
+          },
           child: Padding(
             padding: EdgeInsets.only(top: 4.h),
             child: FittedImageProvider.localSvg(
