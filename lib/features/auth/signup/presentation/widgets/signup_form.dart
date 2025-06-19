@@ -21,7 +21,8 @@ class SignupFormWidget extends StatelessWidget {
       key: formKey,
       child: BlocConsumer<SignInBloc, SignInState>(
         listenWhen: (previous, current) =>
-            previous.isSuccess != current.isSuccess,
+            previous.isSuccess != current.isSuccess ||
+            previous.isOAuthSuccess != current.isOAuthSuccess,
         listener: (context, state) {
           final bloc = context.read<SignInBloc>();
 
