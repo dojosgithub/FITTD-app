@@ -27,7 +27,7 @@ class TermsAndConditionsView extends StatelessWidget {
           ),
         ),
         title: AppText.poppinsMedium(
-          "Privacy Policy ",
+          "Terms and Conditions ",
           fontSize: 16,
           height: 24 / 16,
           color: AppColors.black,

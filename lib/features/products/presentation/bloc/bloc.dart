@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/products/domain/entities/product_detail_entity.dart';
 import 'package:fitted/features/products/domain/usecase/products_usecase.dart';
 part 'state.dart';
@@ -19,7 +20,10 @@ class ProductsBloc extends Bloc<ProductEvent, ProductState> {
     on<GetProductDetails>(
       (event, emit) async {
         emit(state.copyWith(isLoading: true));
-        final result = await getProductsDetailUsecase.call(id: event.productId);
+        final result = await getProductsDetailUsecase.call(
+          id: event.productId,
+          userId: event.userId ?? SharedPrefsStorage.getUserId()!,
+        );
         result.fold(
           (failure) => emit(state.copyWith(isLoading: false)),
           (response) {

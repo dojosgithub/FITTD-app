@@ -2,7 +2,8 @@ import 'package:fitted/core/network/api_client.dart';
 import '../model/products_detail_response_model.dart';
 
 abstract class ProductsRemoteDataSource {
-  Future<ProductDetailResponseModel> getProductDetails({required String id});
+  Future<ProductDetailResponseModel> getProductDetailsGuest(
+      {required String id, required String userId});
   Future<dynamic> addClick({required String id});
   Future<dynamic> wishList({required String id, required bool isAdded});
 }
@@ -13,10 +14,10 @@ class ProductsRemoteDataSourceImpl implements ProductsRemoteDataSource {
   ProductsRemoteDataSourceImpl(this.apiClient);
 
   @override
-  Future<ProductDetailResponseModel> getProductDetails(
-      {required String id}) async {
-    final response =
-        await apiClient.get('/api/product/get-product-details?productId=$id');
+  Future<ProductDetailResponseModel> getProductDetailsGuest(
+      {required String id, required String userId}) async {
+    final response = await apiClient
+        .get('/api/product/get-product-details?productId=$id&userId=$userId');
 
     return ProductDetailResponseModel.fromJson(response.data);
   }

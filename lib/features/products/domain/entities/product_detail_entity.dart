@@ -29,7 +29,7 @@ class ProductEntity {
   final ProductImageEntity image;
   final List<ProductSizeEntity> sizes;
   final String gender;
-  final double? rating;
+  final String? rating;
   final int? reviewCount;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -176,7 +176,7 @@ extension ProductModelMapper on ProductDetailResponseModel {
                   .toList()
               : [],
           gender: product?.gender ?? '',
-          rating: product?.rating,
+          rating: product?.rating.toString(),
           reviewCount: product?.reviewCount,
           createdAt:
               product?.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0),

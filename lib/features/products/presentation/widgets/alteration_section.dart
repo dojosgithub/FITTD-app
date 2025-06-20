@@ -52,9 +52,9 @@ class AlterationSection extends StatelessWidget {
                 height: 24 / 16,
                 color: AppColors.charcoal,
               ),
-              FittedImageProvider.localSvg(
-                imagePath: AppVectors.share,
-              ),
+              // FittedImageProvider.localSvg(
+              //   imagePath: AppVectors.share,
+              // ),
             ],
           ),
           ..._buildAlterationItem(

@@ -39,6 +39,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GIDClientID</key>
 	<string>582529657919-7mvododk9q6it0vf4hl64hcg4bq3gbiv.apps.googleusercontent.com</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+  	<string>NSUserActivityTypeBrowsingWeb</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

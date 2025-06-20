@@ -28,13 +28,13 @@ class FeetMeasurementView extends StatelessWidget {
           CustomPaint(
             painter: GridPainter(),
           ),
-          Positioned(
-            top: 100.h,
-            left: 15.w,
-            child: FittedImageProvider.localSvg(
-              imagePath: AppVectors.shareRounded,
-            ),
-          ),
+          // Positioned(
+          //   top: 100.h,
+          //   left: 15.w,
+          //   child: FittedImageProvider.localSvg(
+          //     imagePath: AppVectors.shareRounded,
+          //   ),
+          // ),
           Positioned(
             top: 90.h,
             left: 0.w,

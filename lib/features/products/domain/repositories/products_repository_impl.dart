@@ -12,9 +12,10 @@ class ProductsRepositoryImpl extends ProductsRepository {
   ProductsRepositoryImpl(this.productsRemoteDatasource);
   @override
   Future<Either<Failure, ProductDetailResponseModel>> getProductDetails(
-      {required String id}) async {
+      {required String id, required String userId}) async {
     try {
-      final response = await productsRemoteDatasource.getProductDetails(id: id);
+      final response = await productsRemoteDatasource.getProductDetailsGuest(
+          id: id, userId: userId);
 
       return Right(response);
     } catch (e) {

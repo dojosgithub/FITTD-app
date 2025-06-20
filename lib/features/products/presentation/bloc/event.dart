@@ -5,8 +5,10 @@ class ProductEvent {}
 
 class GetProductDetails extends ProductEvent {
   final String productId;
+  final String? userId;
   GetProductDetails({
     required this.productId,
+    required this.userId,
   });
 }
 

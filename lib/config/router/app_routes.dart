@@ -1,4 +1,5 @@
 import 'package:fitted/features/notifications/presentation/screens/notification_view.dart';
+import 'package:fitted/features/products/presentation/screens/guest_product_view.dart';
 import 'package:fitted/features/search/presentation/screens/search_results_view.dart';
 import 'package:fitted/features/settings/presentation/screens/privacy_and_policy_view.dart';
 import 'package:fitted/features/settings/presentation/screens/terms_and_conditions_view.dart';
@@ -290,6 +291,16 @@ class AppRoutes {
         child: PrivacyAndPolicyView(),
       ),
     ),
+    GoRoute(
+      path: AppRoutesEnum.guestProductsDetailView.path,
+      name: AppRoutesEnum.guestProductsDetailView.name,
+      pageBuilder: (context, state) => buildTransitionPage(
+        child: GuestProductsDetailView(
+          productId: (state.extra as Map)['id'],
+          userId: (state.extra as Map)['uid'],
+        ),
+      ),
+    ),
   ];
 }
 
@@ -329,6 +340,7 @@ enum AppRoutesEnum {
   notificationView,
   termsAndConditionsView,
   privacyAndPolicyView,
+  guestProductsDetailView
 }
 
 extension AppRoutesExtension on AppRoutesEnum {
@@ -404,6 +416,8 @@ extension AppRoutesExtension on AppRoutesEnum {
         return '/termsAndConditionsView';
       case AppRoutesEnum.privacyAndPolicyView:
         return '/privacyAndPolicyView';
+      case AppRoutesEnum.guestProductsDetailView:
+        return '/guestProductsDetailView';
     }
   }
 

@@ -8,8 +8,8 @@ class GetProductsDetailUsecase {
   GetProductsDetailUsecase(this.repository);
 
   Future<Either<Failure, ProductDetailEntity>> call(
-      {required String id}) async {
-    final result = await repository.getProductDetails(id: id);
+      {required String id, required String userId}) async {
+    final result = await repository.getProductDetails(id: id, userId: userId);
 
     return result.fold(
       (failure) => Left(failure),

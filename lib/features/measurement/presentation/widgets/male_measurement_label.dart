@@ -27,13 +27,8 @@ class MaleMeasurementLabelsPanel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FittedImageProvider.localSvg(
-                imagePath: AppVectors.shareRounded,
-                imageSize: Size(44.w, 44.h),
-                boxFit: BoxFit.cover,
-              ),
               Transform.translate(
-                offset: Offset(-80, -80),
+                offset: Offset(-80, -30),
                 child: FittedImageProvider.localAsset(
                   imagePath: AppImages.male,
                   imageSize: Size(1.sw, 0.64.sh),

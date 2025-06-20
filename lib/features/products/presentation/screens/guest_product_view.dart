@@ -16,19 +16,20 @@ import '../widgets/info_row.dart';
 import '../widgets/rating_row.dart';
 import '../widgets/sizes_section.dart';
 
-class ProductsDetailView extends StatefulWidget {
-  const ProductsDetailView({super.key, required this.productId});
+class GuestProductsDetailView extends StatefulWidget {
+  const GuestProductsDetailView(
+      {super.key, required this.productId, required this.userId});
   final String productId;
+  final String userId;
   @override
-  State<ProductsDetailView> createState() => _ProductsDetailViewState();
+  State<GuestProductsDetailView> createState() => _ProductsDetailViewState();
 }
 
-class _ProductsDetailViewState extends State<ProductsDetailView> {
+class _ProductsDetailViewState extends State<GuestProductsDetailView> {
   @override
   void initState() {
     context.read<ProductsBloc>().add(
-          GetProductDetails(productId: widget.productId, userId: null),
-        );
+        GetProductDetails(productId: widget.productId, userId: widget.userId));
     super.initState();
   }
 
@@ -50,10 +51,6 @@ class _ProductsDetailViewState extends State<ProductsDetailView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProductDetailHeader(
-                        name: product.name,
-                        id: product.id,
-                      ),
                       ProductImageCarousel(imageUrls: product.image.secondary),
                       SpacersVertical.spacer12,
                       AppText.poppinsMedium(
