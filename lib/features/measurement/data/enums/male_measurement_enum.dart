@@ -8,6 +8,5 @@ enum MaleMeasurementEnum {
   torsoHeight,
   hip,
   inseam,
-  legLength,
   thighCircumference,
 }

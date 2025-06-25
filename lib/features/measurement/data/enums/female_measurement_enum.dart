@@ -7,6 +7,5 @@ enum FemaleMeasurementEnum {
   torsoHeight,
   hip,
   inseam,
-  legLength,
   height,
 }

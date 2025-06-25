@@ -50,7 +50,6 @@ class ApiClient {
     if (!await networkInfo.isConnected) {
       throw Exception("No internet connection");
     }
-
     try {
       final response =
           await _dio.get(endpoint, queryParameters: queryParameters);

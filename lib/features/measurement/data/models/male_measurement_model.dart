@@ -10,7 +10,7 @@ class MaleMeasurementModel extends Equatable {
   final Measurement torsoHeight;
   final Measurement hip;
   final Measurement inseam;
-  final Measurement legLength;
+
   final Measurement height;
   final Measurement bicep;
   final Measurement shoulderWidth;
@@ -23,7 +23,6 @@ class MaleMeasurementModel extends Equatable {
     required this.torsoHeight,
     required this.hip,
     required this.inseam,
-    required this.legLength,
     required this.height,
     required this.bicep,
     required this.shoulderWidth,
@@ -38,7 +37,6 @@ class MaleMeasurementModel extends Equatable {
         torsoHeight,
         hip,
         inseam,
-        legLength,
         height,
         bicep,
         shoulderWidth,
@@ -52,7 +50,6 @@ class MaleMeasurementModel extends Equatable {
     Measurement? torsoHeight,
     Measurement? hip,
     Measurement? inseam,
-    Measurement? legLength,
     Measurement? height,
     Measurement? bicep,
     Measurement? shoulderWidth,
@@ -65,7 +62,6 @@ class MaleMeasurementModel extends Equatable {
       torsoHeight: torsoHeight ?? this.torsoHeight,
       hip: hip ?? this.hip,
       inseam: inseam ?? this.inseam,
-      legLength: legLength ?? this.legLength,
       height: height ?? this.height,
       bicep: bicep ?? this.bicep,
       shoulderWidth: shoulderWidth ?? this.shoulderWidth,
@@ -89,7 +85,6 @@ class MaleMeasurementModel extends Equatable {
       torsoHeight: _convertMeasurement(torsoHeight, newUnit),
       hip: _convertMeasurement(hip, newUnit),
       inseam: _convertMeasurement(inseam, newUnit),
-      legLength: _convertMeasurement(legLength, newUnit),
       height: _convertMeasurement(height, newUnit),
       bicep: _convertMeasurement(bicep, newUnit),
       shoulderWidth: _convertMeasurement(shoulderWidth, newUnit),
@@ -122,8 +117,6 @@ class MaleMeasurementModel extends Equatable {
         return updatedModel.copyWith(hip: newValue);
       case MaleMeasurementEnum.inseam:
         return updatedModel.copyWith(inseam: newValue);
-      case MaleMeasurementEnum.legLength:
-        return updatedModel.copyWith(legLength: newValue);
       case MaleMeasurementEnum.height:
         return updatedModel.copyWith(height: newValue);
       case MaleMeasurementEnum.bicep:

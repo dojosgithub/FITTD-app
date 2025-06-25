@@ -98,14 +98,13 @@ class LowerBodyMeasurement {
   final Measurement? waist;
   final Measurement? hip;
   final Measurement? inseam;
-  final Measurement? legLength;
+
   final Measurement? thighCircumference;
 
   LowerBodyMeasurement({
     this.waist,
     this.hip,
     this.inseam,
-    this.legLength,
     this.thighCircumference,
   });
 
@@ -114,9 +113,6 @@ class LowerBodyMeasurement {
       waist: map['waist'] != null ? Measurement.fromMap(map['waist']) : null,
       hip: map['hip'] != null ? Measurement.fromMap(map['hip']) : null,
       inseam: map['inseam'] != null ? Measurement.fromMap(map['inseam']) : null,
-      legLength: map['legLength'] != null
-          ? Measurement.fromMap(map['legLength'])
-          : null,
       thighCircumference: map['thighCircumference'] != null
           ? Measurement.fromMap(map['thighCircumference'])
           : null,
@@ -127,7 +123,6 @@ class LowerBodyMeasurement {
         'waist': waist?.toMap(),
         'hip': hip?.toMap(),
         'inseam': inseam?.toMap(),
-        'legLength': legLength?.toMap(),
         'thighCircumference': thighCircumference?.toMap(),
       };
 }

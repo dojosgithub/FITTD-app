@@ -25,12 +25,10 @@ class BuildSearchSuggestions extends StatelessWidget {
     return ListView.separated(
       itemCount: suggestions.length,
       shrinkWrap: true,
-      padding: isApparel
-          ? EdgeInsets.zero
-          : EdgeInsets.symmetric(
-              horizontal: 18.w,
-              vertical: 18.h,
-            ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 18.w,
+        vertical: isApparel ? 0 : 18.h,
+      ),
       separatorBuilder: (context, index) => Divider(
         height: 24.h,
       ),

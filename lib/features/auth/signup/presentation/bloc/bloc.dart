@@ -27,12 +27,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Future<void> _onSignInButtonPressed(
       SignInButtonPressed event, Emitter<SignInState> emit) async {
     emit(state.copyWith(isLoading: true, isError: false, errorMessage: ''));
-
+    String fcmToken = '';
+    await FirebaseMessaging.instance
+        .getToken()
+        .then((token) => fcmToken = token ?? "");
     final result = await signUpUseCase(
-      name: state.name.text,
-      email: state.email.text,
-      password: state.password.text,
-    );
+        name: state.name.text,
+        email: state.email.text,
+        password: state.password.text,
+        fcmToken: fcmToken);
     result.fold(
       (failure) {
         emit(state.copyWith(

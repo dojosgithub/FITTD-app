@@ -13,11 +13,13 @@ class SignUpUseCase {
     required String name,
     required String email,
     required String password,
+    required String fcmToken,
   }) async {
     return await repository.signUp(SignUpRequestModel(
       name: name,
       email: email,
       password: password,
+      fcmToken: fcmToken,
     ));
   }
 }

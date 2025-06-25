@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/storage/app_storage.dart';

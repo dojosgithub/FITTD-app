@@ -1,4 +1,3 @@
-import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/features/measurement/data/models/female_measurement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,12 +88,6 @@ class FemaleMeasurementLabelsPanel extends StatelessWidget {
                   MeasurementMarker(
                     value: formatMeasurement(measurementModel.hip),
                     part: "Hips",
-                    hasbottom: false,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                  ),
-                  MeasurementMarker(
-                    value: formatMeasurement(measurementModel.legLength),
-                    part: "Leg Height",
                     hasbottom: false,
                     crossAxisAlignment: CrossAxisAlignment.end,
                   ),

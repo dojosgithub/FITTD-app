@@ -74,7 +74,7 @@ class UnitDropdown extends StatelessWidget {
             return DropdownMenuItem<Unit>(
               value: unit,
               child: Text(
-                unit.name,
+                unit.display,
                 style: AppTextStyles.poppinsSemiBold(
                   fontSize: 20,
                   height: 28 / 20,

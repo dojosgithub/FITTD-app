@@ -75,6 +75,7 @@ class DeleteAccountDialog extends StatelessWidget {
                           seePassword: !state.seePassword,
                           seeConfirmPassword: state.seeConfirmPassword,
                         )),
+                controller: state.deleteAccountController,
               ),
             SpacersVertical.spacer16,
             state.isLoading

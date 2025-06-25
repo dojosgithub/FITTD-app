@@ -3,7 +3,6 @@ import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/products/presentation/bloc/bloc.dart';
-import 'package:fitted/features/products/presentation/widgets/product_detail_header.dart';
 import 'package:fitted/features/products/presentation/widgets/similar_products_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

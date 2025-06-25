@@ -46,11 +46,6 @@ final maleLowerFields = [
     'getter': (MaleMeasurementModel m) => m.inseam,
   },
   {
-    'label': 'Leg length',
-    'enum': MaleMeasurementEnum.legLength,
-    'getter': (MaleMeasurementModel m) => m.legLength,
-  },
-  {
     'label': 'Thigh Circumference',
     'enum': MaleMeasurementEnum.thighCircumference,
     'getter': (MaleMeasurementModel m) => m.thighCircumference,

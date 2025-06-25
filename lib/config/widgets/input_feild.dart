@@ -71,7 +71,12 @@ class FittedInputField extends StatelessWidget {
   }) {
     return FittedInputField(
       label: label,
-      hint: hint ?? '',
+      hint: hint ?? '••••••••',
+      hintStyle: AppTextStyles.poppinsRegular(
+        fontSize: 16,
+        height: 24 / 16,
+        color: Color(0xFFA6B6B9),
+      ),
       obscureText: isHidden,
       controller: controller,
       suffixIcon: IconButton(
@@ -114,7 +119,12 @@ class FittedInputField extends StatelessWidget {
   }) {
     return FittedInputField(
       label: label,
-      hint: hint ?? '',
+      hint: hint ?? '••••••••',
+      hintStyle: AppTextStyles.poppinsRegular(
+        fontSize: 16,
+        height: 24 / 16,
+        color: Color(0xFFA6B6B9),
+      ),
       obscureText: isHidden,
       controller: confirmController,
       suffixIcon: IconButton(
@@ -223,6 +233,8 @@ class FittedInputField extends StatelessWidget {
                       height: 24 / 16,
                       color: AppColors.tealSecondary,
                     ),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.w),
                 errorMaxLines: 2,
                 border: outlineInputBorder,
                 enabledBorder: outlineInputBorder,

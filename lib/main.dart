@@ -36,7 +36,7 @@ void _handleUri(Uri uri) {
       AppRoutesEnum.guestProductsDetailView.name,
       extra: {
         "id": productId,
-        "uid": uid, // optional
+        "uid": uid,
       },
     );
   }

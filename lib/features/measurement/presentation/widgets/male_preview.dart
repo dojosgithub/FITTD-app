@@ -125,38 +125,6 @@ class MaleSizePreview extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment(0.58, 0.55),
-          child: Container(
-            width: width * 0.05,
-            height: height * 0.33,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: AppColors.black,
-                  width: 0.5,
-                ),
-                top: BorderSide(
-                  color: AppColors.black,
-                  width: 0.5,
-                ),
-                right: BorderSide(
-                  color: AppColors.black,
-                  width: 0.5,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment(1.1, 0.4),
-          child: MeasurementMarker(
-            value: "${model.legLength.value} ${model.legLength.unit.name}",
-            part: "Leg height",
-            hasTop: false,
-            hasbottom: false,
-          ),
-        ),
-        Align(
           alignment: Alignment.center,
           child: FittedImageProvider.localAsset(
             imagePath: AppImages.male,

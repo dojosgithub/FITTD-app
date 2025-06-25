@@ -46,9 +46,4 @@ final femaleLowerFields = [
     'enum': FemaleMeasurementEnum.inseam,
     'getter': (FemaleMeasurementModel m) => m.inseam,
   },
-  {
-    'label': 'Leg length',
-    'enum': FemaleMeasurementEnum.legLength,
-    'getter': (FemaleMeasurementModel m) => m.legLength,
-  },
 ];

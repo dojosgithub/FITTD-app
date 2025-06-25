@@ -27,6 +27,7 @@ class ApparelDetailView extends StatefulWidget {
 class _ApparelDetailViewState extends State<ApparelDetailView> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController controller = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -47,17 +48,21 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<ApparelBloc, ApparelState>(
-        builder: (context, state) => state.isLoading &&
-                state.productsEntity == null
-            ? LoadingIndicator()
-            : SingleChildScrollView(
-                controller: _scrollController,
+        builder: (context, state) {
+          if (state.isLoading && state.productsEntity == null) {
+            return LoadingIndicator();
+          }
+
+          final List<Object> products = state.searchQuery.isNotEmpty
+              ? (state.searchProductEntity ?? [])
+              : (state.productsEntity ?? []);
+
+          return CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 22.0,
-                    left: 18,
-                    right: 18,
-                  ),
+                  padding: EdgeInsets.only(top: 22.0, left: 18, right: 18),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -82,9 +87,7 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
                         ),
                         onFieldSubmitted: (p0) =>
                             context.read<ApparelBloc>().add(
-                                  SearchProducts(
-                                    keyword: p0,
-                                  ),
+                                  SearchProducts(keyword: p0),
                                 ),
                         label: "",
                         prefixIcon: Padding(
@@ -95,7 +98,7 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
                             boxFit: BoxFit.contain,
                           ),
                         ),
-                        suffixIcon: controller.text != ""
+                        suffixIcon: controller.text.isNotEmpty
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 12.0),
@@ -119,35 +122,60 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
                             .add(SearchQuery(query: value)),
                       ),
                       SpacersVertical.spacer34,
-                      if (state.searchQuery.isNotEmpty) ...[
-                        if (state.searchProductEntity != null &&
-                            state.searchProductEntity!.isNotEmpty)
-                          _buildProductGrid(state, state.searchProductEntity!)
-                        else if (state.suggestionEntity!.isNotEmpty)
-                          BuildSearchSuggestions(
-                            suggestions: state.suggestionEntity!,
-                            isApparel: true,
-                          )
-                        else
-                          state.isLoading
-                              ? SizedBox.shrink()
-                              : Container(
-                                  height: 0.5.sw,
-                                  alignment: Alignment.bottomCenter,
-                                  child: AppText.poppinsBold(
-                                    "NO RESULTS FOUND",
-                                    fontSize: 18,
-                                    color: AppColors.black,
-                                  ),
-                                )
-                      ] else ...[
-                        _buildProductGrid(state, state.productsEntity ?? []),
-                      ],
-                      if (state.isLoading) Center(child: LoadingIndicator()),
                     ],
                   ),
                 ),
               ),
+              if (state.searchQuery.isNotEmpty &&
+                  (state.searchProductEntity?.isEmpty ?? true) &&
+                  state.suggestionEntity != null)
+                SliverToBoxAdapter(
+                  child: state.suggestionEntity!.isNotEmpty
+                      ? BuildSearchSuggestions(
+                          suggestions: state.suggestionEntity!,
+                          isApparel: true,
+                        )
+                      : state.isLoading
+                          ? SizedBox.shrink()
+                          : Container(
+                              height: 0.5.sw,
+                              alignment: Alignment.bottomCenter,
+                              child: AppText.poppinsBold(
+                                "NO RESULTS FOUND",
+                                fontSize: 18,
+                                color: AppColors.black,
+                              ),
+                            ),
+                ),
+              if (products.isNotEmpty)
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  sliver: SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final product = products[index];
+                        return _buildProductCard(product);
+                      },
+                      childCount: products.length,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10.h,
+                      crossAxisSpacing: 12.w,
+                      childAspectRatio: 162.w / 290.h,
+                    ),
+                  ),
+                ),
+              if (state.isLoading)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Center(child: LoadingIndicator()),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -155,72 +183,54 @@ class _ApparelDetailViewState extends State<ApparelDetailView> {
   @override
   void dispose() {
     _scrollController.dispose();
+    controller.dispose();
     super.dispose();
   }
-}
 
-Widget _buildProductGrid(ApparelState state, List<Object> products) {
-  return GridView.builder(
-    itemCount: products.length,
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    padding: EdgeInsets.zero,
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      mainAxisSpacing: 10.h,
-      crossAxisSpacing: 12.w,
-      childAspectRatio: 162.w / 290.h,
-    ),
-    itemBuilder: (context, index) {
-      final product = products[index];
+  Widget _buildProductCard(Object product) {
+    final name = product is ProductEntity
+        ? product.name
+        : product is SearchProductEntity
+            ? product.name
+            : '';
 
-      final name = product is ProductEntity
-          ? product.name
-          : product is SearchProductEntity
-              ? product.name
-              : '';
+    final price = product is ProductEntity
+        ? product.price
+        : product is SearchProductEntity
+            ? product.price
+            : '';
 
-      final price = product is ProductEntity
-          ? product.price
-          : product is SearchProductEntity
-              ? product.price
-              : '';
+    final id = product is ProductEntity
+        ? product.id
+        : product is SearchProductEntity
+            ? product.id
+            : '';
 
-      final id = product is ProductEntity
-          ? product.id
-          : product is SearchProductEntity
-              ? product.id
-              : '';
+    final isLiked = product is ProductEntity
+        ? product.isWishlist
+        : product is SearchProductEntity
+            ? product.isWishlist
+            : false;
 
-      final isLiked = product is ProductEntity
-          ? product.isWishlist
-          : product is SearchProductEntity
-              ? product.isWishlist
-              : false;
+    final image = product is ProductEntity
+        ? product.imageUrl
+        : product is SearchProductEntity
+            ? product.imageUrl
+            : '';
 
-      final image = product is ProductEntity
-          ? product.imageUrl
-          : product is SearchProductEntity
-              ? product.imageUrl
-              : '';
+    final alterationRequired =
+        product is SearchProductEntity ? product.alterationRequired : false;
 
-      final alterationRequired = product is ProductEntity
-          ? false
-          : product is SearchProductEntity
-              ? product.alterationRequired
-              : false;
-
-      return ProductCard(
-        name: name,
-        price: price,
-        id: id,
-        isLiked: isLiked,
-        image: image,
-        alterationRequired: alterationRequired,
-        onTap: () => context.read<ApparelBloc>().add(
-              WishList(productId: id, isAdded: isLiked),
-            ),
-      );
-    },
-  );
+    return ProductCard(
+      name: name,
+      price: price,
+      id: id,
+      isLiked: isLiked,
+      image: image,
+      alterationRequired: alterationRequired,
+      onTap: () => context.read<ApparelBloc>().add(
+            WishList(productId: id, isAdded: isLiked),
+          ),
+    );
+  }
 }

@@ -1,10 +1,8 @@
-import 'package:fitted/config/assets/icons.dart';
 import 'package:fitted/features/products/domain/entities/product_detail_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/colors/colors.dart';
-import '../../../../config/helper/image_provider/fitted_image_provider.dart';
 import '../../../../config/helper/spacers/spacers.dart';
 import '../../../../config/widgets/app_text.dart';
 import 'alteration_recommendations.dart';

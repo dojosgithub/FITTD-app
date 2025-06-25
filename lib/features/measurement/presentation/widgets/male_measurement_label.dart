@@ -1,5 +1,3 @@
-import 'package:fitted/config/assets/icons.dart';
-
 import 'package:fitted/features/measurement/data/models/male_measurement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -106,12 +104,6 @@ class MaleMeasurementLabelsPanel extends StatelessWidget {
                   MeasurementMarker(
                     value: formatMeasurement(measurementModel.inseam),
                     part: "Inseams",
-                    hasbottom: false,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                  ),
-                  MeasurementMarker(
-                    value: formatMeasurement(measurementModel.legLength),
-                    part: "Leg Height",
                     hasbottom: false,
                     crossAxisAlignment: CrossAxisAlignment.end,
                   ),

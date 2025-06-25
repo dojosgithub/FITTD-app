@@ -33,7 +33,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
             torsoHeight: Measurement(value: 0, unit: Unit.cm),
             hip: Measurement(value: 0, unit: Unit.cm),
             inseam: Measurement(value: 0, unit: Unit.cm),
-            legLength: Measurement(value: 0, unit: Unit.cm),
             height: Measurement(value: 0, unit: Unit.cm),
             bicep: Measurement(value: 0, unit: Unit.cm),
             shoulderWidth: Measurement(value: 0, unit: Unit.cm),
@@ -48,7 +47,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
             torsoHeight: Measurement(value: 0, unit: Unit.cm),
             hip: Measurement(value: 0, unit: Unit.cm),
             inseam: Measurement(value: 0, unit: Unit.cm),
-            legLength: Measurement(value: 0, unit: Unit.cm),
             height: Measurement(value: 0, unit: Unit.cm),
           ),
           otherMeasurementModel: OtherMeasurementModel(
@@ -118,7 +116,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
                     waist: state.maleMeasurementModel.waist,
                     hip: state.maleMeasurementModel.hip,
                     inseam: state.maleMeasurementModel.inseam,
-                    legLength: state.maleMeasurementModel.legLength,
                     thighCircumference:
                         state.maleMeasurementModel.thighCircumference,
                   )
@@ -126,7 +123,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
                     waist: state.femaleMeasurementModel.waist,
                     hip: state.femaleMeasurementModel.hip,
                     inseam: state.femaleMeasurementModel.inseam,
-                    legLength: state.femaleMeasurementModel.legLength,
                   ),
             footMeasurement: FootMeasurement(
               footLength: state.otherMeasurementModel.feetLength,
@@ -191,7 +187,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
               torsoHeight: safeMeasurement(successData.upperBody!.torsoHeight),
               hip: safeMeasurement(successData.lowerBody!.hip),
               inseam: safeMeasurement(successData.lowerBody!.inseam),
-              legLength: safeMeasurement(successData.lowerBody!.legLength),
               bicep: safeMeasurement(successData.upperBody!.bicep),
               shoulderWidth:
                   safeMeasurement(successData.upperBody!.shoulderWidth),
@@ -234,7 +229,6 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
               torsoHeight: safeMeasurement(successData.upperBody!.torsoHeight),
               hip: safeMeasurement(successData.lowerBody!.hip),
               inseam: safeMeasurement(successData.lowerBody!.inseam),
-              legLength: safeMeasurement(successData.lowerBody!.legLength),
               height: safeMeasurement(successData.height),
             );
             emit(

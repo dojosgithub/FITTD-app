@@ -12,7 +12,7 @@ class FemaleMeasurementModel extends Equatable {
   final Measurement torsoHeight;
   final Measurement hip;
   final Measurement inseam;
-  final Measurement legLength;
+
   final Measurement height;
 
   const FemaleMeasurementModel({
@@ -24,7 +24,6 @@ class FemaleMeasurementModel extends Equatable {
     required this.torsoHeight,
     required this.hip,
     required this.inseam,
-    required this.legLength,
     required this.height,
   });
 
@@ -38,7 +37,6 @@ class FemaleMeasurementModel extends Equatable {
         torsoHeight,
         hip,
         inseam,
-        legLength,
         height,
       ];
 
@@ -51,7 +49,6 @@ class FemaleMeasurementModel extends Equatable {
     Measurement? torsoHeight,
     Measurement? hip,
     Measurement? inseam,
-    Measurement? legLength,
     Measurement? height,
   }) {
     return FemaleMeasurementModel(
@@ -63,7 +60,6 @@ class FemaleMeasurementModel extends Equatable {
       torsoHeight: torsoHeight ?? this.torsoHeight,
       hip: hip ?? this.hip,
       inseam: inseam ?? this.inseam,
-      legLength: legLength ?? this.legLength,
       height: height ?? this.height,
     );
   }
@@ -84,7 +80,6 @@ class FemaleMeasurementModel extends Equatable {
       torsoHeight: convert(torsoHeight),
       hip: convert(hip),
       inseam: convert(inseam),
-      legLength: convert(legLength),
       height: convert(height),
     );
   }
@@ -118,8 +113,6 @@ class FemaleMeasurementModel extends Equatable {
         return updatedModel.copyWith(hip: newValue);
       case FemaleMeasurementEnum.inseam:
         return updatedModel.copyWith(inseam: newValue);
-      case FemaleMeasurementEnum.legLength:
-        return updatedModel.copyWith(legLength: newValue);
       case FemaleMeasurementEnum.height:
         return updatedModel.copyWith(height: newValue);
     }
