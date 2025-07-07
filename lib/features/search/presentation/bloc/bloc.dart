@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/search/domain/entity/search_suggestion_entity.dart';
@@ -53,7 +52,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       );
 
       result.fold(
-        (failure) => log(failure.message),
+        (failure) {},
         (success) async {
           emit(state.copyWith(searchProductEntity: success));
 
@@ -97,7 +96,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     final result = await searchSuggestionUsecase.call(event.query);
 
     result.fold(
-      (failure) => log(failure.message),
+      (failure) {},
       (success) => emit(state.copyWith(suggestionEntity: success)),
     );
   }
