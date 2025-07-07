@@ -127,8 +127,8 @@ class MaleSizePreview extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: FittedImageProvider.localAsset(
-            imagePath: AppImages.male,
-            imageSize: Size(width * 0.5, height * 0.8),
+            imagePath: AppImages.male1,
+            imageSize: Size(width * 0.43, height * 0.8),
             boxFit: BoxFit.cover,
           ),
         ),

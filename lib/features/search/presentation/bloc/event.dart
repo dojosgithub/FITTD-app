@@ -30,3 +30,5 @@ class SelectFit extends SearchEvent {
     required this.fit,
   });
 }
+
+class Reset extends SearchEvent {}

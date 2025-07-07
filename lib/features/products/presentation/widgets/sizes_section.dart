@@ -70,12 +70,12 @@ class _BuildSizesState extends State<BuildSizes> {
                   padding:
                       EdgeInsets.symmetric(horizontal: index == 0 ? 0 : 6.w),
                   child: SizedBox(
-                    height: 105,
+                    height: 115,
                     child: Stack(
                       children: [
                         Container(
-                          width: 80.w,
-                          height: 80.h,
+                          width: 90.w,
+                          height: 90.h,
                           decoration: BoxDecoration(
                             color: widget.sizesList[index].size ==
                                     widget.recommendedSize
@@ -95,9 +95,12 @@ class _BuildSizesState extends State<BuildSizes> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               AppText.poppinsRegular(
-                                widget.sizesList[index].size,
+                                widget.sizesList[index].size
+                                    .replaceAll('#', ' '),
                                 fontSize: 22,
                                 color: AppColors.tealPrimary,
+                                overflow: TextOverflow.visible,
+                                textAlign: TextAlign.center,
                               ),
                               if (!widget.sizesList[index].inStock)
                                 AppText.poppinsRegular(

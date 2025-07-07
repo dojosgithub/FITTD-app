@@ -21,19 +21,13 @@ class MaleUpperForm extends StatelessWidget {
         child: Column(
           children: [
             for (final field in maleUpperFields) ...[
-              buildMeasurementField(
-                context: context,
-                state: state,
+              MeasurementField(
                 label: field['label'] as String,
                 fieldEnum: field['enum'] as MaleMeasurementEnum,
-                value: (field['getter'] as Measurement Function(
-                        MaleMeasurementModel))
-                    .call(state.maleMeasurementModel)
-                    .value,
-                unit: (field['getter'] as Measurement Function(
-                        MaleMeasurementModel))
-                    .call(state.maleMeasurementModel)
-                    .unit,
+                getter: (model) => (field['getter'] as Measurement Function(
+                    MaleMeasurementModel))(model as MaleMeasurementModel),
+                state: state,
+                parentContext: context,
               ),
               SpacersVertical.spacer18,
             ],

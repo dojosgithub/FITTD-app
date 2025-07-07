@@ -36,7 +36,10 @@ class SearchResultsView extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () => context.pop(),
+                            onPressed: () {
+                              context.pop();
+                              context.read<SearchBloc>().add(Reset());
+                            },
                             icon: Icon(Icons.arrow_back_ios),
                           ),
                           AppText.poppinsMedium(
@@ -93,29 +96,33 @@ class SearchResultsView extends StatelessWidget {
                           showHeading: false,
                         ),
                       SpacersVertical.spacer30,
-                      GridView.builder(
-                        itemCount: state.searchProductEntity!.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12.w,
-                          childAspectRatio: 162.w / 290.h,
+                      if (state.searchProductEntity!.isEmpty)
+                        LoadingIndicator()
+                      else
+                        GridView.builder(
+                          itemCount: state.searchProductEntity!.length,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12.w,
+                            childAspectRatio: 162.w / 290.h,
+                          ),
+                          itemBuilder: (context, index) {
+                            final product = state.searchProductEntity![index];
+                            return ProductCard(
+                              name: product.name,
+                              price: product.price,
+                              id: product.id,
+                              isLiked: product.isWishlist,
+                              image: product.imageUrl,
+                              alterationRequired: product.alterationRequired,
+                              onTap: () {},
+                            );
+                          },
                         ),
-                        itemBuilder: (context, index) {
-                          final product = state.searchProductEntity![index];
-                          return ProductCard(
-                            name: product.name,
-                            price: product.price,
-                            id: product.id,
-                            isLiked: product.isWishlist,
-                            image: product.imageUrl,
-                            alterationRequired: product.alterationRequired,
-                            onTap: () {},
-                          );
-                        },
-                      ),
                     ],
                   ),
                 ),

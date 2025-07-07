@@ -39,20 +39,24 @@ class HeightSliderWidget extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-            children: [
-              TextSpan(
-                text: unit.name,
-                style: AppTextStyles.poppinsLight(
-                  fontSize: 18,
-                  color: AppColors.tealSecondary,
-                ),
-              ),
-            ],
-            text: value.toStringAsFixed(0),
-            style: AppTextStyles.poppinsLight(
-              fontSize: 38,
-              color: AppColors.tealSecondary,
-            ),
+            children: unit == Unit.inch
+                ? _buildFeetInchesTextSpans(value)
+                : [
+                    TextSpan(
+                      text: value.toStringAsFixed(0),
+                      style: AppTextStyles.poppinsLight(
+                        fontSize: 38,
+                        color: AppColors.tealSecondary,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' ${unit.name}',
+                      style: AppTextStyles.poppinsLight(
+                        fontSize: 18,
+                        color: AppColors.tealSecondary,
+                      ),
+                    ),
+                  ],
           ),
         ),
         SpacersVertical.spacer2,
@@ -95,4 +99,51 @@ class HeightSliderWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+List<TextSpan> _buildFeetInchesTextSpans(num inchValue) {
+  final feet = inchValue ~/ 12;
+  final inches = (inchValue % 12).round();
+
+  final spans = <TextSpan>[];
+
+  if (feet > 0) {
+    spans.addAll([
+      TextSpan(
+        text: "$feet ",
+        style: AppTextStyles.poppinsLight(
+          fontSize: 38,
+          color: AppColors.tealSecondary,
+        ),
+      ),
+      TextSpan(
+        text: "ft ",
+        style: AppTextStyles.poppinsLight(
+          fontSize: 18,
+          color: AppColors.tealSecondary,
+        ),
+      ),
+    ]);
+  }
+
+  if (inches > 0) {
+    spans.addAll([
+      TextSpan(
+        text: "$inches ",
+        style: AppTextStyles.poppinsLight(
+          fontSize: 38,
+          color: AppColors.tealSecondary,
+        ),
+      ),
+      TextSpan(
+        text: "in",
+        style: AppTextStyles.poppinsLight(
+          fontSize: 18,
+          color: AppColors.tealSecondary,
+        ),
+      ),
+    ]);
+  }
+
+  return spans;
 }

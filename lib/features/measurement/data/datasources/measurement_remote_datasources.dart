@@ -24,6 +24,7 @@ class MeasurementRemoteDataSourceImpl implements MeasurementRemoteDataSource {
   @override
   Future<MeasurementResponseModel> getMeasurement() async {
     final response = await apiClient.get('/api/user/measurements');
+    print(response);
 
     return MeasurementResponseModel.fromJson(response.data);
   }

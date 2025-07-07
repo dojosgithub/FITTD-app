@@ -23,19 +23,13 @@ class FemaleLowerForm extends StatelessWidget {
         child: Column(
           children: [
             for (final field in femaleLowerFields) ...[
-              buildMeasurementField(
-                context: context,
-                state: state,
+              MeasurementField(
                 label: field['label'] as String,
                 fieldEnum: field['enum'] as FemaleMeasurementEnum,
-                value: (field['getter'] as Measurement Function(
-                        FemaleMeasurementModel))
-                    .call(state.femaleMeasurementModel)
-                    .value,
-                unit: (field['getter'] as Measurement Function(
-                        FemaleMeasurementModel))
-                    .call(state.femaleMeasurementModel)
-                    .unit,
+                getter: (model) => (field['getter'] as Measurement Function(
+                    FemaleMeasurementModel))(model as FemaleMeasurementModel),
+                state: state,
+                parentContext: context,
               ),
               SpacersVertical.spacer18,
             ],

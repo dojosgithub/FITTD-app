@@ -1,5 +1,6 @@
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
+import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/config/widgets/app_text.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/search/presentation/bloc/bloc.dart';
@@ -50,9 +51,13 @@ class SearchView extends StatelessWidget {
                                   suggestions: state.suggestionEntity!,
                                 )
                       : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SpacersVertical.spacer36,
-                            RecentSearchesWidget(),
+                            if (SharedPrefsStorage.getRecentSearchesList()
+                                .isNotEmpty) ...[
+                              SpacersVertical.spacer36,
+                              RecentSearchesWidget(),
+                            ],
                             SpacersVertical.spacer22,
                             MostPopularBrandsWidget(),
                             SpacersVertical.spacer22,

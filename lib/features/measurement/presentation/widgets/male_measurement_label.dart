@@ -28,7 +28,7 @@ class MaleMeasurementLabelsPanel extends StatelessWidget {
               Transform.translate(
                 offset: Offset(-80, -30),
                 child: FittedImageProvider.localAsset(
-                  imagePath: AppImages.male,
+                  imagePath: AppImages.male1,
                   imageSize: Size(1.sw, 0.64.sh),
                 ),
               ),

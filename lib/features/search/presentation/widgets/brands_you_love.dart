@@ -27,7 +27,7 @@ class BrandsYouLoveWidget extends StatelessWidget {
           color: AppColors.black,
         ),
         SizedBox(
-          height: 80.h,
+          height: 85.h,
           child: ListView.separated(
             itemCount: brands.length,
             shrinkWrap: true,

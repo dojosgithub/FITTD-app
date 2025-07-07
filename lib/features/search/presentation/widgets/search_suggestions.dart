@@ -54,6 +54,7 @@ class BuildSearchSuggestions extends StatelessWidget {
                       ),
                     );
                 context.pushNamed(AppRoutesEnum.searchResultsView.name);
+                context.read<SearchBloc>().add(Reset());
               },
         child: Row(
           spacing: 18.w,

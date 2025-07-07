@@ -5,6 +5,7 @@ CustomTransitionPage<T> buildTransitionPage<T>({required Widget child}) {
   return CustomTransitionPage<T>(
     child: child,
     transitionDuration: const Duration(milliseconds: 200),
+    reverseTransitionDuration: const Duration(milliseconds: 150),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       final offsetAnimation = Tween<Offset>(
         begin: const Offset(0.0, 0.1),

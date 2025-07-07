@@ -107,7 +107,7 @@ class FemaleSizePreview extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: FittedImageProvider.localAsset(
-            imagePath: AppImages.female,
+            imagePath: AppImages.female1,
             imageSize: Size(width * 0.6, height * 0.8),
           ),
         ),

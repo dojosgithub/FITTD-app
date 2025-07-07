@@ -150,13 +150,56 @@ class MeasurementBloc extends Bloc<MeasurementEvent, MeasurementState> {
         },
         (successData) {
           SharedPrefsStorage.setUserFit(state.fit);
-          emit(
-            state.copyWith(
-              isSuccess: true,
-              isLoading: false,
-              currentIndex: 0,
-            ),
-          );
+          if (successData.gender == "male") {
+            final maleMeasurement = MaleMeasurementModel(
+              chest: safeMeasurement(successData.upperBody!.chest),
+              sleevesLength:
+                  safeMeasurement(successData.upperBody!.sleevesLength),
+              waist: safeMeasurement(successData.lowerBody!.waist),
+              torsoHeight: safeMeasurement(successData.upperBody!.torsoHeight),
+              hip: safeMeasurement(successData.lowerBody!.hip),
+              inseam: safeMeasurement(successData.lowerBody!.inseam),
+              bicep: safeMeasurement(successData.upperBody!.bicep),
+              shoulderWidth:
+                  safeMeasurement(successData.upperBody!.shoulderWidth),
+              thighCircumference:
+                  safeMeasurement(successData.lowerBody!.thighCircumference),
+              height: safeMeasurement(successData.height),
+            );
+            emit(
+              state.copyWith(
+                style: successData.gender,
+                fit: successData.fit,
+                maleMeasurementModel: maleMeasurement,
+                isSuccess: true,
+                isLoading: false,
+                currentIndex: 0,
+              ),
+            );
+          } else {
+            final femaleMeasurement = FemaleMeasurementModel(
+              bust: safeMeasurement(successData.upperBody!.bust),
+              bandSize: safeMeasurement(successData.upperBody!.bandSize),
+              cupSize: safeMeasurement(successData.upperBody!.cupSize),
+              sleevesLength:
+                  safeMeasurement(successData.upperBody!.sleevesLength),
+              waist: safeMeasurement(successData.lowerBody!.waist),
+              torsoHeight: safeMeasurement(successData.upperBody!.torsoHeight),
+              hip: safeMeasurement(successData.lowerBody!.hip),
+              inseam: safeMeasurement(successData.lowerBody!.inseam),
+              height: safeMeasurement(successData.height),
+            );
+            emit(
+              state.copyWith(
+                isSuccess: true,
+                isLoading: false,
+                currentIndex: 0,
+                style: successData.gender,
+                fit: successData.fit,
+                femaleMeasurementModel: femaleMeasurement,
+              ),
+            );
+          }
         },
       );
     });

@@ -84,25 +84,40 @@ class FemaleMeasurementModel extends Equatable {
     );
   }
 
+  String _calculateCupSize(double diffInInches) {
+    if (diffInInches <= 1.0) return "AA";
+    if (diffInInches <= 1.5) return "A";
+    if (diffInInches <= 2.5) return "B";
+    if (diffInInches <= 3.5) return "C";
+    if (diffInInches <= 4.5) return "D";
+    if (diffInInches <= 5.5) return "DD / E";
+    if (diffInInches <= 6.5) return "F / DDD";
+    if (diffInInches <= 7.5) return "FF / G";
+    return "G / H";
+  }
+
   FemaleMeasurementModel updateMeasurement(
       FemaleMeasurementEnum field, Measurement newValue) {
     // Pick model's current unit (any field's unit)
     final currentUnit = bust.unit;
 
-    // If units differ, convert all fields to newValue.unit first
+    // Convert all fields to the new unit if needed
     FemaleMeasurementModel updatedModel = this;
     if (currentUnit != newValue.unit) {
       updatedModel = convertAllFieldsToUnit(newValue.unit);
     }
 
-    // Now update the specific field with newValue (already in newValue.unit)
+    // Update the target field
     switch (field) {
       case FemaleMeasurementEnum.bust:
-        return updatedModel.copyWith(bust: newValue);
+        updatedModel = updatedModel.copyWith(bust: newValue);
+        break;
       case FemaleMeasurementEnum.bandSize:
-        return updatedModel.copyWith(bandSize: newValue);
+        updatedModel = updatedModel.copyWith(bandSize: newValue);
+        break;
       case FemaleMeasurementEnum.cupSize:
-        return updatedModel.copyWith(cupSize: newValue);
+        updatedModel = updatedModel.copyWith(cupSize: newValue);
+        break;
       case FemaleMeasurementEnum.sleevesLength:
         return updatedModel.copyWith(sleevesLength: newValue);
       case FemaleMeasurementEnum.waist:
@@ -116,5 +131,29 @@ class FemaleMeasurementModel extends Equatable {
       case FemaleMeasurementEnum.height:
         return updatedModel.copyWith(height: newValue);
     }
+
+    if (field == FemaleMeasurementEnum.bust ||
+        field == FemaleMeasurementEnum.bandSize) {
+      final bustInInches = updatedModel.bust.unit == Unit.cm
+          ? updatedModel.bust.value / 2.54
+          : updatedModel.bust.value.toDouble();
+
+      final bandInInches = updatedModel.bandSize.unit == Unit.cm
+          ? updatedModel.bandSize.value / 2.54
+          : updatedModel.bandSize.value.toDouble();
+
+      final cupSizeDifference = bustInInches - bandInInches;
+      final calculatedCupSize = _calculateCupSize(cupSizeDifference);
+
+      updatedModel = updatedModel.copyWith(
+        cupSize: Measurement(
+          value: (updatedModel.bust.value - updatedModel.bandSize.value),
+          unit: updatedModel.bust.unit,
+          description: calculatedCupSize,
+        ),
+      );
+    }
+
+    return updatedModel;
   }
 }

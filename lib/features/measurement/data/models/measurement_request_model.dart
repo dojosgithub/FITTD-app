@@ -1,3 +1,5 @@
+import 'package:fitted/features/measurement/data/enums/unit_enum.dart';
+
 import 'measurement_model.dart';
 
 class MeasurementRequestModel {
@@ -71,8 +73,13 @@ class UpperBodyMeasurement {
       bust: map['bust'] != null ? Measurement.fromMap(map['bust']) : null,
       bandSize:
           map['bandSize'] != null ? Measurement.fromMap(map['bandSize']) : null,
-      cupSize:
-          map['cupSize'] != null ? Measurement.fromMap(map['cupSize']) : null,
+      cupSize: map['cupSize'] != null
+          ? Measurement(
+              value: (map['bust']['value'] - map['bandSize']['value']),
+              unit: UnitExtension.fromString(map['cupSize']['unit']),
+              description: map['cupSize']['value'],
+            )
+          : null,
       sleevesLength: map['sleevesLength'] != null
           ? Measurement.fromMap(map['sleevesLength'])
           : null,
@@ -88,7 +95,7 @@ class UpperBodyMeasurement {
         'bicep': bicep?.toMap(),
         'bust': bust?.toMap(),
         'bandSize': bandSize?.toMap(),
-        'cupSize': cupSize?.toMap(),
+        'cupSize': cupSize?.toMap(sendOnlyDescription: true),
         'sleevesLength': sleevesLength?.toMap(),
         'torsoHeight': torsoHeight?.toMap(),
       };

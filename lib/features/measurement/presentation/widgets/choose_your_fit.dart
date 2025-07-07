@@ -79,6 +79,6 @@ List<Map> fitList = [
   {
     "image": AppImages.fit,
     "title": "FITTED",
-    "value": "fit",
+    "value": "fitted",
   },
 ];

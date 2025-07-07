@@ -22,11 +22,16 @@ class ProductDetailHeader extends StatelessWidget {
             final goRouter = GoRouter.of(context);
             final matches =
                 goRouter.routerDelegate.currentConfiguration.matches;
-
-            final targetMatch = matches.lastWhere(
-              (match) => match.matchedLocation != '/productsDetailView',
-            );
-            goRouter.go(targetMatch.matchedLocation);
+            for (int i = matches.length - 1; i >= 0; i--) {
+              final match = matches[i];
+              if (match.matchedLocation != '/productsDetailView') {
+                final backSteps = matches.length - 1 - i;
+                for (int j = 0; j < backSteps; j++) {
+                  goRouter.pop();
+                }
+                break;
+              }
+            }
           },
           child: Padding(
             padding: EdgeInsets.only(top: 4.h),

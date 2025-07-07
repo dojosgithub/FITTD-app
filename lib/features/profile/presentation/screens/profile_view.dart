@@ -133,10 +133,15 @@ class _ProfileViewState extends State<ProfileView> {
                                     imageSize: Size(13.w, 17.h),
                                     boxFit: BoxFit.contain,
                                   ),
-                                  AppText.poppinsRegular(
-                                    state.profile.email.toString(),
-                                    fontSize: 14,
-                                    color: AppColors.tealSecondary,
+                                  SizedBox(
+                                    width: 0.4.sw,
+                                    child: AppText.poppinsRegular(
+                                      state.profile.email.toString(),
+                                      // "abdullahkhan.smiu@gmail.com",
+                                      fontSize: 14,
+                                      color: AppColors.tealSecondary,
+                                      overflow: TextOverflow.clip,
+                                    ),
                                   )
                                 ],
                               ),

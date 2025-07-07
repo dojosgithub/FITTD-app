@@ -33,7 +33,7 @@ class FemaleMeasurementLabelsPanel extends StatelessWidget {
               Transform.translate(
                 offset: Offset(-80, -30),
                 child: FittedImageProvider.localAsset(
-                  imagePath: AppImages.female,
+                  imagePath: AppImages.female1,
                   imageSize: Size(1.sw, 0.64.sh),
                 ),
               ),

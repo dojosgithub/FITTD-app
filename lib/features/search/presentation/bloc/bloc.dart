@@ -45,6 +45,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
     on<SearchProducts>((event, emit) async {
       emit(state.copyWith(selectedQuery: event.keyword));
+
       final result = await searchProductUsecase.call(
         keyword: event.keyword,
         isStandard: state.filterList[1]['isSelected'],
@@ -53,8 +54,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
       result.fold(
         (failure) => log(failure.message),
-        (success) {
+        (success) async {
           emit(state.copyWith(searchProductEntity: success));
+
+          final searches = SharedPrefsStorage.getRecentSearchesList();
+          searches.removeWhere((item) => item["keyword"] == event.keyword);
+          searches.insert(0, {
+            "keyword": event.keyword,
+            "image": success.isNotEmpty ? success[0].imageUrl : ""
+          });
+
+          SharedPrefsStorage.setRecentSearchesList(searches);
         },
       );
     });
@@ -74,6 +84,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       emit(state.copyWith(fitType: event.fit));
       add(SearchProducts(keyword: state.selectedQuery));
     });
+    on<Reset>((event, emit) =>
+        emit(state.copyWith(searchProductEntity: [], suggestionEntity: [])));
   }
 
   Future<void> _onSearchQuery(
