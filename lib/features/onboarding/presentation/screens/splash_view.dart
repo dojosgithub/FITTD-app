@@ -1,7 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/assets/images.dart';
 import 'package:fitted/config/helper/image_provider/fitted_image_provider.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
+
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,8 +38,11 @@ class _SplashViewState extends State<SplashView> {
     await Future.delayed(const Duration(seconds: 2));
 
     final userId = SharedPrefsStorage.getUserId();
+    final fit = SharedPrefsStorage.getUserFit();
+    print(userId);
+    print(fit);
     if (mounted) {
-      if (userId != null && userId.isNotEmpty) {
+      if (userId != null && userId.isNotEmpty && fit != null) {
         context.goNamed(AppRoutesEnum.main.name);
       } else {
         context.goNamed(AppRoutesEnum.onboarding.name);

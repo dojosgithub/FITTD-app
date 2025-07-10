@@ -1,6 +1,7 @@
 import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
+
 import 'package:fitted/features/measurement/data/enums/measurement_route_enum.dart';
 import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';

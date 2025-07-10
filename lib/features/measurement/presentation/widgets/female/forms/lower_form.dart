@@ -1,4 +1,5 @@
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
+
 import 'package:fitted/features/measurement/presentation/bloc/bloc.dart';
 import 'package:fitted/features/measurement/data/models/measurement_model.dart';
 import 'package:fitted/features/measurement/presentation/widgets/build_measurement_feild.dart';

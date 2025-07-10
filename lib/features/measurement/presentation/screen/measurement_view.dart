@@ -3,7 +3,8 @@ import 'package:fitted/config/colors/colors.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
 import 'package:fitted/config/widgets/app_text.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
+
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

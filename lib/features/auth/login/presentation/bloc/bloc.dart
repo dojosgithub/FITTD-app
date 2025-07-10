@@ -1,12 +1,12 @@
-import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../../utils/auth_utils.dart';
 part 'event.dart';
 part 'state.dart';
 
@@ -26,10 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginButtonPressed event, Emitter<LoginState> emit) async {
     emit(state.copyWith(
         isLoading: true, isError: false, errorMessage: '', isSuccess: false));
-    String fcmToken = '';
-    await FirebaseMessaging.instance
-        .getToken()
-        .then((token) => fcmToken = token ?? "");
+    final fcmToken = await AuthUtils.getFcmToken();
 
     final result = await loginUseCase(
       email: event.email ?? state.email.text,
@@ -48,24 +45,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           SharedPrefsStorage.setRefreshToken(
             event.password ?? state.password.text,
           );
+          ToastUtil.showToast(
+            message: "Account Not Verified. Verify Your Account To Continue.",
+          );
         } else {
           emit(state.copyWith(
             isLoading: false,
             isError: true,
             errorMessage: failure.message.split(":").last,
           ));
+          ToastUtil.showToast(
+            message: failure.message.split(":").last,
+          );
         }
-
-        ToastUtil.showToast(
-          message: "Account Not Verified. Verify Your Account To Continue.",
-        );
       },
       (response) {
-        SharedPrefsStorage.setToken(response.accessToken!);
-        SharedPrefsStorage.setUserId(response.user!.id!);
-        response.user!.measurements == null
-            ? null
-            : SharedPrefsStorage.setUserFit(response.user!.measurements['fit']);
+        AuthUtils.persistAuthData(
+          accessToken: response.accessToken!,
+          userId: response.user!.id!,
+          fit: response.user!.measurements?['fit'],
+        );
 
         emit(state.copyWith(
           isLoading: false,
@@ -91,21 +90,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(
         isLoading: true, isError: false, errorMessage: '', isSuccess: false));
     try {
-      final GoogleSignIn googleSignIn = Platform.isAndroid
-          ? GoogleSignIn(
-              clientId:
-                  "582529657919-kb8675mbd6930u4oamgd9iolplmhedko.apps.googleusercontent.com")
-          : GoogleSignIn();
+      final googleSignIn = AuthUtils.getGoogleSignIn();
 
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
         final GoogleSignInAuthentication googleAuth =
             await googleUser.authentication;
 
-        String fcmToken = '';
-        await FirebaseMessaging.instance
-            .getToken()
-            .then((token) => fcmToken = token ?? "");
+        final fcmToken = await AuthUtils.getFcmToken();
         final result = await oAuthUseCase.call(
           googleTokenId: googleAuth.idToken ?? "",
           fcmToken: fcmToken,
@@ -124,12 +116,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             );
           },
           (response) {
-            SharedPrefsStorage.setToken(response.accessToken!);
-            SharedPrefsStorage.setUserId(response.user!.id!);
-            response.user!.measurements == null
-                ? null
-                : SharedPrefsStorage.setUserFit(
-                    response.user!.measurements['fit']);
+            AuthUtils.persistAuthData(
+              accessToken: response.accessToken!,
+              userId: response.user!.id!,
+              fit: response.user!.measurements?['fit'],
+            );
 
             emit(
               state.copyWith(
@@ -143,7 +134,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
       }
     } catch (error) {
-      ToastUtil.showToast(message: "Google Sign-In Failed");
+      AuthUtils.handleToast("Google Sign-In Failed");
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:fitted/config/colors/colors.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
+
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/measurement/data/enums/other_measurements_enum.dart';

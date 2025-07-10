@@ -24,8 +24,6 @@ abstract class AppTextStyles {
     );
   }
 
-  /// SF-Pro-Display Styles (Now includes SF-Pro-Text)
-
   static TextStyle _poppinsBase({
     required double fontSize,
     FontWeight fontWeight = FontWeight.w400,
@@ -69,7 +67,6 @@ abstract class AppTextStyles {
           height: height,
           letterSpacing: letterSpacing);
 
-  /// Medium
   static TextStyle poppinsMedium({
     required double fontSize,
     Color? color,
@@ -84,7 +81,6 @@ abstract class AppTextStyles {
         height: height,
       );
 
-  /// SemiBold
   static TextStyle poppinsSemiBold({
     required double fontSize,
     double? letterSpacing,
@@ -99,7 +95,6 @@ abstract class AppTextStyles {
         letterSpacing: letterSpacing,
       );
 
-  /// Bold
   static TextStyle poppinsBold({
     required double fontSize,
     double? letterSpacing,

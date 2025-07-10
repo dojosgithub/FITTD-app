@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../enums/male_measurement_enum.dart';
 import 'measurement_model.dart';
-import '../enums/unit_enum.dart'; // import your Unit enum and convertValue function
+import '../enums/unit_enum.dart';
 
 class MaleMeasurementModel extends Equatable {
   final Measurement chest;
@@ -10,7 +10,6 @@ class MaleMeasurementModel extends Equatable {
   final Measurement torsoHeight;
   final Measurement hip;
   final Measurement inseam;
-
   final Measurement height;
   final Measurement bicep;
   final Measurement shoulderWidth;
@@ -69,14 +68,11 @@ class MaleMeasurementModel extends Equatable {
     );
   }
 
-  // Helper to convert a Measurement to new unit
   Measurement _convertMeasurement(Measurement m, Unit toUnit) {
     if (m.unit == toUnit) return m;
-
     return Measurement(value: m.value, unit: toUnit);
   }
 
-  // Convert all fields to the given unit
   MaleMeasurementModel convertAllFieldsToUnit(Unit newUnit) {
     return MaleMeasurementModel(
       chest: _convertMeasurement(chest, newUnit),
@@ -94,16 +90,14 @@ class MaleMeasurementModel extends Equatable {
 
   MaleMeasurementModel updateMeasurement(
       MaleMeasurementEnum field, Measurement newValue) {
-    final currentUnit = chest.unit; // you can pick any field's unit
+    final currentUnit = chest.unit;
 
     MaleMeasurementModel updatedModel = this;
 
-    // Convert all fields if units differ
     if (currentUnit != newValue.unit) {
       updatedModel = convertAllFieldsToUnit(newValue.unit);
     }
 
-    // Update the specific field with newValue
     switch (field) {
       case MaleMeasurementEnum.chest:
         return updatedModel.copyWith(chest: newValue);
@@ -126,5 +120,23 @@ class MaleMeasurementModel extends Equatable {
       case MaleMeasurementEnum.shoulderWidth:
         return updatedModel.copyWith(shoulderWidth: newValue);
     }
+  }
+
+  factory MaleMeasurementModel.empty() {
+    const defaultUnit = Unit.cm;
+    final zero = Measurement(value: 0.0, unit: defaultUnit);
+
+    return MaleMeasurementModel(
+      chest: zero,
+      sleevesLength: zero,
+      waist: zero,
+      torsoHeight: zero,
+      hip: zero,
+      inseam: zero,
+      height: zero,
+      bicep: zero,
+      shoulderWidth: zero,
+      thighCircumference: zero,
+    );
   }
 }

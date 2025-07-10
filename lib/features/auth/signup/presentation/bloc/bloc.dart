@@ -1,14 +1,14 @@
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:fitted/features/auth/signup/domain/usecase/signup_usecase.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../../utils/auth_utils.dart';
 
 part 'event.dart';
 part 'state.dart';
@@ -27,10 +27,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Future<void> _onSignInButtonPressed(
       SignInButtonPressed event, Emitter<SignInState> emit) async {
     emit(state.copyWith(isLoading: true, isError: false, errorMessage: ''));
-    String fcmToken = '';
-    await FirebaseMessaging.instance
-        .getToken()
-        .then((token) => fcmToken = token ?? "");
+    final fcmToken = await AuthUtils.getFcmToken();
     final result = await signUpUseCase(
         name: state.name.text,
         email: state.email.text,
@@ -73,21 +70,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         errorMessage: '',
         isOAuthSuccess: false));
     try {
-      final GoogleSignIn googleSignIn = Platform.isAndroid
-          ? GoogleSignIn(
-              clientId:
-                  "582529657919-kb8675mbd6930u4oamgd9iolplmhedko.apps.googleusercontent.com")
-          : GoogleSignIn();
-
+      final googleSignIn = AuthUtils.getGoogleSignIn();
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
         final GoogleSignInAuthentication googleAuth =
             await googleUser.authentication;
 
-        String fcmToken = '';
-        await FirebaseMessaging.instance
-            .getToken()
-            .then((token) => fcmToken = token ?? "");
+        final fcmToken = await AuthUtils.getFcmToken();
         final result = await oAuthUseCase.call(
           googleTokenId: googleAuth.idToken ?? "",
           fcmToken: fcmToken,
@@ -106,12 +95,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             );
           },
           (response) {
-            SharedPrefsStorage.setToken(response.accessToken!);
-            SharedPrefsStorage.setUserId(response.user!.id!);
-            response.user!.measurements == null
-                ? null
-                : SharedPrefsStorage.setUserFit(
-                    response.user!.measurements['fit']);
+            AuthUtils.persistAuthData(
+              accessToken: response.accessToken!,
+              userId: response.user!.id!,
+              fit: response.user!.measurements?['fit'],
+            );
             response.user!.measurements == null
                 ? emit(
                     state.copyWith(
@@ -131,7 +119,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         );
       }
     } catch (error) {
-      ToastUtil.showToast(message: "Google Sign-In Failed");
+      AuthUtils.handleToast("Google Sign-In Failed");
     }
   }
 }

@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/helper/flutter_toast/show_toast.dart';
 import 'package:fitted/features/auth/forgot_password/domain/usecase/forgot_password_usecase.dart';
 import 'package:fitted/features/auth/login/domain/usecase/login_usecase.dart';
 import 'package:fitted/features/auth/verify_otp/data/enums/otp_enum.dart';
 
 import '../../../../../config/storage/app_storage.dart';
+import '../../../utils/auth_utils.dart';
 import '../../domain/usecase/otp_usecase.dart';
 
 part 'event.dart';
@@ -65,10 +65,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
           ));
           return;
         }
-        String fcmToken = '';
-        await FirebaseMessaging.instance
-            .getToken()
-            .then((token) => fcmToken = token ?? "");
+        final fcmToken = await AuthUtils.getFcmToken();
         final loginResult = await loginUseCase(
           password: SharedPrefsStorage.getRefreshToken().toString(),
           email: event.email,
@@ -100,11 +97,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
   void _onResendOtp(ResendOtpEvent event, Emitter<OtpState> emit) async {
     switch (event.contextType) {
       case OtpContextType.signUp:
-        String fcmToken = '';
-
-        await FirebaseMessaging.instance
-            .getToken()
-            .then((token) => fcmToken = token ?? "");
+        final fcmToken = await AuthUtils.getFcmToken();
         final loginResult = await loginUseCase(
           password: SharedPrefsStorage.getRefreshToken().toString(),
           email: event.email,

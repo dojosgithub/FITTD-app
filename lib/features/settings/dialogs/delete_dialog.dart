@@ -1,6 +1,7 @@
 import 'package:fitted/config/helper/spacers/spacers.dart';
 import 'package:fitted/config/helper/typography/app_text_styles.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
+
 import 'package:fitted/config/widgets/buttons/primary/primary_button.dart';
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';

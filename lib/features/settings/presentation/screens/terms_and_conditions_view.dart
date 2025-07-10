@@ -378,58 +378,61 @@ class TermsAndConditionsView extends StatelessWidget {
                       'YOU AND COMPANY AGREE THAT EACH OF US MAY BRING CLAIMS AGAINST THE OTHER ONLY ON AN INDIVIDUAL BASIS AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE ACTION OR PROCEEDING. UNLESS BOTH YOU AND COMPANY AGREE OTHERWISE, THE ARBITRATOR MAY NOT CONSOLIDATE OR JOIN MORE THAN ONE PERSON’S OR PARTY’S CLAIMS AND MAY NOT OTHERWISE PRESIDE OVER ANY FORM OF A CONSOLIDATED, REPRESENTATIVE, OR CLASS PROCEEDING. ALSO, THE ARBITRATOR MAY AWARD RELIEF (INCLUDING MONETARY, INJUNCTIVE, AND DECLARATORY RELIEF) ONLY IN FAVOR OF THE INDIVIDUAL PARTY SEEKING RELIEF AND ONLY TO THE EXTENT NECESSARY TO PROVIDE RELIEF NECESSITATED BY THAT PARTY’S INDIVIDUAL CLAIM(S), EXCEPT THAT YOU MAY PURSUE A CLAIM FOR AND THE ARBITRATOR MAY AWARD PUBLIC INJUNCTIVE RELIEF UNDER APPLICABLE LAW TO THE EXTENT REQUIRED FOR THE ENFORCEABILITY OF THIS PROVISION.',
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 4.h,
-                children: [
-                  AppText.poppinsMedium(
-                    "c. Pre-Arbitration Dispute Resolution",
-                    fontSize: 14,
-                    height: 22 / 14,
-                    letterSpacing: -.02 * 14,
-                    color: AppColors.black,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text:
-                              "Company is always interested in resolving disputes amicably and efficiently, and most customer concerns can be resolved quickly and to the customer’s satisfaction by emailing customer support at ",
-                          style: AppTextStyles.poppinsMedium(
-                            fontSize: 14,
-                            height: 22 / 14,
-                            letterSpacing: -.02 * 14,
-                            color: AppColors.black.withValues(alpha: 0.6),
-                          ),
-                        ),
-                        TextSpan(
-                          text: "fittd.managment@gmail.com",
-                          style: AppTextStyles.poppinsSemiBold(
-                            fontSize: 14,
-                            height: 22 / 14,
-                            letterSpacing: -.04 * 14,
-                            color: AppColors.black,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              launchUrl(Uri.parse(
-                                  'mailto:fittd.managment@gmail.com'));
-                            },
-                        ),
-                        TextSpan(
-                          text:
-                              " If such efforts prove unsuccessful, a party who intends to seek arbitration must first send to the other, by certified mail, a written Notice of Dispute (“Notice”). The Notice to Company should be sent to 8605 Santa Monica Blvd 479590 West Hollywood, CA 90069 (“Notice Address”). The Notice must (i) describe the nature and basis of the claim or dispute and (ii) set forth the specific relief sought. If Company and you do not resolve the claim within sixty (60) calendar days after the Notice is received, you or Company may commence an arbitration proceeding. During the arbitration, the amount of any settlement offer made by Company or you will not be disclosed to the arbitrator until after the arbitrator determines the amount, if any, to which you or Company is entitled",
-                          style: AppTextStyles.poppinsRegular(
-                            fontSize: 14,
-                            height: 22 / 14,
-                            letterSpacing: -.02 * 14,
-                            color: AppColors.black.withValues(alpha: 0.6),
-                          ),
-                        )
-                      ],
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 4.h,
+                  children: [
+                    AppText.poppinsMedium(
+                      "c. Pre-Arbitration Dispute Resolution",
+                      fontSize: 14,
+                      height: 22 / 14,
+                      letterSpacing: -.02 * 14,
+                      color: AppColors.black,
                     ),
-                  ),
-                ],
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                "Company is always interested in resolving disputes amicably and efficiently, and most customer concerns can be resolved quickly and to the customer’s satisfaction by emailing customer support at ",
+                            style: AppTextStyles.poppinsMedium(
+                              fontSize: 14,
+                              height: 22 / 14,
+                              letterSpacing: -.02 * 14,
+                              color: AppColors.black.withValues(alpha: 0.6),
+                            ),
+                          ),
+                          TextSpan(
+                            text: "fittd.managment@gmail.com",
+                            style: AppTextStyles.poppinsSemiBold(
+                              fontSize: 14,
+                              height: 22 / 14,
+                              letterSpacing: -.04 * 14,
+                              color: AppColors.black,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                launchUrl(Uri.parse(
+                                    'mailto:fittd.managment@gmail.com'));
+                              },
+                          ),
+                          TextSpan(
+                            text:
+                                " If such efforts prove unsuccessful, a party who intends to seek arbitration must first send to the other, by certified mail, a written Notice of Dispute (“Notice”). The Notice to Company should be sent to 8605 Santa Monica Blvd 479590 West Hollywood, CA 90069 (“Notice Address”). The Notice must (i) describe the nature and basis of the claim or dispute and (ii) set forth the specific relief sought. If Company and you do not resolve the claim within sixty (60) calendar days after the Notice is received, you or Company may commence an arbitration proceeding. During the arbitration, the amount of any settlement offer made by Company or you will not be disclosed to the arbitrator until after the arbitrator determines the amount, if any, to which you or Company is entitled",
+                            style: AppTextStyles.poppinsRegular(
+                              fontSize: 14,
+                              height: 22 / 14,
+                              letterSpacing: -.02 * 14,
+                              color: AppColors.black.withValues(alpha: 0.6),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10),

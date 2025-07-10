@@ -7,7 +7,7 @@ import '../../features/main/data/mock_data.dart';
 import '../assets/icons.dart';
 import '../colors/colors.dart';
 import '../helper/image_provider/fitted_image_provider.dart';
-import '../router/app_routes.dart';
+import '../router/enum/app_routes_enum.dart';
 import 'app_text.dart';
 
 class ProductCard extends StatelessWidget {

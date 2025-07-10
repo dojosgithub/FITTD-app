@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitted/config/providers/app_providers.dart';
 import 'package:fitted/config/router/app_router.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/config/theme/app_theme.dart';
 import 'package:fitted/core/network/firebase/firebase_options.dart';

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fitted/config/router/app_router.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
 import 'package:fitted/config/storage/app_storage.dart';
 import 'package:fitted/core/constants/app_constants.dart';
 import 'package:fitted/core/network/network_info.dart';

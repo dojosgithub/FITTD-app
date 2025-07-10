@@ -156,4 +156,21 @@ class FemaleMeasurementModel extends Equatable {
 
     return updatedModel;
   }
+
+  factory FemaleMeasurementModel.empty() {
+    const defaultUnit = Unit.cm;
+    final zero = Measurement(value: 0.0, unit: defaultUnit);
+
+    return FemaleMeasurementModel(
+      sleevesLength: zero,
+      waist: zero,
+      torsoHeight: zero,
+      hip: zero,
+      inseam: zero,
+      height: zero,
+      bust: zero,
+      bandSize: zero,
+      cupSize: zero,
+    );
+  }
 }

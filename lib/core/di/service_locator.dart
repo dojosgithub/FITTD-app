@@ -25,7 +25,6 @@ import 'package:fitted/features/profile/presentation/bloc/bloc.dart';
 import 'package:fitted/features/settings/domain/repositories/settings_repository.dart';
 import 'package:fitted/features/settings/domain/usecases/settings_usecase.dart';
 import 'package:fitted/features/settings/presentation/bloc/bloc.dart';
-
 import '../../features/apparel/data/datasources/apparel_remote_datasource.dart';
 import '../../features/apparel/domain/repositories/apparel_repository.dart';
 import '../../features/apparel/domain/repositories/apparel_repository_impl.dart';

@@ -1,6 +1,7 @@
 import 'package:fitted/config/helper/form_validation/form_validator.dart';
 import 'package:fitted/config/helper/spacers/spacers.dart';
-import 'package:fitted/config/router/app_routes.dart';
+import 'package:fitted/config/router/enum/app_routes_enum.dart';
+
 import 'package:fitted/config/widgets/input_feild.dart';
 import 'package:fitted/config/widgets/loading_indicator.dart';
 import 'package:fitted/features/auth/signup/presentation/bloc/bloc.dart';
