@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import '../enum/app_routes_enum.dart';
-import 'route_helpers.dart';
 import 'package:fitted/features/settings/presentation/screens/privacy_and_policy_view.dart';
 import 'package:fitted/features/settings/presentation/screens/terms_and_conditions_view.dart';
 import 'package:fitted/features/settings/presentation/screens/change_password_view.dart';

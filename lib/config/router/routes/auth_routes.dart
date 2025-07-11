@@ -6,7 +6,6 @@ import 'package:fitted/features/auth/signup/presentation/screens/signup_view.dar
 import 'package:fitted/features/auth/verify_otp/presentation/screens/otp_verification.dart';
 import 'package:go_router/go_router.dart';
 import '../enum/app_routes_enum.dart';
-import 'route_helpers.dart';
 import 'package:fitted/config/helper/transitions/page_transition.dart';
 
 final authRoutes = [

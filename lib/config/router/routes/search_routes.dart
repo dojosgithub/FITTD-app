@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import '../enum/app_routes_enum.dart';
-import 'route_helpers.dart';
 import 'package:fitted/features/search/presentation/screens/search_results_view.dart';
 import 'package:fitted/features/search/presentation/screens/search_view.dart';
 import 'package:fitted/config/helper/transitions/page_transition.dart';

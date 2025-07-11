@@ -2,7 +2,6 @@ import 'package:fitted/features/profile/presentation/screens/profile_view.dart';
 import 'package:fitted/features/profile/presentation/screens/personal_info_view.dart';
 import 'package:go_router/go_router.dart';
 import '../enum/app_routes_enum.dart';
-import 'route_helpers.dart';
 import 'package:fitted/config/helper/transitions/page_transition.dart';
 
 final profileRoutes = [

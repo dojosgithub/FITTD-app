@@ -2,7 +2,6 @@ import 'package:fitted/features/onboarding/presentation/screens/onboarding_view.
 import 'package:fitted/features/onboarding/presentation/screens/splash_view.dart';
 import 'package:go_router/go_router.dart';
 import '../enum/app_routes_enum.dart';
-import 'route_helpers.dart';
 import 'package:fitted/config/helper/transitions/page_transition.dart';
 
 final onboardingRoutes = [
